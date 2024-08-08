@@ -40,17 +40,7 @@ CREATE TABLE Role (
 ALTER TABLE Account
 ADD CONSTRAINT FK_RoleAccount FOREIGN KEY (role_id) REFERENCES Role(id);
 
--- Create ProductStatus table
-CREATE TABLE ProductStatus (
-    status_id INT PRIMARY KEY,
-    name NVARCHAR(50) NOT NULL
-);
 
--- Insert data into ProductStatus
-INSERT INTO ProductStatus (status_id, name) VALUES
-(1, 'Available'),
-(2, 'Out of Stock'),
-(3, 'Discontinued');
 
 -- Create Product table
 CREATE TABLE Product (
@@ -65,8 +55,8 @@ CREATE TABLE Product (
     release_date DATE,
     battery_life NVARCHAR(50),
     description NVARCHAR(MAX),
-    status INT NOT NULL,
-    CONSTRAINT FK_ProductStatus FOREIGN KEY (status) REFERENCES ProductStatus(status_id)
+    status VARCHAR(20) NOT NULL,
+    CHECK (Status IN ('AVAILABLE', 'OUT_OF_STOCK', 'DISCONTINUED'))
 );
 
 -- Create ProductImage table
@@ -75,12 +65,6 @@ CREATE TABLE ProductImage (
     product_id INT NOT NULL,
     url NVARCHAR(255),
     CONSTRAINT FK_ProductImage_Product FOREIGN KEY (product_id) REFERENCES Product(id)
-);
-
--- Create VariantStatus table
-CREATE TABLE VariantStatus (
-    status_id INT PRIMARY KEY,
-    name NVARCHAR(50) NOT NULL
 );
 
 
@@ -95,14 +79,10 @@ CREATE TABLE ProductVariant (
     quantity INT,
     variant_price DECIMAL(10, 2),
     sale_id INT,
-    status INT NOT NULL,
+    status varchar(20) NOT NULL,
     CONSTRAINT FK_ProductVariant_Product FOREIGN KEY (product_id) REFERENCES Product(id),
     
-    CONSTRAINT FK_ProductVariant_Status FOREIGN KEY (status) REFERENCES VariantStatus(status_id)
+    CHECK (status IN ('AVAILABLE', 'OUT_OF_STOCK', 'DISCONTINUED'))
 );
 
--- Populate VariantStatus table
-INSERT INTO VariantStatus (status_id, name) VALUES
-(1, 'Active'),
-(2, 'Inactive'),
-(3, 'Discontinued');
+
