@@ -19,11 +19,26 @@ CREATE TABLE [User] (
     full_name NVARCHAR(250),
     phone VARCHAR(12),
     email VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    isAdmin INT NOT NULL,
-    isActive INT DEFAULT NULL,
-    address NVARCHAR(255) DEFAULT NULL
+    gender int ,
+    address NVARCHAR(255) DEFAULT NULL,
+	isActive INT DEFAULT NULL
 );
+
+create table Account(
+	id INT IDENTITY(1,1) PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role_id INT NOT NULL,
+    CONSTRAINT FK_UserAccount FOREIGN KEY (id) REFERENCES [User](id)
+);
+
+CREATE TABLE Role (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    role_name NVARCHAR(50) NOT NULL
+);
+
+ALTER TABLE Account
+ADD CONSTRAINT FK_RoleAccount FOREIGN KEY (role_id) REFERENCES Role(id);
 
 -- Create ProductStatus table
 CREATE TABLE ProductStatus (
@@ -68,11 +83,8 @@ CREATE TABLE VariantStatus (
     name NVARCHAR(50) NOT NULL
 );
 
--- Create Sale table
-CREATE TABLE Sale (
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    percentage DECIMAL(5, 2) NOT NULL
-);
+
+
 
 -- Create ProductVariant table
 CREATE TABLE ProductVariant (
@@ -85,7 +97,7 @@ CREATE TABLE ProductVariant (
     sale_id INT,
     status INT NOT NULL,
     CONSTRAINT FK_ProductVariant_Product FOREIGN KEY (product_id) REFERENCES Product(id),
-    CONSTRAINT FK_ProductVariant_Sale FOREIGN KEY (sale_id) REFERENCES Sale(id),
+    
     CONSTRAINT FK_ProductVariant_Status FOREIGN KEY (status) REFERENCES VariantStatus(status_id)
 );
 
