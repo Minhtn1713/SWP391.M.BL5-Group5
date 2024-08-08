@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    <servlet>
+        <servlet-name>ForgotPasswordController</servlet-name>
+        <servlet-class>controller.ForgotPasswordController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SignInController</servlet-name>
+        <servlet-class>controller.SignInController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SignUpController</servlet-name>
+        <servlet-class>controller.SignUpController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AccountProfileController</servlet-name>
+        <servlet-class>controller.AccountProfileController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ForgotPasswordController</servlet-name>
+        <url-pattern>/ForgotPasswordController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SignInController</servlet-name>
+        <url-pattern>/SignInController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SignUpController</servlet-name>
+        <url-pattern>/SignUpController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountProfileController</servlet-name>
+        <url-pattern>/AccountProfileController</url-pattern>
+    </servlet-mapping>
+</web-app>
