@@ -40,7 +40,10 @@ CREATE TABLE Role (
 ALTER TABLE Account
 ADD CONSTRAINT FK_RoleAccount FOREIGN KEY (role_id) REFERENCES Role(id);
 
-
+create table Brand(
+	id int identity(1,1) primary key,
+	name nvarchar(100)
+)
 
 -- Create Product table
 CREATE TABLE Product (
@@ -51,13 +54,16 @@ CREATE TABLE Product (
     graphic_card NVARCHAR(100),
     screen_details VARCHAR(50),
     weight DECIMAL(5, 2),
-    brand NVARCHAR(50) NOT NULL,
+    brand int NOT NULL,
     release_date DATE,
     battery_life NVARCHAR(50),
     description NVARCHAR(MAX),
     status VARCHAR(20) NOT NULL,
-    CHECK (Status IN ('AVAILABLE', 'OUT_OF_STOCK', 'DISCONTINUED'))
+    CHECK (Status IN ('AVAILABLE', 'OUT_OF_STOCK', 'DISCONTINUED')),
+	CONSTRAINT FK_Product_Brand FOREIGN KEY (brand) REFERENCES Brand(id)
 );
+
+
 
 -- Create ProductImage table
 CREATE TABLE ProductImage (
