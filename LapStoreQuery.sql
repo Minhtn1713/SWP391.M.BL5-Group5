@@ -8,41 +8,39 @@ BEGIN
     DROP DATABASE [LapStore];
 END
 
+
+
 -- Create the database
 CREATE DATABASE [LapStore];
 USE [LapStore];
 GO
+--Create Role table
+CREATE TABLE [Role] (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    role_name NVARCHAR(100) NOT NULL
+);
+--Create Account table
+CREATE TABLE [dbo].[Account](
+	[id] [bigint] IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[username] [varchar](32) NOT NULL,
+	[password] [varchar](64) NOT NULL,
+	[role_Id] [int] NOT NULL,
+	[isActive] INT DEFAULT 1,
+	CONSTRAINT FK_AccountRole FOREIGN KEY (role_id) REFERENCES Role(id)
+);
 
 -- Create User table
 CREATE TABLE [User] (
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    full_name NVARCHAR(250),
-    phone VARCHAR(12),
-    email VARCHAR(255) UNIQUE NOT NULL,
-    gender int ,
-    address NVARCHAR(255) DEFAULT NULL,
-	isActive INT DEFAULT NULL
+    [id] [bigint] NOT NULL PRIMARY KEY,
+	[fullname] [nvarchar](max) NULL,
+	[phone] [varchar](12) NULL,
+	[address] [nvarchar](max) NULL,
+	[gender] [bit] NULL
 );
-
-create table Account(
-	id INT IDENTITY(1,1) PRIMARY KEY,
-    username VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    role_id INT NOT NULL,
-    CONSTRAINT FK_UserAccount FOREIGN KEY (id) REFERENCES [User](id)
-);
-
-CREATE TABLE Role (
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    role_name NVARCHAR(50) NOT NULL
-);
-
-ALTER TABLE Account
-ADD CONSTRAINT FK_RoleAccount FOREIGN KEY (role_id) REFERENCES Role(id);
-
+-- Create Brand table
 create table Brand(
-	id int identity(1,1) primary key,
-	name nvarchar(100)
+id int identity(1,1) primary key,
+name nvarchar(100)
 )
 
 -- Create Product table
@@ -58,11 +56,9 @@ CREATE TABLE Product (
     release_date DATE,
     battery_life NVARCHAR(50),
     description NVARCHAR(MAX),
-    status VARCHAR(20) NOT NULL,
-    CHECK (Status IN ('AVAILABLE', 'OUT_OF_STOCK', 'DISCONTINUED')),
-	CONSTRAINT FK_Product_Brand FOREIGN KEY (brand) REFERENCES Brand(id)
+    status INT NOT NULL,
+	constraint FK_Product_Brand Foreign key (brand) references Brand(id)
 );
-
 
 
 -- Create ProductImage table
@@ -74,8 +70,6 @@ CREATE TABLE ProductImage (
 );
 
 
-
-
 -- Create ProductVariant table
 CREATE TABLE ProductVariant (
     id INT IDENTITY(1,1) PRIMARY KEY,
@@ -85,10 +79,35 @@ CREATE TABLE ProductVariant (
     quantity INT,
     variant_price DECIMAL(10, 2),
     sale_id INT,
-    status varchar(20) NOT NULL,
+    status INT NOT NULL,
     CONSTRAINT FK_ProductVariant_Product FOREIGN KEY (product_id) REFERENCES Product(id),
-    
-    CHECK (status IN ('AVAILABLE', 'OUT_OF_STOCK', 'DISCONTINUED'))
 );
+GO
+CREATE TABLE [dbo].[Security](
+	[question_Id] [bigint],
+	[account_Id] [bigint] NOT NULL PRIMARY KEY,
+	[answer] [ntext] NOT NULL,
+	)
+GO
+/****** Object:  Table [dbo].[SecurityQuestion]    Script Date: 7/25/2023 8:47:57 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SecurityQuestion](
+	[id] [bigint] IDENTITY(1,1) NOT NULL  PRIMARY KEY,
+	[question] [ntext] NOT NULL,
 
-
+	);
+-- Populate VariantStatus table
+GO
+ALTER TABLE [dbo].[Security]  WITH CHECK ADD FOREIGN KEY([account_Id])
+REFERENCES [dbo].[Account] ([id])
+GO
+ALTER TABLE [dbo].[Security]  WITH CHECK ADD FOREIGN KEY([question_Id])
+REFERENCES [dbo].[SecurityQuestion] ([id])
+GO
+GO
+ALTER TABLE [dbo].[User]  WITH CHECK ADD FOREIGN KEY([id])
+REFERENCES [dbo].[Account] ([id])
+ON DELETE CASCADE
