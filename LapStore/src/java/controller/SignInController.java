@@ -80,7 +80,7 @@ public class SignInController extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("account", account);
             
-            response.sendRedirect("home");
+            response.sendRedirect("account-profile");
         } else {
             request.setAttribute("error", "Invalid username or password");
             request.getRequestDispatcher("screens/signIn.jsp").forward(request, response);
