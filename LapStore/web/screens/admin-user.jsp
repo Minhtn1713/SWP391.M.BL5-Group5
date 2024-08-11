@@ -41,7 +41,7 @@
                             <div class="product-title">
                                 <i class='bx bx-news icon'></i>&nbsp;User
                             </div>
-                            <div class="product-add"><a href="">Add new User</a></div>
+                            <div class="product-add"><a href="/LapStore/user/add">Add new User</a></div>
                             <div class="product-content">
                                 <table class="table table-striped table-bordered table-hover">
                                     <thead>

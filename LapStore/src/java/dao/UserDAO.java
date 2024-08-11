@@ -113,24 +113,19 @@ public class UserDAO extends DBContext {
         }
         return check > 0 ? u : null;
     }
-    public boolean add(User p) {
+    public boolean add(String email) {
         String query = """
-                       update [User] set fullname=?,phone=?,address=?,gender=? where id=?;
-                       update [Account] set role_Id=?,isActive=? where id=?;""";
+                       insert into [User] (email) values (?); ;
+                       """;
         int rows = 0;
         Connection con = null;
-        try (Connection c = DatabaseConnection.getConnection();
-                PreparedStatement ps = c.prepareStatement(IBlogQuery.ADD)) {
-            con = c;
-            c.setAutoCommit(false);
-            ps.setString(1, p.getEmail());
-            ps.setString(2, p.getUsername());
-            ps.setString(3, p.getPassword());
-            ps.setLong(4, p.getAuthor().getId());
-            ps.setString(5, p.getBlogStatus().getBlogStatus().toLowerCase());
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            con = connection;
+            connection.setAutoCommit(false);
+            ps.setString(1, email);
             rows = ps.executeUpdate();
             if (rows > 0) {
-                c.commit();
+                connection.commit();
             }
         } catch (SQLException e) {
             if (con != null) {
@@ -144,7 +139,55 @@ public class UserDAO extends DBContext {
         }
         return rows > 0;
     }
-
+    public boolean add(int id,String username,String password,int role,int status) {
+        String query = """
+                       insert into [Account] (id,username,password,role_Id,isActive) values (?,?,?,?,?); 
+                       """;
+        int rows = 0;
+        Connection con = null;
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            con = connection;
+            connection.setAutoCommit(false);
+            ps.setInt(1, id);
+            ps.setString(2, username);
+            ps.setString(3, password);
+            ps.setInt(4, role);
+            ps.setInt(5, status);
+            rows = ps.executeUpdate();
+            if (rows > 0) {
+                connection.commit();
+            }
+        } catch (SQLException e) {
+            if (con != null) {
+                try {
+                    con.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace(System.err);
+                }
+            }
+            e.printStackTrace(System.err);
+        }
+        return rows > 0;
+    }
+    public boolean usernameExists(String username) {
+    String query = "SELECT COUNT(*) FROM [Account] WHERE username = ?";
+    Connection con = null;
+    boolean exists = false;
+    try (PreparedStatement ps = connection.prepareStatement(query)) {
+        con = connection;
+        ps.setString(1, username);
+        try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                exists = (count > 0);
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace(System.err);
+    }
+    return exists;
+}
+    
     public static void main(String[] args) {
         UserDAO userDao = new UserDAO();
 

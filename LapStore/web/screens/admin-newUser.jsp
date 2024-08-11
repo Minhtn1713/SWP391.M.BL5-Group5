@@ -33,7 +33,7 @@
                             <div class="row">
                                 <div class="col-lg-12 mt-4">
                                     <div class="card border-0 p-4 rounded shadow">
-                                        <form class="mt-4" action="/LapStore/user/add" method="post"  enctype="multipart/form-data">
+                                        <form class="mt-4" action="/LapStore/user/add" method="post"  >
                                             <div class="row">
                                             <div class="col-md-12">
                                                 <div class="mb-3">
@@ -47,14 +47,14 @@
                                                 <div class="mb-3">
                                                     <label class="form-label">Username</label>
                                                     <input name="username" id="username" type="text" placeholder="Enter username ..." class="form-control "  >   
-                                                    <p class="text-danger">${errorEmail}</p>
+                                                    <p class="text-danger">${errorUsername}</p>
                                                 </div>
                                             </div><!--end col-->
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Password</label>
                                                     <input name="password" id="password" type="text" placeholder="Enter password ..." class="form-control "  >   
-                                                    <p class="text-danger">${errorEmail}</p>
+                                                    <p class="text-danger">${errorPass}</p>
                                                 </div>
                                             </div><!--end col-->
 

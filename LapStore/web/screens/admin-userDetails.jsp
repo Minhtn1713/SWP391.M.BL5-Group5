@@ -33,7 +33,7 @@
                             <div class="row">
                             <div class="col-lg-12 mt-4">
                                 <div class="card border-0 p-4 rounded shadow">
-                                    <form class="mt-4" action="/LapStore/user/save?id=${user.id}" method="post"  enctype="multipart/form-data">
+                                    <form class="mt-4" action="/LapStore/user/save?id=${user.id}" method="post" >
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="mb-3">
@@ -112,7 +112,7 @@
             </div>
         </section>
         <c:choose>
-            <c:when test="${param.toggled != null}">
+            <c:when test="${param.updated != null}">
                 <div class="toast-container position-fixed bottom-0 end-0 p-3">
                     <div id="liveToast" class="toast show" role="alert" aria-live="assertive" aria-atomic="true" style="width: 350px">
                         <div class="toast-header">
@@ -122,7 +122,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                         </div>
                         <c:choose>
-                            <c:when test="${param.toggled == 'successful'}">
+                            <c:when test="${param.updated == 'yes'}">
                                 <div class="toast-body text-success-emphasis">
                                     Status changed successfully!
                                 </div>

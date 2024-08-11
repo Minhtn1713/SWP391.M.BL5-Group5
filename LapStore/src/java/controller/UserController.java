@@ -20,7 +20,7 @@ import model.User;
  *
  * @author Admin
  */
-@WebServlet(name = "UserController", urlPatterns = {"/user", "/user/toggle", "/user/update", "/user/save"})
+@WebServlet(name = "UserController", urlPatterns = {"/user", "/user/toggle", "/user/update", "/user/save","/user/add"})
 public class UserController extends HttpServlet {
 
     @Override
@@ -39,6 +39,9 @@ public class UserController extends HttpServlet {
             case "/user/update" -> {
                 loadUserDetails(request, response);
             }
+            case "/user/add" -> {
+                request.getRequestDispatcher("/screens/admin-newUser.jsp").forward(request, response);
+            }
         }
 
     }
@@ -51,6 +54,9 @@ public class UserController extends HttpServlet {
         switch (ACTION) {
             case "/user/save" -> {
                 updateUser(request, response);
+            }
+            case "/user/add" -> {
+                addUser(request, response);
             }
 
         }
@@ -169,12 +175,12 @@ public class UserController extends HttpServlet {
         if (isValidFullName(fullName) && isValidPhone(phone) && isValidAddress(address) ) {
         User isUpdated = u.updateUser(update);
         if (isUpdated != null) {
-            response.sendRedirect("/LapStore/update?updated=yes");
+            response.sendRedirect("/LapStore/user/update?id="+id+"&updated=yes");
         } else {
-            response.sendRedirect("/LapStore/update?updated=no");
+            response.sendRedirect("/LapStore/user/update?id="+id+"&updated=no");
         }
         }else {
-            response.sendRedirect("/LapStore/update?updated=no");
+            response.sendRedirect("/LapStore/user/update?id="+id+"&updated=no");
         }
     }
 
@@ -187,10 +193,59 @@ public class UserController extends HttpServlet {
     // Phone number should not be null, empty, and should match the pattern for 9 or 10 digits.
     return phone != null && phone.matches("^\\d{9,10}$");
 }
+    public static boolean isValidEmail(String email) {
+    // Email should not be null, empty, and should follow a basic email pattern.
+    String emailPattern = "^[\\w.%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
+    return email != null && !email.isEmpty() && email.matches(emailPattern);
+}
 
     public static boolean isValidAddress(String address) {
         // Address should not be null or empty, and should match a basic pattern for common address components.
         return address != null && address.matches("^[a-zA-Z0-9\\s,.-]+$");
+    }
+
+    private void addUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String email = request.getParameter("email");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        int role = Integer.parseInt(request.getParameter("role"));
+        int status = Integer.parseInt(request.getParameter("status"));
+        UserDAO u = new UserDAO();
+        boolean add = u.usernameExists(username);
+        if(add || !isValidEmail(email) || username == null || password == null ||username.isEmpty()||password.isEmpty() ){
+            request.setAttribute("email", email);
+            request.setAttribute("username", username);
+            request.setAttribute("password", password);
+            request.setAttribute("role", role);
+            request.setAttribute("status", status);
+            if(add||username == null||username.isEmpty()){
+                request.setAttribute("errorUsername", "Invalid username");
+            }else{
+                request.setAttribute("errorUsername", null);
+            }
+            if(!isValidEmail(email)){
+                request.setAttribute("errorEmail", "Invalid Email");
+            }else{
+                request.setAttribute("errorEmail", null);
+            }
+            if(password == null||password.isEmpty()){
+                request.setAttribute("errorPass", "Please input a password");
+            }else{
+                request.setAttribute("errorPass", null);
+            }
+            request.getRequestDispatcher("/screens/admin-newUser.jsp").forward(request, response);
+        }else{
+            boolean successUser = u.add(email);
+            if(successUser){
+            int id=u.getAllUser().size()+1;
+            boolean successAcc = u.add(id,username, password, role, status);
+            if(successUser && successAcc){
+                response.sendRedirect("/LapStore/user/add?added=successful");
+            }}else{
+                request.setAttribute("error", "Failed to add user to the database.");
+                request.getRequestDispatcher("/screens/admin-newUser.jsp").forward(request, response);
+            }
+        }
     }
 
 }
