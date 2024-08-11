@@ -21,7 +21,7 @@ CREATE TABLE [Role] (
 );
 --Create Account table
 CREATE TABLE [dbo].[Account](
-	[id] [bigint] IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[id] [bigint] NOT NULL PRIMARY KEY,
 	[username] [varchar](32) NOT NULL,
 	[password] [varchar](64) NOT NULL,
 	[role_Id] [int] NOT NULL,
@@ -31,8 +31,9 @@ CREATE TABLE [dbo].[Account](
 
 -- Create User table
 CREATE TABLE [User] (
-    [id] [bigint] NOT NULL PRIMARY KEY,
+    [id] [bigint] identity(1,1) NOT NULL PRIMARY KEY,
 	[fullname] [nvarchar](max) NULL,
+	[email] varchar(255) ,
 	[phone] [varchar](12) NULL,
 	[email][nvarchar](max) NULL,
 	[address] [nvarchar](max) NULL,
@@ -111,6 +112,21 @@ ALTER TABLE [dbo].[Security]  WITH CHECK ADD FOREIGN KEY([question_Id])
 REFERENCES [dbo].[SecurityQuestion] ([id])
 GO
 GO
+
+ALTER TABLE [dbo].[Account]  WITH CHECK ADD FOREIGN KEY([id])
+REFERENCES [dbo].[User] ([id])
+ON DELETE CASCADE
+
+insert into Role (role_name) values 
+('Admin'),
+('Staff'),
+('Customer');
+
+insert into [User] (fullname,email,phone,address,gender) values (
+'Tran Tien Dung','ttd21072004@gmail.com','0963177099','Ha Noi',1);
+insert into [Account] (id,username,password,role_Id,isActive) values
+(1,'dungle2107','1',1,1);
+
 ALTER TABLE [dbo].[User]  WITH CHECK ADD FOREIGN KEY([id])
 REFERENCES [dbo].[Account] ([id])
 ON DELETE CASCADE
@@ -155,5 +171,4 @@ SET IDENTITY_INSERT [dbo].[SecurityQuestion] OFF
 SELECT * FROM [Product];
 SELECT * FROM [Brand];
 Select * from [ProductImage]
-
 

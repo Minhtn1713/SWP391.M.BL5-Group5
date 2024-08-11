@@ -15,10 +15,8 @@ public class Account {
     private String role_id;
     private boolean isActive;
 
-
     public Account() {
     }
-
     public Account(int id, String username, String password, String role_id, boolean isActive) {
         this.id = id;
         this.username = username;

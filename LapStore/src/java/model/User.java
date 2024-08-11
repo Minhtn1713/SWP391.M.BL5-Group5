@@ -11,22 +11,43 @@ package model;
 public class User {
     int id;
     String fullName;
-    String phone;
     String email;
+    String phone;
     String address;
-    boolean gender;
+    int gender;
+    String userName;
+    int role;
+    int isActive;
 
     public User() {
     }
+
+
+    public User(int id, String fullName, String email, String phone, String address, int gender, String userName,int role, int isActive) {
+
     public User(int id, String fullName, String phone, String address, boolean gender) {
         this.id = id;
         this.fullName = fullName;
         this.phone = phone;
-    public User(int id, String fullName, String phone, String email, String address, boolean gender) {
+    public User(nt id, String fullName, String phone, String email, String address, boolean gender) {
+
         this.id = id;
         this.fullName = fullName;
-        this.phone = phone;
         this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.gender = gender;
+        this.userName = userName;
+        this.role = role;
+        this.isActive = isActive;
+    }
+    
+    
+    public User(int id, String fullName, String email, String phone, String address, int gender) {
+        this.id = id;
+        this.fullName = fullName;
+        this.email = email;
+        this.phone = phone;
         this.address = address;
         this.gender = gender;
     }
@@ -70,11 +91,11 @@ public class User {
         this.address = address;
     }
 
-    public boolean isGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(boolean gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 }

@@ -1,8 +1,8 @@
 <nav class="sidebar close">
       <header>
         <div class="logo text">
-          <a href="dashboard" style="text-decoration: none"
-            ><h3 style="width: 100%; text-align: center">LapStore</h3></a
+          <a href="home" style="text-decoration: none"
+            ><h3 style="width: 100%; text-align: center">Durian Store</h3></a
           >
         </div>
         <i class="bx bx-menu toggle icon"></i>
@@ -36,13 +36,13 @@
               >
             </li>
             <li class="nav-link sub-menu">
-              <a href="admin-brand"
+              <a href="color-list"
                 ><i class="bx bx-palette icon"></i>
-                <span class="text nav-text">Brand</span></a
+                <span class="text nav-text">Color</span></a
               >
             </li>
             <li class="nav-link sub-menu">
-              <a href=""
+              <a href="storage-list"
                 ><i class='bx bx-memory-card icon'></i>
                 <span class="text nav-text">Storage</span></a
               >
@@ -72,7 +72,7 @@
               </a>
             </li>
             <li class="nav-link">
-              <a href="#">
+              <a href="/LapStore/user">
                 <i class="bx bx-user icon"></i>
                 <span class="text nav-text">User</span>
               </a>
