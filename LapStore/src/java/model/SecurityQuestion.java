@@ -6,7 +6,7 @@ package model;
 
 /**
  *
- * @author hieu
+ * @author lords
  */
 public class SecurityQuestion {
     int id;
@@ -35,5 +35,4 @@ public class SecurityQuestion {
     public void setQuestion(String question) {
         this.question = question;
     }
-
 }
