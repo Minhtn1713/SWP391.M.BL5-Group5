@@ -81,18 +81,10 @@
                                                         <i class="bx bxs-edit-alt icon"></i>
                                                     </a>
                                                 </td>
-                                                <td>
-                                                    <c:if test="${p.status == 1}">
-                                                        <a href="admin-delete-product?id=${p.id}&sta=2">
-                                                            <i class='bx bx-show-alt icon'></i>
-                                                        </a>
-                                                    </c:if>
-                                                    <c:if test="${p.status != 1}">
-                                                        <a href="admin-delete-product?id=${p.id}&sta=1">
-                                                            <i class='bx bx-low-vision icon'></i>
-                                                        </a>
-                                                    </c:if>
-                                                </td>
+                                                <td><c:if test="${p.status == 1}"><a href="admin-delete-product?id=${p.id}&sta=2"><i class='bx bx-show-alt icon'></i></a></c:if>
+                      <c:if test="${p.status != 1}"><a href="admin-delete-product?id=${p.id}&sta=1"><i class='bx bx-low-vision icon' ></i></a></c:if></td>
+                    
+                   
                                             </tr>
                                         </c:forEach>
                                     </tbody>
