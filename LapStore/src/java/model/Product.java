@@ -2,18 +2,13 @@ package model;
 
 import java.sql.Date;
 
-/**
- * Represents a product with various attributes.
- * 
- * Author: hieu
- */
 public class Product {
     private int id;
     private String name;
+    private String img;
     private float price;
     private String processor;
     private String screen_details;
-    private String imgId;
     private String size;
     private String operatingSystem;
     private String battery;
@@ -23,37 +18,17 @@ public class Product {
     private String graphic_card;
     private String description;
     private Date release_date;
+    private String brandName;  // New field for brand name
 
-    public Product() {
-    }
-
-//    public Product(int id, String name, float price, String processor, String screen_details,
-//            String imgId, String size, String operatingSystem, String battery, int status,
-//            int brandId, float weight, String graphic_card, String description, Date release_date) {
-//        this.id = id;
-//        this.name = name;
-//        this.price = price;
-//        this.processor = processor;
-//        this.screen_details = screen_details;
-//        this.imgId = imgId;
-//        this.size = size;
-//        this.operatingSystem = operatingSystem;
-//        this.battery = battery;
-//        this.status = status;
-//        this.brandId = brandId;
-//        this.weight = weight;
-//        this.graphic_card = graphic_card;
-//        this.description = description;
-//        this.release_date = release_date;
-//    }
-
-    public Product(int id, String name, float price, String processor, String screen_details, String size, String operatingSystem, String battery, int status, int brandId, float weight, String graphic_card, String description, Date release_date) {
+    public Product(int id, String name, String img, float price, String processor, String screen_details,
+                   String size, String operatingSystem, String battery, int status, int brandId,
+                   float weight, String graphic_card, String description, Date release_date, String brandName) {
         this.id = id;
         this.name = name;
+        this.img = img;
         this.price = price;
         this.processor = processor;
         this.screen_details = screen_details;
-//        this.imgId = imgId;
         this.size = size;
         this.operatingSystem = operatingSystem;
         this.battery = battery;
@@ -63,8 +38,26 @@ public class Product {
         this.graphic_card = graphic_card;
         this.description = description;
         this.release_date = release_date;
+        this.brandName = brandName; 
     }
+  public Product(int id, String name, float price, String processor, String screen_details,
+                   String size, String operatingSystem, String battery,  
+                   float weight, String graphic_card, int status ) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.processor = processor;
+        this.screen_details = screen_details;
+        this.size = size;
+        this.operatingSystem = operatingSystem;
+        this.battery = battery;
+        this.weight = weight;
+        this.graphic_card = graphic_card;
+        this.status = status;
+    }
+    
 
+    // Getters and setters for all fields, including brandName
     public int getId() {
         return id;
     }
@@ -79,6 +72,14 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public float getPrice() {
@@ -103,14 +104,6 @@ public class Product {
 
     public void setScreen_details(String screen_details) {
         this.screen_details = screen_details;
-    }
-
-    public String getImgId() {
-        return imgId;
-    }
-
-    public void setImgId(String imgId) {
-        this.imgId = imgId;
     }
 
     public String getSize() {
@@ -184,5 +177,12 @@ public class Product {
     public void setRelease_date(Date release_date) {
         this.release_date = release_date;
     }
-        
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
+    }
 }

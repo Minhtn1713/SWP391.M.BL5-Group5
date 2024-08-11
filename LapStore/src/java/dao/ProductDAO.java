@@ -11,12 +11,17 @@ import java.util.List;
 import java.util.Map;
 import model.Product;
 
+
 public class ProductDAO extends DBContext {
 
     public List<Product> getProductList() {
         List<Product> productList = new ArrayList<>();
-        String query = "SELECT * FROM Product";
-        
+        String query = "SELECT p.id, p.name, p.img, p.price, p.processor, p.screen_details, " +
+                       "p.size, p.operating_system, p.battery_life, p.status, p.brand, p.weight, " +
+                       "p.graphic_card, p.description, p.release_date, b.name AS brand_name " +
+                       "FROM Product p " +
+                       "JOIN Brand b ON p.brand = b.id";
+
         try (Connection conn = connection;
              PreparedStatement ps = conn.prepareStatement(query);
              ResultSet rs = ps.executeQuery()) {
@@ -24,20 +29,21 @@ public class ProductDAO extends DBContext {
             while (rs.next()) {
                 productList.add(new Product(
                     rs.getInt("id"),
-                            rs.getString("name"),
-                            rs.getFloat("price"),
-                            rs.getString("processor"),
-                            rs.getString("screen_details"),
-//                            rs.getString("imgId"),
-                            rs.getString("size"),
-                            rs.getString("operating_system"),
-                            rs.getString("battery_life"),
-                            rs.getInt("status"),
-                            rs.getInt("brand"),
-                            rs.getFloat("weight"),
-                            rs.getString("graphic_card"),
-                            rs.getString("description"),
-                            rs.getDate("release_date")
+                    rs.getString("name"),
+                    rs.getString("img"),
+                    rs.getFloat("price"),
+                    rs.getString("processor"),
+                    rs.getString("screen_details"),
+                    rs.getString("size"),
+                    rs.getString("operating_system"),
+                    rs.getString("battery_life"),
+                    rs.getInt("status"),
+                    rs.getInt("brand"),
+                    rs.getFloat("weight"),
+                    rs.getString("graphic_card"),
+                    rs.getString("description"),
+                    rs.getDate("release_date"),
+                    rs.getString("brand_name")  // Assuming your Product class has a brandName field
                 ));
             }
         } catch (SQLException e) {
@@ -71,21 +77,22 @@ public class ProductDAO extends DBContext {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return new Product(
-                             rs.getInt("id"),
-                            rs.getString("name"),
-                            rs.getFloat("price"),
-                            rs.getString("processor"),
-                            rs.getString("screen_details"),
-//                            rs.getString("imgId"),
-                            rs.getString("size"),
-                            rs.getString("operating_system"),
-                            rs.getString("battery_life"),
-                            rs.getInt("status"),
-                            rs.getInt("brand"),
-                            rs.getFloat("weight"),
-                            rs.getString("graphic_card"),
-                            rs.getString("description"),
-                            rs.getDate("release_date")
+                                rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getString("img"),
+                    rs.getFloat("price"),
+                    rs.getString("processor"),
+                    rs.getString("screen_details"),
+                    rs.getString("size"),
+                    rs.getString("operating_system"),
+                    rs.getString("battery_life"),
+                    rs.getInt("status"),
+                    rs.getInt("brand"),
+                    rs.getFloat("weight"),
+                    rs.getString("graphic_card"),
+                    rs.getString("description"),
+                    rs.getDate("release_date"),
+                    rs.getString("brand_name")  
                     );
                 }
             }
@@ -107,7 +114,7 @@ public class ProductDAO extends DBContext {
             ps.setFloat(2, product.getPrice());
             ps.setString(3, product.getProcessor());
             ps.setString(4, product.getScreen_details());
-            ps.setString(5, product.getImgId());
+            ps.setString(5, product.getImg());
             ps.setString(6, product.getSize());
             ps.setString(7, product.getOperatingSystem());
             ps.setString(8, product.getBattery());
@@ -153,34 +160,21 @@ public class ProductDAO extends DBContext {
         return 0;
     }
 
-    public int createProduct(Product product) {
-        String query = "INSERT INTO Product (name, price, processor, screen_details, imgId, size, " +
-                "operatingSystem, battery, status, brandId, weight, graphic_card, description, release_date) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        
-        try (Connection conn = connection;
-             PreparedStatement ps = conn.prepareStatement(query)) {
-            ps.setString(1, product.getName());
-            ps.setFloat(2, product.getPrice());
-            ps.setString(3, product.getProcessor());
-            ps.setString(4, product.getScreenDetails());
-            ps.setString(5, product.getImgId());
-            ps.setString(6, product.getSize());
-            ps.setString(7, product.getOperatingSystem());
-            ps.setString(8, product.getBattery());
-            ps.setInt(9, product.getStatus());
-            ps.setInt(10, product.getBrandId());
-            ps.setFloat(11, product.getWeight());
-            ps.setString(12, product.getGpu());
-            ps.setString(13, product.getDescription());
-            ps.setDate(14, product.getReleaseDate());
-            
-            return ps.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("Error creating product: " + e.getMessage());
-        }
-        return 0;
+   public int createProduct(Product product) {
+    int success = 0;
+    String query = "INSERT INTO [Product] (name, price, processor, screen_details, img, size, " +
+            "operating_system, battery_life, status, brand, weight, graphic_card, description, release_date) " +
+            "VALUES ('"+ product.getName() + "', "+product.getPrice()+", '"+product.getProcessor()+"', '"+product.getScreen_details()+"', '"+product.getImg()+"', '"+product.getSize()+"', '"+product.getOperatingSystem()+"', '"+product.getBattery()+"', '"+product.getStatus()+"', '"+product.getBrandId()+"', "+product.getWeight()+", '"+product.getGraphic_card()+"', '"+product.getDescription()+"', '"+product.getRelease_date()+"')";
+    
+    try (Connection conn = connection;
+         PreparedStatement ps = conn.prepareStatement(query)) {
+        success = ps.executeUpdate();
+          ps.close();
+    } catch (SQLException e) {
+        System.err.println("Error creating product: " + e.getMessage());
     }
+    return success;
+   }
 
     public double getPriceById(int id) {
         String query = "SELECT price FROM Product WHERE id = ?";
