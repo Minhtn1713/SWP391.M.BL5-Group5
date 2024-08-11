@@ -16,7 +16,7 @@ USE [LapStore];
 GO
 --Create Role table
 CREATE TABLE [Role] (
-    id INT IDENTITY(1,1) PRIMARY KEY,
+    id [int] PRIMARY KEY,
     role_name NVARCHAR(100) NOT NULL
 );
 --Create Account table
@@ -34,6 +34,7 @@ CREATE TABLE [User] (
     [id] [bigint] NOT NULL PRIMARY KEY,
 	[fullname] [nvarchar](max) NULL,
 	[phone] [varchar](12) NULL,
+	[email][nvarchar](max) NULL,
 	[address] [nvarchar](max) NULL,
 	[gender] [bit] NULL
 );
@@ -51,7 +52,9 @@ CREATE TABLE Product (
     processor VARCHAR(200),
     graphic_card NVARCHAR(100),
     screen_details VARCHAR(50),
+	size VARCHAR(50),
     weight DECIMAL(5, 2),
+	operating_system NVARCHAR(50),
     brand int NOT NULL,
     release_date DATE,
     battery_life NVARCHAR(50),
@@ -111,3 +114,46 @@ GO
 ALTER TABLE [dbo].[User]  WITH CHECK ADD FOREIGN KEY([id])
 REFERENCES [dbo].[Account] ([id])
 ON DELETE CASCADE
+-- Insert data Product
+-- Insert sample data into the Brand table
+INSERT INTO Brand (name) 
+VALUES 
+('Dell'),
+('Apple'),
+('HP'),
+('Asus'),
+('Lenovo');
+
+-- Insert sample data into the Product table
+INSERT INTO Product (name, price, processor, graphic_card, screen_details, size, weight, operating_system, brand, release_date, battery_life, description, status)
+VALUES 
+('Dell XPS 13', 999.99, 'Intel Core i7', 'Intel Iris Xe', '13.3" FHD', '13.3 inches', 1.20, 'Windows 11', 1, '2023-05-01', '12 hours', 'Dell XPS 13 is a high-performance laptop with a sleek design.', 1),
+('MacBook Pro 14', 1999.99, 'Apple M1 Pro', 'Integrated 14-core GPU', '14" Retina', '14 inches', 1.36, 'macOS', 2, '2023-03-15', '17 hours', 'The new MacBook Pro 14 offers incredible power and performance.', 1),
+('HP Spectre x360', 1299.99, 'Intel Core i5', 'Intel UHD Graphics', '13.3" 4K OLED', '13.3 inches', 1.30, 'Windows 11', 3, '2023-06-20', '15 hours', 'HP Spectre x360 is a versatile convertible laptop with a stunning display.', 1),
+('Asus ROG Zephyrus G14', 1499.99, 'AMD Ryzen 9', 'NVIDIA GeForce RTX 3060', '14" QHD', '14 inches', 1.60, 'Windows 11', 4, '2023-07-10', '10 hours', 'Asus ROG Zephyrus G14 is a gaming powerhouse in a compact form factor.', 1),
+('Lenovo ThinkPad X1 Carbon', 1799.99, 'Intel Core i7', 'Intel Iris Xe', '14" FHD', '14 inches', 1.09, 'Windows 11', 5, '2023-04-22', '15 hours', 'Lenovo ThinkPad X1 Carbon is a lightweight, high-performance business laptop.', 1);
+
+-- Insert sample data into the ProductImage table
+INSERT INTO ProductImage (product_id, url)
+VALUES 
+(1, N'DellXPS13.jpg'),
+(2, N'MacBookPro14.jpg'),
+(3, N'HP Spectre x360'),
+(4, N'Asus ROG Zephyrus G14'),
+(5, N'Lenovo ThinkPad X1 Carbon.jpg')
+
+-- Insert Security questions
+GO
+SET IDENTITY_INSERT [dbo].[SecurityQuestion] ON 
+
+INSERT [dbo].[SecurityQuestion] ([Id], [Question]) VALUES (1, N'What is your favorite song?')
+INSERT [dbo].[SecurityQuestion] ([Id], [Question]) VALUES (2, N'Who is your best friend?')
+INSERT [dbo].[SecurityQuestion] ([Id], [Question]) VALUES (3, N'Where are you come from?')
+SET IDENTITY_INSERT [dbo].[SecurityQuestion] OFF
+
+-- Verify that the ids match with those used in the Product table
+SELECT * FROM [Product];
+SELECT * FROM [Brand];
+Select * from [ProductImage]
+
+
