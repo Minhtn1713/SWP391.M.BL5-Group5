@@ -33,7 +33,7 @@ public class AccountDBContext extends DBContext {
                 account.setUsername(resultSet.getString("Username"));
                 account.setPassword(resultSet.getString("Password"));
                 account.setRole_id(resultSet.getString("Role_Id"));
-                account.setIsActive(resultSet.getBoolean("IsAdmin"));
+                account.setIsActive(resultSet.getBoolean("IsActive"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);
