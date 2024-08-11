@@ -113,6 +113,37 @@ public class UserDAO extends DBContext {
         }
         return check > 0 ? u : null;
     }
+    public boolean add(User p) {
+        String query = """
+                       update [User] set fullname=?,phone=?,address=?,gender=? where id=?;
+                       update [Account] set role_Id=?,isActive=? where id=?;""";
+        int rows = 0;
+        Connection con = null;
+        try (Connection c = DatabaseConnection.getConnection();
+                PreparedStatement ps = c.prepareStatement(IBlogQuery.ADD)) {
+            con = c;
+            c.setAutoCommit(false);
+            ps.setString(1, p.getEmail());
+            ps.setString(2, p.getUsername());
+            ps.setString(3, p.getPassword());
+            ps.setLong(4, p.getAuthor().getId());
+            ps.setString(5, p.getBlogStatus().getBlogStatus().toLowerCase());
+            rows = ps.executeUpdate();
+            if (rows > 0) {
+                c.commit();
+            }
+        } catch (SQLException e) {
+            if (con != null) {
+                try {
+                    con.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace(System.err);
+                }
+            }
+            e.printStackTrace(System.err);
+        }
+        return rows > 0;
+    }
 
     public static void main(String[] args) {
         UserDAO userDao = new UserDAO();
