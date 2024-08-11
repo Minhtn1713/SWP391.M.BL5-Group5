@@ -5,7 +5,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Blog List</title>
+        <title>User List</title>
         <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
         <link rel="stylesheet" href="styles/admin-product.css" type="text/css"/>
         <link rel="stylesheet" href="styles/sidebar.css" type="text/css"/>
@@ -14,6 +14,7 @@
         
     </head>
     <body>
+        <jsp:include page="../screens/sideBarAdmin.jsp"></jsp:include>
         <section class="product">
             <div class="top">
                 <div class="search-box">
