@@ -11,19 +11,35 @@ package model;
 public class User {
     int id;
     String fullName;
-    String phone;
     String email;
+    String phone;
     String address;
-    boolean gender;
+    int gender;
+    String userName;
+    int role;
+    int isActive;
 
     public User() {
     }
 
-    public User(int id, String fullName, String phone, String email, String address, boolean gender) {
+    public User(int id, String fullName, String email, String phone, String address, int gender, String userName,int role, int isActive) {
         this.id = id;
         this.fullName = fullName;
-        this.phone = phone;
         this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.gender = gender;
+        this.userName = userName;
+        this.role = role;
+        this.isActive = isActive;
+    }
+    
+    
+    public User(int id, String fullName, String email, String phone, String address, int gender) {
+        this.id = id;
+        this.fullName = fullName;
+        this.email = email;
+        this.phone = phone;
         this.address = address;
         this.gender = gender;
     }
@@ -68,12 +84,35 @@ public class User {
         this.address = address;
     }
 
-    public boolean isGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(boolean gender) {
+    public void setGender(int gender) {
         this.gender = gender;
+    }
+     public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
+    }
+
+    public int getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(int isActive) {
+        this.isActive = isActive;
     }
 
 }

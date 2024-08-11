@@ -9,10 +9,12 @@ public class Account {
     private String username;
     private String password;
     private String role_id;
+    private int isActive;
 
     public Account() {
     }
 
+    
     public Account(int id, String username, String password, String role_id) {
         this.id = id;
         this.username = username;
