@@ -1,8 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
+
+import java.sql.Date;
 
 /**
  * Represents a product with various attributes.
@@ -14,41 +12,57 @@ public class Product {
     private String name;
     private float price;
     private String processor;
-    private String screenSize;
-    private String screenResolution;
+    private String screen_details;
     private String imgId;
-    private String port;
     private String size;
     private String operatingSystem;
     private String battery;
     private int status;
     private int brandId;
     private float weight;
-    private String gpu;
+    private String graphic_card;
     private String description;
+    private Date release_date;
 
     public Product() {
     }
 
-    public Product(int id, String name, float price, String processor, String screenSize, String screenResolution,
-            String imgId, String port, String size, String operatingSystem, String battery, int status,
-            int brandId, float weight, String gpu, String description) {
+//    public Product(int id, String name, float price, String processor, String screen_details,
+//            String imgId, String size, String operatingSystem, String battery, int status,
+//            int brandId, float weight, String graphic_card, String description, Date release_date) {
+//        this.id = id;
+//        this.name = name;
+//        this.price = price;
+//        this.processor = processor;
+//        this.screen_details = screen_details;
+//        this.imgId = imgId;
+//        this.size = size;
+//        this.operatingSystem = operatingSystem;
+//        this.battery = battery;
+//        this.status = status;
+//        this.brandId = brandId;
+//        this.weight = weight;
+//        this.graphic_card = graphic_card;
+//        this.description = description;
+//        this.release_date = release_date;
+//    }
+
+    public Product(int id, String name, float price, String processor, String screen_details, String size, String operatingSystem, String battery, int status, int brandId, float weight, String graphic_card, String description, Date release_date) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.processor = processor;
-        this.screenSize = screenSize;
-        this.screenResolution = screenResolution;
-        this.imgId = imgId;
-        this.port = port;
+        this.screen_details = screen_details;
+//        this.imgId = imgId;
         this.size = size;
         this.operatingSystem = operatingSystem;
         this.battery = battery;
         this.status = status;
         this.brandId = brandId;
         this.weight = weight;
-        this.gpu = gpu;
+        this.graphic_card = graphic_card;
         this.description = description;
+        this.release_date = release_date;
     }
 
     public int getId() {
@@ -83,20 +97,12 @@ public class Product {
         this.processor = processor;
     }
 
-    public String getScreenSize() {
-        return screenSize;
+    public String getScreen_details() {
+        return screen_details;
     }
 
-    public void setScreenSize(String screenSize) {
-        this.screenSize = screenSize;
-    }
-
-    public String getScreenResolution() {
-        return screenResolution;
-    }
-
-    public void setScreenResolution(String screenResolution) {
-        this.screenResolution = screenResolution;
+    public void setScreen_details(String screen_details) {
+        this.screen_details = screen_details;
     }
 
     public String getImgId() {
@@ -105,14 +111,6 @@ public class Product {
 
     public void setImgId(String imgId) {
         this.imgId = imgId;
-    }
-
-    public String getPort() {
-        return port;
-    }
-
-    public void setPort(String port) {
-        this.port = port;
     }
 
     public String getSize() {
@@ -163,12 +161,12 @@ public class Product {
         this.weight = weight;
     }
 
-    public String getGpu() {
-        return gpu;
+    public String getGraphic_card() {
+        return graphic_card;
     }
 
-    public void setGpu(String gpu) {
-        this.gpu = gpu;
+    public void setGraphic_card(String graphic_card) {
+        this.graphic_card = graphic_card;
     }
 
     public String getDescription() {
@@ -178,4 +176,13 @@ public class Product {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Date getRelease_date() {
+        return release_date;
+    }
+
+    public void setRelease_date(Date release_date) {
+        this.release_date = release_date;
+    }
+        
 }

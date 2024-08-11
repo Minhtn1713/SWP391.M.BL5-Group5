@@ -23,11 +23,19 @@ public class DBContext {
         try {
             String user = "sa";
             String pass = "123456";
-            String url = "jdbc:sqlserver://localhost:1433;databaseName=DURIAN_SHOP";
+            String url = "jdbc:sqlserver://localhost:1433;databaseName=LapStore";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, user, pass);
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public static void main(String[] args) {
+        DBContext dbContext = new DBContext();
+        if (dbContext.connection != null) {
+            System.out.println("Connection Oke");
+        } else {
+            System.out.println("Loi ket noi");
         }
     }
 }
