@@ -22,7 +22,15 @@ public class User {
     public User() {
     }
 
+
     public User(int id, String fullName, String email, String phone, String address, int gender, String userName,int role, int isActive) {
+
+    public User(int id, String fullName, String phone, String address, boolean gender) {
+        this.id = id;
+        this.fullName = fullName;
+        this.phone = phone;
+    public User(nt id, String fullName, String phone, String email, String address, boolean gender) {
+
         this.id = id;
         this.fullName = fullName;
         this.email = email;
@@ -75,7 +83,6 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
     public String getAddress() {
         return address;
     }
@@ -91,28 +98,4 @@ public class User {
     public void setGender(int gender) {
         this.gender = gender;
     }
-     public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public int getRole() {
-        return role;
-    }
-
-    public void setRole(int role) {
-        this.role = role;
-    }
-
-    public int getIsActive() {
-        return isActive;
-    }
-
-    public void setIsActive(int isActive) {
-        this.isActive = isActive;
-    }
-
 }
