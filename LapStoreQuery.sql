@@ -8,34 +8,40 @@ BEGIN
     DROP DATABASE [LapStore];
 END
 
+
+
 -- Create the database
 CREATE DATABASE [LapStore];
 USE [LapStore];
 GO
+--Create Role table
+CREATE TABLE [Role] (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    role_name NVARCHAR(100) NOT NULL
+);
+--Create Account table
+CREATE TABLE [dbo].[Account](
+	[id] [bigint] IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[username] [varchar](32) NOT NULL,
+	[password] [varchar](64) NOT NULL,
+	[role_Id] [int] NOT NULL,
+	[isActive] INT DEFAULT 1,
+	CONSTRAINT FK_AccountRole FOREIGN KEY (role_id) REFERENCES Role(id)
+);
 
 -- Create User table
 CREATE TABLE [User] (
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    full_name NVARCHAR(250),
-    phone VARCHAR(12),
-    email VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    isAdmin INT NOT NULL,
-    isActive INT DEFAULT NULL,
-    address NVARCHAR(255) DEFAULT NULL
+    [id] [bigint] NOT NULL PRIMARY KEY,
+	[fullname] [nvarchar](max) NULL,
+	[phone] [varchar](12) NULL,
+	[address] [nvarchar](max) NULL,
+	[gender] [bit] NULL
 );
-
--- Create ProductStatus table
-CREATE TABLE ProductStatus (
-    status_id INT PRIMARY KEY,
-    name NVARCHAR(50) NOT NULL
-);
-
--- Insert data into ProductStatus
-INSERT INTO ProductStatus (status_id, name) VALUES
-(1, 'Available'),
-(2, 'Out of Stock'),
-(3, 'Discontinued');
+-- Create Brand table
+create table Brand(
+id int identity(1,1) primary key,
+name nvarchar(100)
+)
 
 -- Create Product table
 CREATE TABLE Product (
@@ -46,13 +52,14 @@ CREATE TABLE Product (
     graphic_card NVARCHAR(100),
     screen_details VARCHAR(50),
     weight DECIMAL(5, 2),
-    brand NVARCHAR(50) NOT NULL,
+    brand int NOT NULL,
     release_date DATE,
     battery_life NVARCHAR(50),
     description NVARCHAR(MAX),
     status INT NOT NULL,
-    CONSTRAINT FK_ProductStatus FOREIGN KEY (status) REFERENCES ProductStatus(status_id)
+	constraint FK_Product_Brand Foreign key (brand) references Brand(id)
 );
+
 
 -- Create ProductImage table
 CREATE TABLE ProductImage (
@@ -62,17 +69,6 @@ CREATE TABLE ProductImage (
     CONSTRAINT FK_ProductImage_Product FOREIGN KEY (product_id) REFERENCES Product(id)
 );
 
--- Create VariantStatus table
-CREATE TABLE VariantStatus (
-    status_id INT PRIMARY KEY,
-    name NVARCHAR(50) NOT NULL
-);
-
--- Create Sale table
-CREATE TABLE Sale (
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    percentage DECIMAL(5, 2) NOT NULL
-);
 
 -- Create ProductVariant table
 CREATE TABLE ProductVariant (
@@ -85,12 +81,33 @@ CREATE TABLE ProductVariant (
     sale_id INT,
     status INT NOT NULL,
     CONSTRAINT FK_ProductVariant_Product FOREIGN KEY (product_id) REFERENCES Product(id),
-    CONSTRAINT FK_ProductVariant_Sale FOREIGN KEY (sale_id) REFERENCES Sale(id),
-    CONSTRAINT FK_ProductVariant_Status FOREIGN KEY (status) REFERENCES VariantStatus(status_id)
 );
+GO
+CREATE TABLE [dbo].[Security](
+	[question_Id] [bigint],
+	[account_Id] [bigint] NOT NULL PRIMARY KEY,
+	[answer] [ntext] NOT NULL,
+	)
+GO
+/****** Object:  Table [dbo].[SecurityQuestion]    Script Date: 7/25/2023 8:47:57 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SecurityQuestion](
+	[id] [bigint] IDENTITY(1,1) NOT NULL  PRIMARY KEY,
+	[question] [ntext] NOT NULL,
 
+	);
 -- Populate VariantStatus table
-INSERT INTO VariantStatus (status_id, name) VALUES
-(1, 'Active'),
-(2, 'Inactive'),
-(3, 'Discontinued');
+GO
+ALTER TABLE [dbo].[Security]  WITH CHECK ADD FOREIGN KEY([account_Id])
+REFERENCES [dbo].[Account] ([id])
+GO
+ALTER TABLE [dbo].[Security]  WITH CHECK ADD FOREIGN KEY([question_Id])
+REFERENCES [dbo].[SecurityQuestion] ([id])
+GO
+GO
+ALTER TABLE [dbo].[User]  WITH CHECK ADD FOREIGN KEY([id])
+REFERENCES [dbo].[Account] ([id])
+ON DELETE CASCADE

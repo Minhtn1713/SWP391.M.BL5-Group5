@@ -13,24 +13,27 @@ public class Account {
     private String username;
     private String password;
     private String role_id;
-    private boolean isAdmin;
+    private boolean isActive;
+
 
     public Account() {
     }
 
-    public Account(int id, String username, String password, String role_id, boolean isAdmin) {
+    public Account(int id, String username, String password, String role_id, boolean isActive) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.role_id = role_id;
-        this.isAdmin = isAdmin;
+        this.isActive = isActive;
     }
+
     public Account(int id, String username, String password, String role_id) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.role_id = role_id;
     }
+
     public int getId() {
         return id;
     }
@@ -63,13 +66,12 @@ public class Account {
         this.role_id = role_id;
     }
 
-    public boolean isStatus() {
-        return isAdmin;
+    public boolean isIsActive() {
+        return isActive;
     }
 
-    public void setIsAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setisActive(boolean isActive) {
+        this.isActive = isActive;
     }
-    
-    
+
 }
