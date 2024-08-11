@@ -4,13 +4,27 @@
  */
 package model;
 
+/**
+ *
+ * @author lords
+ */
 public class Account {
     private int id;
     private String username;
     private String password;
     private String role_id;
+    private boolean isActive;
+
 
     public Account() {
+    }
+
+    public Account(int id, String username, String password, String role_id, boolean isActive) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.role_id = role_id;
+        this.isActive = isActive;
     }
 
     public Account(int id, String username, String password, String role_id) {
@@ -51,4 +65,13 @@ public class Account {
     public void setRole_id(String role_id) {
         this.role_id = role_id;
     }
+
+    public boolean isIsActive() {
+        return isActive;
+    }
+
+    public void setisActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
 }

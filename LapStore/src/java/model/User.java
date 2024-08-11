@@ -18,7 +18,10 @@ public class User {
 
     public User() {
     }
-
+    public User(int id, String fullName, String phone, String address, boolean gender) {
+        this.id = id;
+        this.fullName = fullName;
+        this.phone = phone;
     public User(int id, String fullName, String phone, String email, String address, boolean gender) {
         this.id = id;
         this.fullName = fullName;
@@ -59,7 +62,6 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
     public String getAddress() {
         return address;
     }
@@ -75,5 +77,4 @@ public class User {
     public void setGender(boolean gender) {
         this.gender = gender;
     }
-
 }

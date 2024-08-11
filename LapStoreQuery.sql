@@ -1,5 +1,6 @@
 USE [master];
 GO
+
 -- Drop the database if it exists
 IF DB_ID('LapStore') IS NOT NULL
 BEGIN
@@ -8,13 +9,14 @@ BEGIN
 END
 
 
+
 -- Create the database
 CREATE DATABASE [LapStore];
 USE [LapStore];
 GO
 --Create Role table
 CREATE TABLE [Role] (
-    id INT IDENTITY(1,1) PRIMARY KEY,
+    id [int] PRIMARY KEY,
     role_name NVARCHAR(100) NOT NULL
 );
 --Create Account table
@@ -32,6 +34,7 @@ CREATE TABLE [User] (
     [id] [bigint] NOT NULL PRIMARY KEY,
 	[fullname] [nvarchar](max) NULL,
 	[phone] [varchar](12) NULL,
+	[email][nvarchar](max) NULL,
 	[address] [nvarchar](max) NULL,
 	[gender] [bit] NULL
 );
@@ -134,12 +137,23 @@ VALUES
 INSERT INTO ProductImage (product_id, url)
 VALUES 
 (1, N'DellXPS13.jpg'),
-(2,N'MacBookPro14.jpg'),
+(2, N'MacBookPro14.jpg'),
 (3, N'HP Spectre x360'),
 (4, N'Asus ROG Zephyrus G14'),
 (5, N'Lenovo ThinkPad X1 Carbon.jpg')
+
+-- Insert Security questions
+GO
+SET IDENTITY_INSERT [dbo].[SecurityQuestion] ON 
+
+INSERT [dbo].[SecurityQuestion] ([Id], [Question]) VALUES (1, N'What is your favorite song?')
+INSERT [dbo].[SecurityQuestion] ([Id], [Question]) VALUES (2, N'Who is your best friend?')
+INSERT [dbo].[SecurityQuestion] ([Id], [Question]) VALUES (3, N'Where are you come from?')
+SET IDENTITY_INSERT [dbo].[SecurityQuestion] OFF
 
 -- Verify that the ids match with those used in the Product table
 SELECT * FROM [Product];
 SELECT * FROM [Brand];
 Select * from [ProductImage]
+
+
