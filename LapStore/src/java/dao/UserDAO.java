@@ -14,22 +14,7 @@ import model.User;
  * @author lords
  */
 public class UserDAO extends DBContext{
-    public int createUser(int id, String phone, String name){
-        int succes = 0;
-        String sql = "insert into [LapStore].[dbo].[User](id,fullname,phone) values (?, ?, ?);";
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, id);
-            ps.setString(2, name);            
-            ps.setString(3, phone);
-            System.out.println(sql);
-            succes = ps.executeUpdate();
-            ps.close();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return succes;
-    }
+   
     public User getUserById(int id){
         String query = "Select * from [LapStore].[dbo].[User]"
                 + " Where [id] = ?";
@@ -38,7 +23,7 @@ public class UserDAO extends DBContext{
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                return new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getBoolean(5));
+                return new User(rs.getInt(1), rs.getString(2), rs.getString(3),rs.getString(4), rs.getString(5), rs.getBoolean(6));
             }
             ps.close();
             rs.close();
@@ -47,9 +32,9 @@ public class UserDAO extends DBContext{
         }
         return null;
     }
-    public void updateUser(int id,String name, String phone, String address, String gender){
+    public void updateUser(int id,String name, String phone,String email, String address, String gender){
         String query = "UPDATE [LapStore].[dbo].[User] " +
-                        " SET fullName = ?, phone = ?, address = ?";
+                        " SET fullName = ?, phone = ?,email= ?, address = ?";
                         
         if (!gender.equals("#")){
             query+= ", gender = ? ";
@@ -60,6 +45,7 @@ public class UserDAO extends DBContext{
             int index = 1;
             ps.setString(index++, name);
             ps.setString(index++, phone);
+             ps.setString(index++, email);
             ps.setString(index++, address);
             if (!gender.equals("#")){
                 ps.setString(index++, gender);

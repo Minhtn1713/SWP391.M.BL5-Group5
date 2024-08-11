@@ -11,7 +11,6 @@
         <link rel="stylesheet" href="styles/nav-bar.css" type="text/css"/>
         <link rel="stylesheet" href="styles/footer.css" type="text/css"/>
         <link rel="stylesheet" href="styles/account-profile.css" type="text/css"/>
-        <!-- Font family -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -33,10 +32,10 @@
                     <div class="left-container">
                         <a id="profile" class="left-line" href="/LapStore/account-profile?status=profile"><i class='fa fa-user'></i> Profile</a><br/><br/>
                         <a id="setting" class="left-line" href="/LapStore/account-profile?status=setting"><i class="fa fa-cog" aria-hidden="true"></i> Change Password</a><br/><br/>
-                        <a class="left-line" href="my-cart"><i class='fa fa-shopping-bag'></i> My cart</i></a><br/><br/>
+
                     </div>
                     <div class="right-container" id="right-content">
-                        
+
                     </div>
                 </div>
             </div>
@@ -48,16 +47,18 @@
                             <input name="fullName" class="user-inf" value="${user.fullName}"/><br/>
                             <p>Gender</p>
                             <select name="gender" class="user-inf">
-                                <c:choose>
-            <c:when test="${user.gender == null}">
+            <c:choose>
+                <c:when test="${user.gender == null}">
                 <option value="#" selected>Gender</option>
-            </c:when>
-        </c:choose>
+                </c:when>
+            </c:choose>
                             <option value="0" ${user.gender=="false"?"selected":""}>Male</option>
                             <option value="1" ${user.gender=="true"?"selected":""}>Female</option> 
                             </select><br/>
                             <p>Phone</p>
                             <input name="phone" class="user-inf" value="${user.phone}"/><br/>
+                            <p>Email</p>
+                            <input name="email" class="user-inf" value="${user.email}"/><br/>  
                             <p>Address</p>
                             <input name="address" class="user-inf" value="${user.address}"/>
                             <input class="update" type="submit" value="Update">
@@ -66,26 +67,31 @@
                 const setting = `<form method="POST" action="account-profile?status=setting">
                                 <p>Current password</p>
                                 <input type="password" name="current-password" class="user-inf" required/><br/>
-                            <c:if test="${not empty error}"><h1 style="color: red; text-align: center; width: 100%; margin: auto">${error}</h1><br/></c:if>
+            <c:if test="${not empty error}"><h3 style="color: red; text-align: center; width: 100%; margin: auto">${error}</h3><br/></c:if>
                                 <p>New password</p>
                                 <input type="password" name="newPassword" class="user-inf" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&\*]{8,31}$" required/><br/>
                                 <p>Verify new password</p>
                                 <input type="password" name="rePassword" class="user-inf" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&\*]{8,31}$" required/>
-                                <c:if test="${not empty error2}"><h1 style="color: red; text-align: center; width: 100%; margin: auto">${error2}</h1><br/></c:if>
+            <c:if test="${not empty error2}"><h3 style="color: red; text-align: center; width: 100%; margin: auto">${error2}</h3><br/></c:if>
                                 <input class="update" type="submit" value="Update">
                             </form>`;
-                
-                const handleContentTwo = () =>{
-                    const rightContent = document.getElementById('right-content');
-                    var queryString = window.location.search;
-                    var urlParams = new URLSearchParams(queryString);
-                    var status = urlParams.get('status');
-                    if (status.includes("profile")){
-                        rightContent.innerHTML = profile;
-                    }   
-                    else if (status.includes("setting")){
-                        rightContent.innerHTML = setting;
-                    } 
+                const handleContentTwo = () => {
+                const rightContent = document.getElementById('right-content');
+                var queryString = window.location.search;
+                var urlParams = new URLSearchParams(queryString);
+                var status = urlParams.get('status');
+                if (status.includes("profile")) {
+                rightContent.innerHTML = profile;
+                } else if (status.includes("setting")) {
+                rightContent.innerHTML = setting;
+                }
+
+
+            <% String updateSuccess = (String) session.getAttribute("updateSuccess"); %>
+            <% if (updateSuccess != null) { %>
+                alert("<%= updateSuccess %>");
+            <% session.removeAttribute("updateSuccess"); %>
+            <% } %>
                 };
                 handleContentTwo();
         </script>

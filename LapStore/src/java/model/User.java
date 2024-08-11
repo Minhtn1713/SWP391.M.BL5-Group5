@@ -9,21 +9,32 @@ package model;
  * @author Admin
  */
 public class User {
+
     int id;
     String fullName;
     String phone;
+    String Email;
     String address;
     boolean gender;
 
     public User() {
     }
 
-    public User(int id, String fullName, String phone, String address, boolean gender) {
+    public User(int id, String fullName, String phone, String Email, String address, boolean gender) {
         this.id = id;
         this.fullName = fullName;
         this.phone = phone;
+        this.Email = Email;
         this.address = address;
         this.gender = gender;
+    }
+
+    public String getEmail() {
+        return Email;
+    }
+
+    public void setEmail(String Email) {
+        this.Email = Email;
     }
 
     public int getId() {
