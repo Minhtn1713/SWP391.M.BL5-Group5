@@ -58,6 +58,8 @@ public class Product {
     public Product() {
     }
 
+    
+
     // Getters and setters for all fields, including brandName
     public int getId() {
         return id;
