@@ -16,10 +16,7 @@ import jakarta.servlet.http.HttpSession;
 import model.Account;
 import model.User;
 
-/**
- *
- * @author kienk
- */
+
 public class AccountProfileController extends HttpServlet {
 
     /**
@@ -34,7 +31,7 @@ public class AccountProfileController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -87,13 +84,15 @@ public class AccountProfileController extends HttpServlet {
             String fullName = request.getParameter("fullName");
             String gender = request.getParameter("gender");
             String phone = request.getParameter("phone");
+            String email = request.getParameter("email");            
             String address = request.getParameter("address");
             UserDAO user = new UserDAO();
             AccountDAO accDao = new AccountDAO();
             HttpSession session = request.getSession();
             Account acc = (Account) session.getAttribute("account");
             int userId = accDao.getAccountID(acc.getUsername());
-            user.updateUser(userId, fullName, phone, address, gender);
+            user.updateUser(userId, fullName, phone, email, address, gender);
+            request.getSession().setAttribute("updateSuccess", "Profile updated successfully!");
             response.sendRedirect("account-profile?status=profile");
         } else if (status.equals("setting")) {
             String password = request.getParameter("current-password");
@@ -107,6 +106,7 @@ public class AccountProfileController extends HttpServlet {
                 if (rePassword.equals(newPassword)) {
                     AccountDAO a = new AccountDAO();
                     a.updatePassword(userId, newPassword);
+                    request.getSession().setAttribute("updateSuccess", "Password changed successfully!");
                     response.sendRedirect("account-profile?status=setting");
                 } else {
                     request.setAttribute("error2", "Re-password is incorrect");

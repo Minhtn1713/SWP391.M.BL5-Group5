@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <filter>
+        <filter-name>AdminFilter</filter-name>
+        <filter-class>filter.AdminFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/admin-*</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>AccountProfileController</servlet-name>
         <servlet-class>controller.AccountProfileController</servlet-class>
@@ -55,10 +63,6 @@
     <servlet>
         <servlet-name>Admin_UpdateVariantController</servlet-name>
         <servlet-class>controller.Admin_UpdateVariantController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>DashboardController</servlet-name>
-        <servlet-class>controller.DashboardController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Admin_ProductionListController</servlet-name>
@@ -208,6 +212,10 @@
         <servlet-name>AdminDeleteCommentController</servlet-name>
         <servlet-class>controller.AdminDeleteCommentController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DashboardController</servlet-name>
+        <servlet-class>controller.DashboardController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AccountProfileController</servlet-name>
         <url-pattern>/account-profile</url-pattern>
@@ -259,10 +267,6 @@
     <servlet-mapping>
         <servlet-name>Admin_UpdateProductController</servlet-name>
         <url-pattern>/admin-update-product</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>DashboardController</servlet-name>
-        <url-pattern>/dashboard</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Admin_ProductionListController</servlet-name>
@@ -415,6 +419,10 @@
     <servlet-mapping>
         <servlet-name>AdminDeleteCommentController</servlet-name>
         <url-pattern>/admin-delete-comment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DashboardController</servlet-name>
+        <url-pattern>/admin-dashboard</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

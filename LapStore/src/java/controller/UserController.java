@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dao.AccountDAO;
 import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -138,9 +139,9 @@ public class UserController extends HttpServlet {
             boolean isToggled = u.toggleById(id);
             request.setAttribute("currentSite", "/user");
             if (isToggled) {
-                response.sendRedirect("/LapStore/user?toggled=successful");
+                response.sendRedirect("/LapStore_main/user?toggled=successful");
             } else {
-                response.sendRedirect("/LapStore/user?toggled=failed");
+                response.sendRedirect("/LapStore_main/user?toggled=failed");
             }
         } catch (NumberFormatException | IOException ex) {
         }
@@ -150,7 +151,7 @@ public class UserController extends HttpServlet {
         UserDAO u = new UserDAO();
         int id = Integer.parseInt(request.getParameter("id"));
         try {
-            User user = u.getUserById(id);
+            User user = u.getUserById_Dung(id);
             request.setAttribute("user", user);
             request.getRequestDispatcher("/screens/admin-userDetails.jsp").forward(request, response);
 
@@ -164,6 +165,8 @@ public class UserController extends HttpServlet {
         String fullName = request.getParameter("fullName");
         String phone = request.getParameter("phone");
         String address = request.getParameter("address");
+        String username = request.getParameter("username");
+
         
         int role = Integer.parseInt(request.getParameter("role"));
         int gender = Integer.parseInt(request.getParameter("gender"));
@@ -175,33 +178,33 @@ public class UserController extends HttpServlet {
         if (isValidFullName(fullName) && isValidPhone(phone) && isValidAddress(address) ) {
         User isUpdated = u.updateUser(update);
         if (isUpdated != null) {
-            response.sendRedirect("/LapStore/user/update?id="+id+"&updated=yes");
+            response.sendRedirect("/LapStore_main/user/update?id="+id+"&updated=yes");
         } else {
-            response.sendRedirect("/LapStore/user/update?id="+id+"&updated=no");
+            response.sendRedirect("/LapStore_main/user/update?id="+id+"&updated=no");
         }
         }else {
-            response.sendRedirect("/LapStore/user/update?id="+id+"&updated=no");
+            response.sendRedirect("/LapStore_main/user/update?id="+id+"&updated=no");
         }
     }
 
     public static boolean isValidFullName(String fullName) {
         // Full name should not be null or empty, and must match the regex for alphabetic characters and spaces.
-        return fullName != null && fullName.matches("^[a-zA-Z\\s]+$");
+        return fullName != null && !fullName.isEmpty() && !fullName.isBlank() && fullName.matches("^[a-zA-Z\\s]+$");
     }
 
     public static boolean isValidPhone(String phone) {
     // Phone number should not be null, empty, and should match the pattern for 9 or 10 digits.
-    return phone != null && phone.matches("^\\d{9,10}$");
+    return phone != null && !phone.isEmpty() && !phone.isBlank() && phone.matches("^\\d{9,10}$");
 }
     public static boolean isValidEmail(String email) {
     // Email should not be null, empty, and should follow a basic email pattern.
     String emailPattern = "^[\\w.%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
-    return email != null && !email.isEmpty() && email.matches(emailPattern);
+    return email != null && !email.isEmpty() && !email.isBlank() && email.matches(emailPattern);
 }
 
     public static boolean isValidAddress(String address) {
         // Address should not be null or empty, and should match a basic pattern for common address components.
-        return address != null && address.matches("^[a-zA-Z0-9\\s,.-]+$");
+        return address != null && !address.isEmpty() && !address.isBlank() && address.matches("^[a-zA-Z0-9\\s,.-]+$");
     }
 
     private void addUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -212,14 +215,16 @@ public class UserController extends HttpServlet {
         int status = Integer.parseInt(request.getParameter("status"));
         UserDAO u = new UserDAO();
         boolean add = u.usernameExists(username);
-        if(add || !isValidEmail(email) || username == null || password == null ||username.isEmpty()||password.isEmpty() ){
+        if(add || !isValidEmail(email) || username == null || password == null ||username.isEmpty()||password.isEmpty()||username.isBlank()||password.isBlank() ){
             request.setAttribute("email", email);
             request.setAttribute("username", username);
             request.setAttribute("password", password);
             request.setAttribute("role", role);
             request.setAttribute("status", status);
-            if(add||username == null||username.isEmpty()){
+            if(username == null||username.isEmpty()||username.isBlank()){
                 request.setAttribute("errorUsername", "Invalid username");
+            }else if (add){
+                request.setAttribute("errorUsername", "Username has been used , Please choose another username");
             }else{
                 request.setAttribute("errorUsername", null);
             }
@@ -228,19 +233,20 @@ public class UserController extends HttpServlet {
             }else{
                 request.setAttribute("errorEmail", null);
             }
-            if(password == null||password.isEmpty()){
+            if(password == null||password.isEmpty()||password.isBlank()){
                 request.setAttribute("errorPass", "Please input a password");
             }else{
                 request.setAttribute("errorPass", null);
             }
             request.getRequestDispatcher("/screens/admin-newUser.jsp").forward(request, response);
         }else{
-            boolean successUser = u.add(email);
-            if(successUser){
-            int id=u.getAllUser().size()+1;
-            boolean successAcc = u.add(id,username, password, role, status);
+            boolean successAcc = u.add(username, password, role, status);
+            if(successAcc){
+                AccountDAO a = new AccountDAO();
+            int id=a.getAccountID(username);
+            boolean successUser = u.add(id,email);
             if(successUser && successAcc){
-                response.sendRedirect("/LapStore/user/add?added=successful");
+                response.sendRedirect("/LapStore_main/user/add?added=successful");
             }}else{
                 request.setAttribute("error", "Failed to add user to the database.");
                 request.getRequestDispatcher("/screens/admin-newUser.jsp").forward(request, response);

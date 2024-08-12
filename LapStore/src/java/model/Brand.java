@@ -4,15 +4,16 @@
  */
 package model;
 
-/**
- *
- * @author quang
- */
+
 public class Brand {
     private int id;
     private String name;
 
     public Brand() {
+    }
+
+    public Brand(String name) {
+        this.name = name;
     }
 
     public Brand(int id, String name) {

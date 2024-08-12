@@ -19,7 +19,7 @@
             <div class="top">
                 <div class="search-box">
                     <i class="bx bx-search icon"></i>
-                    <form class="d-flex" action="/LapStore/user?search=${txtS}" method="get">
+                    <form class="d-flex" action="/LapStore_main/user?search=${txtS}" method="get">
                         <input class="form-control me-2" type="search" value="${txtS}" name="txtSearch" id="txtSearch" placeholder="Enter username or name:" aria-label="Search">
                         <select class="form-select" name="roleFilter" id="roleFilter">
                             <option value="">All Roles</option>
@@ -42,7 +42,7 @@
                             <div class="product-title">
                                 <i class='bx bx-news icon'></i>&nbsp;User
                             </div>
-                            <div class="product-add"><a href="/LapStore/user/add">Add new User</a></div>
+                            <div class="product-add"><a href="/LapStore_main/user/add">Add new User</a></div>
                             <div class="product-content">
                                 <table class="table table-striped table-bordered table-hover">
                                     <thead>
@@ -120,7 +120,7 @@
                     <div id="liveToast" class="toast show" role="alert" aria-live="assertive" aria-atomic="true" style="width: 350px">
                         <div class="toast-header">
                             <img src="../assets/images/favicon.ico.png" class="rounded me-2" alt="web-logo" height="20" width="20">
-                            <strong class="me-auto">LapStore</strong>
+                            <strong class="me-auto">LapStore_main</strong>
                             <small class="mt-1">A few seconds ago</small>
                             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                         </div>

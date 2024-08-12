@@ -696,27 +696,27 @@
                                 <div class="row">
                                     <div class="col-lg-12 mt-4">
                                         <div class="card border-0 p-4 rounded shadow">
-                                            <form class="mt-4" action="/LapStore/user/add" method="post"  >
+                                            <form class="mt-4" action="/LapStore_main/user/add" method="post"  >
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="mb-3">
-                                                            <label class="form-label">Email</label>
-                                                            <input name="email" id="email" type="text" placeholder="Enter email ..."class="form-control "  >   
+                                                            <label class="form-label">Email*</label>
+                                                            <input name="email" id="email" type="text" placeholder="Enter email ..."class="form-control " value="${email}" >   
                                                             <p class="text-danger">${errorEmail}</p>
                                                     </div>
                                                 </div><!--end col-->
 
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
-                                                        <label class="form-label">Username</label>
-                                                        <input name="username" id="username" type="text" placeholder="Enter username ..." class="form-control "  >   
+                                                        <label class="form-label">Username*</label>
+                                                        <input name="username" id="username" type="text" placeholder="Enter username ..." class="form-control " value="${username}" >   
                                                         <p class="text-danger">${errorUsername}</p>
                                                     </div>
                                                 </div><!--end col-->
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
-                                                        <label class="form-label">Password</label>
-                                                        <input name="password" id="password" type="text" placeholder="Enter password ..." class="form-control "  >   
+                                                        <label class="form-label">Password*</label>
+                                                        <input name="password" id="password" type="password" placeholder="Enter password ..." class="form-control " value="${password}" >   
                                                         <p class="text-danger">${errorPass}</p>
                                                     </div>
                                                 </div><!--end col-->
@@ -754,24 +754,24 @@
             </div>
         </section>
         <c:choose>
-            <c:when test="${param.toggled != null}">
+            <c:when test="${param.added != null}">
                 <div class="toast-container position-fixed bottom-0 end-0 p-3">
                     <div id="liveToast" class="toast show" role="alert" aria-live="assertive" aria-atomic="true" style="width: 350px">
                         <div class="toast-header">
                             <img src="../assets/images/favicon.ico.png" class="rounded me-2" alt="web-logo" height="20" width="20">
-                            <strong class="me-auto">LapStore</strong>
+                            <strong class="me-auto">LapStore_main</strong>
                             <small class="mt-1">A few seconds ago</small>
                             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                         </div>
                         <c:choose>
-                            <c:when test="${param.toggled == 'successful'}">
+                            <c:when test="${param.added == 'successful'}">
                                 <div class="toast-body text-success-emphasis">
-                                    Status changed successfully!
+                                    Add successfully!
                                 </div>
                             </c:when>
                             <c:otherwise>
                                 <div class="toast-body text-danger-emphasis">
-                                    Failed to change status!
+                                    Failed to Add!
                                 </div>
                             </c:otherwise>
                         </c:choose>

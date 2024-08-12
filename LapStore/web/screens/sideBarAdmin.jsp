@@ -1,8 +1,8 @@
 <nav class="sidebar close">
       <header>
         <div class="logo text">
-          <a href="home" style="text-decoration: none"
-            ><h3 style="width: 100%; text-align: center">Durian Store</h3></a
+          <a href="admin-production-list" style="text-decoration: none"
+            ><h3 style="width: 100%; text-align: center">LapStore</h3></a
           >
         </div>
         <i class="bx bx-menu toggle icon"></i>
@@ -36,17 +36,11 @@
               >
             </li>
             <li class="nav-link sub-menu">
-              <a href="color-list"
+              <a href="admin-brand"
                 ><i class="bx bx-palette icon"></i>
-                <span class="text nav-text">Color</span></a
+                <span class="text nav-text">Brand</span></a
               >
-            </li>
-            <li class="nav-link sub-menu">
-              <a href="storage-list"
-                ><i class='bx bx-memory-card icon'></i>
-                <span class="text nav-text">Storage</span></a
-              >
-            </li>
+      
             <li class="nav-link sub-menu">
               <a href="admin-order"
                 ><i class='bx bx-cart icon'></i>
@@ -72,23 +66,14 @@
               </a>
             </li>
             <li class="nav-link">
-              <a href="/LapStore/user">
+              <a href="/LapStore_main/user  ">
                 <i class="bx bx-user icon"></i>
                 <span class="text nav-text">User</span>
               </a>
             </li>
-            <li class="nav-link">
-              <a href="#">
-                <i class="bx bx-pie-chart-alt icon"></i>
-                <span class="text nav-text">Analytics</span>
-              </a>
-            </li>
-            <li class="nav-link">
-              <a href="#">
-                <i class="bx bx-wallet icon"></i>
-                <span class="text nav-text">Wallets</span>
-              </a>
-            </li>
+       
+          
+          
           </ul>
         </div>
         <div class="bottom-content">

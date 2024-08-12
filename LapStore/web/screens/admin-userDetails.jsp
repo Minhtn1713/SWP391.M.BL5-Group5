@@ -676,7 +676,9 @@ body.dark .switch::before {
         </style>
         
     </head>
+    
     <body>
+        
         <jsp:include page="../screens/sideBarAdmin.jsp"></jsp:include>
         <section class="product">
             <div class="top"> 
@@ -697,7 +699,7 @@ body.dark .switch::before {
                             <div class="row">
                             <div class="col-lg-12 mt-4">
                                 <div class="card border-0 p-4 rounded shadow">
-                                    <form class="mt-4" action="/LapStore/user/save?id=${user.id}" method="post" >
+                                    <form class="mt-4" action="/LapStore_main/user/save?id=${user.id}" method="post" >
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="mb-3">
@@ -734,7 +736,14 @@ body.dark .switch::before {
                                                 </div>
                                             </div><!--end col-->
                                             
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Username</label>
+                                                    <input name="username" id="username" type="text" class="form-control " readonly value="${user.userName}">   
+                                                    <p class="text-danger">${errorUsername}</p>
+                                                </div>
+                                            </div><!--end col-->
+                                            <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Address</label>
                                                     <input name="address" id="address" type="text" class="form-control " value="${user.address}">   
@@ -747,8 +756,8 @@ body.dark .switch::before {
                                                     <label class="form-label">Role</label>
                                                     <select class="form-control" name="role" required>
                                                         <option value="1" ${user.role==1 ? 'selected' : ''}>Admin</option>
-                                                        <option value="2" ${user.role==2 ? 'selected' : ''}>Staff</option>
-                                                        <option value="3" ${user.role==3 ? 'selected' : ''}>Customer</option>
+                                                        <option value="2" ${user.role==3 ? 'selected' : ''}>Staff</option>
+                                                        <option value="3" ${user.role==2 ? 'selected' : ''}>Customer</option>
                                                     </select>
                                                 </div>
                                             </div><!--end col-->
@@ -781,21 +790,22 @@ body.dark .switch::before {
                     <div id="liveToast" class="toast show" role="alert" aria-live="assertive" aria-atomic="true" style="width: 350px">
                         <div class="toast-header">
                             <img src="../assets/images/favicon.ico.png" class="rounded me-2" alt="web-logo" height="20" width="20">
-                            <strong class="me-auto">LapStore</strong>
+                            <strong class="me-auto">LapStore_main</strong>
                             <small class="mt-1">A few seconds ago</small>
                             <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
                         </div>
                         <c:choose>
                             <c:when test="${param.updated == 'yes'}">
                                 <div class="toast-body text-success-emphasis">
-                                    Status changed successfully!
+                                    Update successfully!
                                 </div>
                             </c:when>
                             <c:otherwise>
                                 <div class="toast-body text-danger-emphasis">
-                                    Failed to change status!
+                                    Failed to Update!
                                 </div>
                             </c:otherwise>
+                            
                         </c:choose>
                     </div>
                 </div>

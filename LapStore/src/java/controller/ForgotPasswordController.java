@@ -107,7 +107,7 @@ public class ForgotPasswordController extends HttpServlet {
                     request.getRequestDispatcher("screens/forgotPassword.jsp").forward(request, response);
 
                 } else {
-                    response.sendRedirect("/LapStore/sign-in");
+                    response.sendRedirect("/LapStore_main/sign-in");
                 }
 
             }

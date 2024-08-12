@@ -1,5 +1,6 @@
 package controller;
 
+import dao.BrandDAO;
 import dao.ProductDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -7,64 +8,57 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import model.Brand;
 import model.Product;
 
-/**
- * Servlet for handling creation of new products.
- * 
- * @author 84834
- */
 public class Admin_CreateProductController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("screens/Admin_CreateProduct.jsp").forward(req, resp);
+    // Assuming you have a BrandDAO to fetch brands
+    BrandDAO brandDao = new BrandDAO();
+    List<Brand> brands = brandDao.getAllBrands(); // Fetch the list of brands
+
+    req.setAttribute("brands", brands); // Set the brands in the request scope
+    req.getRequestDispatcher("screens/Admin_CreateProduct.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int success = 0;
-
-        // Retrieve parameters from the request
-        String name = req.getParameter("name");
-        double price = Double.parseDouble(req.getParameter("price"));
-        String processor = req.getParameter("processor");
-        String graphicCard = req.getParameter("graphic_card");
-        String screenDetails = req.getParameter("screen_details");
-        String size = req.getParameter("size");
-        double weight = Double.parseDouble(req.getParameter("weight"));
-        String operatingSystem = req.getParameter("operating_system");
-        int brand = Integer.parseInt(req.getParameter("brand"));
-        String releaseDate = req.getParameter("release_date");
-        String batteryLife = req.getParameter("battery_life");
-        String description = req.getParameter("description");
-        int status = Integer.parseInt(req.getParameter("status"));
-
-        // Create a Product object
-        Product product = new Product(0, name, price, processor, graphicCard, screenDetails, size, weight, operatingSystem, brand, releaseDate, batteryLife, description, status);
-        
-        // Initialize ProductDAO
-        ProductDAO productDAO = new ProductDAO();
-        
-        // Create the product in the database
-        success = productDAO.createProduct(product);
-        
-        // Check if product creation was successful
-        if (success != 0) {
-            // Assuming you need to handle images separately
-            String[] imageUrls = req.getParameterValues("image_urls");
-            if (imageUrls != null) {
-                for (String url : imageUrls) {
-                    productDAO.addProductImage(success, url); // Add image URL to ProductImage table
+        Product pro = new Product(
+            0, 
+            req.getParameter("name"), 
+            req.getParameter("img"), 
+            Integer.parseInt(req.getParameter("brandId")), 
+            Float.parseFloat(req.getParameter("price")),
+            req.getParameter("processor"), 
+            req.getParameter("graphic_card"), 
+            req.getParameter("screen_details"), 
+            req.getParameter("size"), 
+            Float.parseFloat(req.getParameter("weight")),
+            req.getParameter("operatingSystem"), 
+            req.getParameter("battery"), 
+            req.getParameter("description"),
+            1
+        );
+        String brandIdStr = req.getParameter("brandId");
+         if (brandIdStr == null || brandIdStr.isEmpty()) {
+                req.setAttribute("error", "Brand ID is required.");
+              req.getRequestDispatcher("screens/Admin_CreateProduct.jsp").forward(req, resp);
+             return;
                 }
-            }
-            
-            // Redirect to the product list page
-            List<Product> productList = productDAO.getProductList();
-            req.setAttribute("list", productList);
-            resp.sendRedirect("admin-product-list");
+
+            int brandId = Integer.parseInt(brandIdStr);
+
+        ProductDAO proDao = new ProductDAO();
+        success = proDao.createProduct(pro);
+
+        if(success != 0){
+            List<Product> list = proDao.getProductList();
+            req.setAttribute("list", list);
+            resp.sendRedirect("admin-production-list");
         } else {
-            // Forward to error page
             req.getRequestDispatcher("error-page").forward(req, resp);
         }
     }

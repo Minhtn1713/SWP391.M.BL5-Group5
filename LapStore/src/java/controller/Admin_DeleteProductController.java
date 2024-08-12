@@ -22,7 +22,7 @@ public class Admin_DeleteProductController extends HttpServlet {
 
         // Redirect based on success
         if (success != 0) {
-            resp.sendRedirect("/LapStore/admin-production-list");
+            resp.sendRedirect("/LapStore_main/admin-production-list");
         } else {
             // Redirect to an error page if the update fails (you need to implement the error page)
             resp.sendRedirect("error-page");
