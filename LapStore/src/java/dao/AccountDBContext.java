@@ -21,7 +21,9 @@ public class AccountDBContext extends DBContext {
         Account account = null;
 
         try {
-            String sql = "SELECT * FROM Account WHERE username = ? AND password = ?";
+            String sql = "SELECT a.*, r.role_name AS role_name FROM Account a " +
+"                         JOIN Role r ON a.role_id = r.id " +
+"                         WHERE username = ? AND password = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, username);
             statement.setString(2, password);
@@ -33,7 +35,7 @@ public class AccountDBContext extends DBContext {
                 account.setUsername(resultSet.getString("Username"));
                 account.setPassword(resultSet.getString("Password"));
                 account.setRole_id(resultSet.getString("Role_Id"));
-                account.setIsAdmin(resultSet.getBoolean("IsAdmin"));
+                account.setisActive(resultSet.getBoolean("IsAdmin"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(AccountDBContext.class.getName()).log(Level.SEVERE, null, ex);

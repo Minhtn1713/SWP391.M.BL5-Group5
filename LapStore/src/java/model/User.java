@@ -12,6 +12,7 @@ public class User {
     int id;
     String fullName;
     String phone;
+    String email;
     String address;
     boolean gender;
 
@@ -25,7 +26,14 @@ public class User {
         this.address = address;
         this.gender = gender;
     }
-
+public User(int id, String fullName, String phone, String email, String address, boolean gender) {
+        this.id = id;
+        this.fullName = fullName;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.gender = gender;
+    }
     public int getId() {
         return id;
     }
@@ -48,6 +56,14 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getAddress() {
