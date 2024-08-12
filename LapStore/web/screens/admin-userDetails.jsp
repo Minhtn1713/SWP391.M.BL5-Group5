@@ -788,12 +788,12 @@ body.dark .switch::before {
                         <c:choose>
                             <c:when test="${param.updated == 'yes'}">
                                 <div class="toast-body text-success-emphasis">
-                                    Status changed successfully!
+                                    Update successfully!
                                 </div>
                             </c:when>
                             <c:otherwise>
                                 <div class="toast-body text-danger-emphasis">
-                                    Failed to change status!
+                                    Failed to Update!
                                 </div>
                             </c:otherwise>
                         </c:choose>

@@ -1,0 +1,77 @@
+[33mcommit 5e77cd0b7716dcda37d39d63d830e73073f86240[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdungle[m[33m)[m
+Author: unknown <tlinh.ic2412@gmail.com>
+Date:   Mon Aug 12 15:02:18 2024 +0700
+
+    sua xi li giao dien
+
+[33mcommit 80246a7defbc01a719691611b808e3593393fd2c[m
+Author: unknown <tlinh.ic2412@gmail.com>
+Date:   Sun Aug 11 22:22:00 2024 +0700
+
+    sua loi giao dien cua user management
+
+[33mcommit 0224051060fd6f665992b383debc190e3a7befd1[m[33m ([m[1;32mmain[m[33m)[m
+Author: unknown <tlinh.ic2412@gmail.com>
+Date:   Sun Aug 11 21:17:09 2024 +0700
+
+    commit before change branch
+
+[33mcommit 60bb16f7e628542d5a57549cae3deb5e299a07ba[m
+Author: unknown <tlinh.ic2412@gmail.com>
+Date:   Sun Aug 11 17:55:32 2024 +0700
+
+    pull
+
+[33mcommit cea515eb41b90d0eef532c828a24ad0987c271b0[m
+Author: unknown <tlinh.ic2412@gmail.com>
+Date:   Sun Aug 11 17:00:20 2024 +0700
+
+    pull
+
+[33mcommit 83e174fc92cf099631a965a9aa8ec2d3fb25e3f7[m
+Author: unknown <tlinh.ic2412@gmail.com>
+Date:   Sat Aug 10 13:16:10 2024 +0700
+
+    sua lai db
+
+[33mcommit 0bba804b98b5a46122c4372f579f2aeb92fd10e0[m
+Author: unknown <tlinh.ic2412@gmail.com>
+Date:   Fri Aug 9 20:54:23 2024 +0700
+
+     sua db tach brand
+
+[33mcommit 184a383b073f87e3e934eb2d5ab50fc343fa2e13[m
+Author: unknown <tlinh.ic2412@gmail.com>
+Date:   Fri Aug 9 00:48:40 2024 +0700
+
+    sua database
+
+[33mcommit a0230425f15cef38bc83d2a28610cc33dcd72270[m
+Author: unknown <tlinh.ic2412@gmail.com>
+Date:   Thu Aug 8 21:29:07 2024 +0700
+
+    chinh db
+
+[33mcommit 75fe290c318ff0cdc2cec9a30526c1e79cb61d59[m
+Author: Quang Hiếu Nguyễn <hieunqhe171865@fpt.edu.vn>
+Date:   Thu Aug 8 11:16:54 2024 +0700
+
+    tạo models
+
+[33mcommit 7eb621d1b34ea75c890d515f42590d14d275c5a7[m
+Author: unknown <tlinh.ic2412@gmail.com>
+Date:   Wed Aug 7 23:39:25 2024 +0700
+
+    tao lai moi truong va them query database
+
+[33mcommit 915ba8bd4c99963a09009db60ead1e910690e4a8[m[33m ([m[1;31morigin/quynt[m[33m, [m[1;31morigin/hieunq[m[33m, [m[1;31morigin/dungtt[m[33m, [m[1;32mdungtt[m[33m)[m
+Author: Quang Hiếu <quanghieunguyen7a1@gmail.com>
+Date:   Wed Aug 7 11:13:08 2024 +0700
+
+    base
+
+[33mcommit 0f5c7b7c17ed0088040f86c27760875622611f1b[m
+Author: Nhat Minh Tran <111967794+Minhtn1713@users.noreply.github.com>
+Date:   Mon Aug 5 11:41:39 2024 +0700
+
+    Initial commit
