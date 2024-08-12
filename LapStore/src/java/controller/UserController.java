@@ -164,6 +164,8 @@ public class UserController extends HttpServlet {
         String fullName = request.getParameter("fullName");
         String phone = request.getParameter("phone");
         String address = request.getParameter("address");
+                String username = request.getParameter("username");
+
         
         int role = Integer.parseInt(request.getParameter("role"));
         int gender = Integer.parseInt(request.getParameter("gender"));

@@ -734,7 +734,14 @@ body.dark .switch::before {
                                                 </div>
                                             </div><!--end col-->
                                             
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Username</label>
+                                                    <input name="username" id="username" type="text" class="form-control " readonly value="${user.userName}">   
+                                                    <p class="text-danger">${errorUsername}</p>
+                                                </div>
+                                            </div><!--end col-->
+                                            <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Address</label>
                                                     <input name="address" id="address" type="text" class="form-control " value="${user.address}">   
@@ -796,6 +803,7 @@ body.dark .switch::before {
                                     Failed to Update!
                                 </div>
                             </c:otherwise>
+                            
                         </c:choose>
                     </div>
                 </div>

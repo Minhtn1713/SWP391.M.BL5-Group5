@@ -44,6 +44,22 @@ public class UserDAO extends DBContext {
         return null;
     }
 
+    public int createUser(int id, String phone, String name){
+        int succes = 0;
+        String sql = "insert into [LapStore].[dbo].[User](id,fullname,phone) values (?, ?, ?);";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.setString(2, name);            
+            ps.setString(3, phone);
+            System.out.println(sql);
+            succes = ps.executeUpdate();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return succes;
+    }
     public boolean toggleById(int id) {
         int check = 0;
         Connection con = null;
@@ -199,4 +215,28 @@ public class UserDAO extends DBContext {
             System.out.println(user);
         }
     }
+    public void updateUser(int id,String name, String phone, String address, String gender){
+        String query = "UPDATE [LapStore].[dbo].[User] " +
+                        " SET fullName = ?, phone = ?, address = ?";
+                        
+        if (!gender.equals("#")){
+            query+= ", gender = ? ";
+        }
+        query+=" WHERE id = ? ";
+        try{
+            PreparedStatement ps = connection.prepareStatement(query);
+            int index = 1;
+            ps.setString(index++, name);
+            ps.setString(index++, phone);
+            ps.setString(index++, address);
+            if (!gender.equals("#")){
+                ps.setString(index++, gender);
+            }
+            ps.setInt(index++, id);
+            ps.executeUpdate();
+        }catch(SQLException e){
+            System.out.println(e);
+        } 
+    }
+  
 }

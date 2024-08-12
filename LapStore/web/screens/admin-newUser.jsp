@@ -701,7 +701,7 @@
                                                     <div class="col-md-12">
                                                         <div class="mb-3">
                                                             <label class="form-label">Email</label>
-                                                            <input name="email" id="email" type="text" placeholder="Enter email ..."class="form-control "  >   
+                                                            <input name="email" id="email" type="text" placeholder="Enter email ..."class="form-control " value="${email}" >   
                                                             <p class="text-danger">${errorEmail}</p>
                                                     </div>
                                                 </div><!--end col-->
@@ -709,14 +709,14 @@
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
                                                         <label class="form-label">Username</label>
-                                                        <input name="username" id="username" type="text" placeholder="Enter username ..." class="form-control "  >   
+                                                        <input name="username" id="username" type="text" placeholder="Enter username ..." class="form-control " value="${username}" >   
                                                         <p class="text-danger">${errorUsername}</p>
                                                     </div>
                                                 </div><!--end col-->
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
                                                         <label class="form-label">Password</label>
-                                                        <input name="password" id="password" type="text" placeholder="Enter password ..." class="form-control "  >   
+                                                        <input name="password" id="password" type="text" placeholder="Enter password ..." class="form-control " value="${password}" >   
                                                         <p class="text-danger">${errorPass}</p>
                                                     </div>
                                                 </div><!--end col-->
