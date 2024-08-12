@@ -180,5 +180,6 @@
         displayPage(currentPage);
         setupPagination(rows.length);
     </script>
+     <script src="js/dashboard.js"></script>
 </body>
 </html>

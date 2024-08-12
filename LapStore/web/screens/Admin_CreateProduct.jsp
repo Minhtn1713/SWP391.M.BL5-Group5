@@ -46,28 +46,28 @@
                             <input type="number" id="price" name="price" step="0.01" required /><br />
                             
                             <label for="processor">Processor</label><br />
-                            <input type="text" id="processor" name="processor" /><br />
+                            <input type="text" id="processor" name="processor" required/><br />
                             
                             <label for="graphic_card">Graphic Card</label><br />
-                            <input type="text" id="graphic_card" name="graphic_card" /><br />
+                            <input type="text" id="graphic_card" name="graphic_card" required/><br />
                             
                             <label for="screen_details">Screen Details</label><br />
-                            <input type="text" id="screen_details" name="screen_details" /><br />
+                            <input type="text" id="screen_details" name="screen_details" required/><br />
                             
                             <label for="size">Size</label><br />
-                            <input type="text" id="size" name="size" /><br />
+                            <input type="text" id="size" name="size" required/><br />
                             
                             <label for="weight">Weight</label><br />
-                            <input type="number" id="weight" name="weight" step="0.01" /><br />
+                            <input type="number" id="weight" name="weight" step="0.01" required/><br />
                             
                             <label for="operatingSystem">Operating System</label><br />
-                            <input type="text" id="operatingSystem" name="operatingSystem" /><br />
+                            <input type="text" id="operatingSystem" name="operatingSystem" required/><br />
                             
                             <label for="battery">Battery Life</label><br />
-                            <input type="text" id="battery" name="battery" /><br />
+                            <input type="text" id="battery" name="battery" required/><br />
                             
                             <label for="description">Description</label><br />
-                            <textarea id="description" name="description" rows="5"></textarea><br />
+                            <textarea id="description" name="description" required rows="5"></textarea><br />
                             <br/>
                             <br/>
                             <button type="submit" id="create-btn">Create Product</button>
@@ -77,5 +77,6 @@
             </div>
         </div>
     </section>
+     <script src="js/dashboard.js"></script>
 </body>
 </html>

@@ -48,28 +48,28 @@
                             <input type="number" id="price" name="price" step="0.01" value="${product.price}" required /><br />
                             
                             <label for="processor">Processor</label><br />
-                            <input type="text" id="processor" name="processor" value="${product.processor}" /><br />
+                            <input type="text" id="processor" name="processor" value="${product.processor}" required/><br />
                             
                             <label for="graphic_card">Graphic Card</label><br />
-                            <input type="text" id="graphic_card" name="graphic_card" value="${product.graphic_card}" /><br />
+                            <input type="text" id="graphic_card" name="graphic_card" value="${product.graphic_card}" required/><br />
                             
                             <label for="screen_details">Screen Details</label><br />
-                            <input type="text" id="screen_details" name="screen_details" value="${product.screen_details}" /><br />
+                            <input type="text" id="screen_details" name="screen_details" value="${product.screen_details}" required/><br />
                             
                             <label for="size">Size</label><br />
-                            <input type="text" id="size" name="size" value="${product.size}" /><br />
+                            <input type="text" id="size" name="size" value="${product.size}" required/><br />
                             
                             <label for="weight">Weight</label><br />
-                            <input type="number" id="weight" name="weight" step="0.01" value="${product.weight}" /><br />
+                            <input type="number" id="weight" name="weight" step="0.01" value="${product.weight}" required/><br />
                             
                             <label for="operatingSystem">Operating System</label><br />
-                            <input type="text" id="operatingSystem" name="operatingSystem" value="${product.operatingSystem}" /><br />
+                            <input type="text" id="operatingSystem" name="operatingSystem" value="${product.operatingSystem}" required/><br />
                             
                             <label for="battery">Battery Life</label><br />
-                            <input type="text" id="battery" name="battery" value="${product.battery}" /><br />
+                            <input type="text" id="battery" name="battery" value="${product.battery}" required/><br />
                             
                             <label for="description">Description</label><br />
-                            <textarea id="description" name="description" rows="5">${product.description}</textarea><br />
+                            <textarea id="description" name="description" required rows="5">${product.description}</textarea><br />
                             
                             <br/>
                             <br/>
@@ -80,5 +80,6 @@
             </div>
         </div>
     </section>
+                             <script src="js/dashboard.js"></script>
 </body>
 </html>

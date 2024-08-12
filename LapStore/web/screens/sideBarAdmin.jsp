@@ -1,9 +1,9 @@
 <nav class="sidebar close">
       <header>
         <div class="logo text">
-          <a href="admin-production-list" style="text-decoration: none"
-            ><h3 style="width: 100%; text-align: center">LapStore</h3></a
-          >
+          <a href="admin-production-list" style="text-decoration: none">
+              <h3 style="width: 100%; text-align: center">LapStore</h3>
+          </a>
         </div>
         <i class="bx bx-menu toggle icon"></i>
       </header>
@@ -16,38 +16,32 @@
                 <span class="text nav-text">Dashboard</span>
               </a>
             </li>
-            <li class="nav-link admin" style="cursor: pointer">
-              <div class="admin-submenu-item">
-                <i class="bx bx-home-heart icon"></i>
-                <span class="text nav-text">Admin</span
-                ><i class="bx bx-chevron-right icon admin-dropdown"></i>
-              </div>
-            </li>
-            <li class="nav-link sub-menu">
+          
+            <li class="nav-link">
               <a href="admin-production-list"
                 ><i class="bx bx-mobile-alt icon"></i>
                 <span class="text nav-text">Product</span></a
               >
             </li>
-            <li class="nav-link sub-menu">
+            <li class="nav-link">
               <a href="admin-variant-list"
                 ><i class="bx bx-devices icon"></i>
                 <span class="text nav-text">Product Variant</span></a
               >
             </li>
-            <li class="nav-link sub-menu">
+            <li class="nav-link">
               <a href="admin-brand"
                 ><i class="bx bx-palette icon"></i>
                 <span class="text nav-text">Brand</span></a
               >
       
-            <li class="nav-link sub-menu">
+            <li class="nav-link">
               <a href="admin-order"
                 ><i class='bx bx-cart icon'></i>
                 <span class="text nav-text">Order</span></a
               >
             </li>
-            <li class="nav-link sub-menu">
+            <li class="nav-link">
               <a href="admin-blog-category"
                 ><i class='bx bx-news icon'></i>
                 <span class="text nav-text">Blog</span></a

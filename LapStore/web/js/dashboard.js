@@ -16,15 +16,3 @@ modeSwitch.addEventListener("click", () => {
 toggle.addEventListener("click", () => {
   sideBar.classList.toggle("close");
 });
-
-const menuItems = document.querySelectorAll(".admin-submenu-item");
-const subMenu = document.querySelectorAll(".sub-menu");
-
-menuItems.forEach((item, index) => {
-  item.addEventListener("click", () => {
-    item.classList.toggle("trans-arrow");
-    subMenu.forEach((subMenu) => {
-      subMenu.classList.toggle("show-submenu");
-    });
-  });
-});
