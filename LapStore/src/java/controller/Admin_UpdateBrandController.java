@@ -86,21 +86,52 @@ public class Admin_UpdateBrandController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        int success = 0;
+        String error = null;
+
         String id = (String) request.getParameter("id");
         int brand_id = Integer.parseInt(id);
         String name = (String) request.getParameter("name");
-        
+
         Brand brand = new Brand(name);
 
         BrandDAO brandDAO = new BrandDAO();
-        int succes = brandDAO.updateBrand(brand_id, brand);
-        if (succes == 0) {
-            response.sendRedirect("error-page");
+
+        if (name == null || name.trim().isEmpty()) {
+            error = "Brand name cannot be null or empty.";
         } else {
-            List<Brand> list = brandDAO.getAllBrands();
-            request.setAttribute("list", list);
-            response.sendRedirect("admin-brand-list");
+
+            List<Brand> existingBrands = brandDAO.getAllBrands();
+            for (Brand b : existingBrands) {
+                if (b.getName().equalsIgnoreCase(name.trim())) {
+                    error = "Brand name already exists.";
+                    break;
+                }
+            }
         }
+
+        if (error != null) {
+            brand = brandDAO.getBrandById(brand_id);
+            request.setAttribute("brand", brand);
+            request.setAttribute("error", error);
+            request.getRequestDispatcher("screens/Admin_UpdateBrand.jsp").forward(request, response);
+        } else {
+            int brand_id1 = Integer.parseInt(id);
+            Brand brand1 = new Brand(name);
+            BrandDAO brand1DAO = new BrandDAO();
+            success = brand1DAO.updateBrand(brand_id1, brand1);
+
+            if (success != 0) {
+
+                List<Brand> brandList = brandDAO.getAllBrands();
+                request.setAttribute("list", brandList);
+                response.sendRedirect("admin-brand-list");
+            } else {
+
+                request.getRequestDispatcher("error-page.jsp").forward(request, response);
+            }
+        }
+
     }
 
     /**
