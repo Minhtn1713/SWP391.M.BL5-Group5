@@ -14,32 +14,31 @@ import java.util.List;
 
 public class BrandDAO extends DBContext {
 
-    public int createBrand(String name) {
-        int success = 0;
-        String sql = "INSERT INTO [Brand]([name]) VALUES (?)";
+    public int createBrand(Brand brand) {
+        String query = "INSERT INTO Brand (name) VALUES (?)";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, name);
-            success = ps.executeUpdate();
+        try (Connection conn = connection;
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, brand.getName());
+            return ps.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("SQL Exception: " + e.getMessage());
+            System.err.println("Error creating brand: " + e.getMessage());
         }
-
-        return success;
+        return 0;
     }
 
-   public int updateBrand(int id, Brand brand) {
-    String query = "UPDATE Brand SET name = ? WHERE id = ?";
+    public int updateBrand(int id, Brand brand) {
+        String query = "UPDATE Brand SET name = ? WHERE id = ?";
 
-    try (PreparedStatement ps = connection.prepareStatement(query)) {
-        ps.setString(1, brand.getName());
-        ps.setInt(2, id);
-        return ps.executeUpdate();
-    } catch (SQLException e) {
-        System.err.println("Error updating brand: " + e.getMessage());
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, brand.getName());
+            ps.setInt(2, id);
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error updating brand: " + e.getMessage());
+        }
+        return 0;
     }
-    return 0;
-}
 
     public int deleteBrand(int id) {
         String query = "DELETE FROM Brand WHERE id = ?";
@@ -54,38 +53,38 @@ public class BrandDAO extends DBContext {
     }
 
     public Brand getBrandById(int id) {
-        String query = "select * from [LapStore].[dbo].[Brand] "
-                + " Where [id] = ?";
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
+        String query = "SELECT * FROM Brand WHERE id = ?";
+        try (Connection conn = connection; PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                return new Brand(rs.getInt(1), rs.getString(2));
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new Brand(
+                            rs.getInt("id"),
+                            rs.getString("name")
+                    );
+                }
             }
-            ps.close();
-            rs.close();
         } catch (SQLException e) {
-            System.out.println(e);
+            System.err.println("Error fetching brand by ID: " + e.getMessage());
         }
         return null;
     }
 
-    public List<Brand> getBrandList() {
-        List<Brand> productList = new ArrayList<>();
-        String query = "SELECT * FROM Brand";
+    public List<Brand> getAllBrands() {
+        List<Brand> brandList = new ArrayList<>();
+        String query = "SELECT id, name FROM Brand";
 
         try (Connection conn = connection; PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                productList.add(new Brand(
-                        rs.getInt("id"),
-                        rs.getString("name")
-                ));
+                Brand brand = new Brand(rs.getInt("id"), rs.getString("name"));
+                brandList.add(brand);
             }
         } catch (SQLException e) {
-            System.err.println("Error fetching product list: " + e.getMessage());
+            System.err.println("Error fetching brands: " + e.getMessage());
         }
-        return productList;
+        return brandList;
     }
+    
+    
 }

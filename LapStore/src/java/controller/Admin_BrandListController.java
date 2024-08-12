@@ -59,7 +59,7 @@ public class Admin_BrandListController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
          BrandDAO proDao = new BrandDAO();
-        List<Brand> list = proDao.getBrandList();
+        List<Brand> list = proDao.getAllBrands();
         request.setAttribute("list", list);
         request.getRequestDispatcher("screens/Admin_BrandList.jsp").forward(request, response);
     } 

@@ -36,6 +36,7 @@
                             <form class="add-product" action="admin-create-brand" method="POST">
                                 <label for="name">Name</label><br />
                                 <input type="text" id="name" name="name" required /><br />
+                                <c:if test="${not empty error}"><h3 style="color: red; text-align: center; width: 100%; margin: auto">${error}</h3><br/></c:if>
                                 <br /><br />
                                 <button type="submit" id="add-btn">Add Brand</button>
                             </form>

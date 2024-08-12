@@ -97,7 +97,7 @@ public class Admin_UpdateBrandController extends HttpServlet {
         if (succes == 0) {
             response.sendRedirect("error-page");
         } else {
-            List<Brand> list = brandDAO.getBrandList();
+            List<Brand> list = brandDAO.getAllBrands();
             request.setAttribute("list", list);
             response.sendRedirect("admin-brand-list");
         }

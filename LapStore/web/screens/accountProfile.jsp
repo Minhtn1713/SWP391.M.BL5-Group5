@@ -44,7 +44,7 @@
             <script>
                 const profile = `<form method="POST" action="account-profile?status=profile">
                             <p>Full name</p>
-                            <input name="fullName" class="user-inf" value="${user.fullName}"/><br/>
+                            <input name="fullName" class="user-inf" value="${user.fullName}" required/><br/>
                             <p>Gender</p>
                             <select name="gender" class="user-inf">
             <c:choose>
@@ -56,11 +56,11 @@
                             <option value="1" ${user.gender=="true"?"selected":""}>Female</option> 
                             </select><br/>
                             <p>Phone</p>
-                            <input name="phone" class="user-inf" value="${user.phone}"/><br/>
+                            <input name="phone" class="user-inf" value="${user.phone}" required/><br/>
                             <p>Email</p>
-                            <input name="email" class="user-inf" value="${user.email}"/><br/>  
+                            <input name="email" class="user-inf" value="${user.email}" required/><br/>  
                             <p>Address</p>
-                            <input name="address" class="user-inf" value="${user.address}"/>
+                            <input name="address" class="user-inf" value="${user.address}" required/>
                             <input class="update" type="submit" value="Update">
                         </form>
             `;
