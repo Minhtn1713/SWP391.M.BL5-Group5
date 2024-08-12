@@ -42,8 +42,8 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Name</th>
-                                        <th>Image</th>
-                                        <th>Description</th>
+                                        <th>Image</th> 
+                                        <th>Brand</th> 
                                         <th>Price</th>
                                         <th>Screen</th>
                                         <th>Processor</th>
@@ -51,7 +51,7 @@
                                         <th>Operating System</th>
                                         <th>Battery Life</th>
                                         <th>Weight</th>
-                                        <th>Brand</th> <!-- Added Brand Column -->
+                                        <th>Description</th>
                                         <th>Edit</th>
                                         <th>Status</th>
                                     </tr>
@@ -64,7 +64,7 @@
                                             <td>
                                                 <img src="img/${p.img}" width="200px"/>
                                             </td>
-                                            <td>${p.description}</td>
+                                            <td>${p.brandName}</td>
                                             <td>${p.price}</td>
                                             <td>${p.screen_details}</td>
                                             <td>${p.processor}</td>
@@ -72,7 +72,7 @@
                                             <td>${p.operatingSystem}</td>
                                             <td>${p.battery}</td>
                                             <td>${p.weight}</td>
-                                            <td>${p.brandName}</td> <!-- Added Brand Name Column -->
+                                            <td>${p.description}</td>
                                             <td>
                                                 <a href="admin-update-product?id=${p.id}">
                                                     <i class="bx bxs-edit-alt icon"></i>

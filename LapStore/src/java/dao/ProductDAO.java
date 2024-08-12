@@ -99,8 +99,8 @@ public class ProductDAO extends DBContext {
 }
 
 
-    public int updateProduct(Product product) {
-    String query = "UPDATE Product SET name = ?, img = ?, brandId = ?, price = ?, processor = ?, graphic_card = ?, screen_details = ?, " +
+    public int updateProduct(int id, Product product) {
+    String query = "UPDATE Product SET name = ?, img = ?, brand = ?, price = ?, processor = ?, graphic_card = ?, screen_details = ?, " +
                    "size = ?, weight = ?, operating_system = ?, battery_life = ?, description = ?, status = ? WHERE id = ?";
 
     try (Connection conn = connection;
@@ -123,6 +123,7 @@ public class ProductDAO extends DBContext {
 
         return ps.executeUpdate();
     } catch (SQLException e) {
+        System.out.println(e.getMessage());
         e.printStackTrace();
     }
     return 0;

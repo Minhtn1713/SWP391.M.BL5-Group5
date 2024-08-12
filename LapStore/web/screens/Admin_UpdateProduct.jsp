@@ -27,7 +27,7 @@
                             <i class="bx bx-mobile-alt icon"></i>&nbsp;Update Product
                         </div>
                         <hr />
-                        <form class="add-product" action="admin-update-product" method="POST" enctype="multipart/form-data">
+                        <form class="add-product" action="admin-update-product" method="POST" >
                             <input type="hidden" name="id" value="${product.id}" />
                             
                             <label for="name">Name</label><br />

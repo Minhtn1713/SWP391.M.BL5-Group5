@@ -18,9 +18,8 @@ public class Admin_UpdateProductController extends HttpServlet {
         String id = req.getParameter("id");
 
         int productId = 0;
-      
-            productId = Integer.parseInt(id);
-        
+
+        productId = Integer.parseInt(id);
 
         ProductDAO proDAO = new ProductDAO();
         Product product = proDAO.getProductById(productId);
@@ -32,72 +31,45 @@ public class Admin_UpdateProductController extends HttpServlet {
     }
 
     @Override
-protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    int success = 0;
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+       
+            String id = (String) req.getParameter("id");
+            int product_id = Integer.parseInt(id);
+            String product_name = (String) req.getParameter("name");
+            String product_price = (String) req.getParameter("price");
+            float price = Float.parseFloat(product_price);
+            String product_processor = (String) req.getParameter("processor");
+            String product_graphicCard = (String) req.getParameter("graphic_card");
+            String product_screenDetails = (String) req.getParameter("screen_details");
+            String product_size = (String) req.getParameter("size");
+            String product_weight = (String) req.getParameter("weight");
+             float weight = Float.parseFloat(product_weight);
+            String product_operatingSystem =(String) req.getParameter("operatingSystem");
+            String product_batteryLife =(String) req.getParameter("battery");
+            String product_description = (String) req.getParameter("description");
+            String product_brandId = (String) req.getParameter("brandId");
+            int brandId = Integer.parseInt(product_brandId);
+            
+            String product_image = req.getParameter("img");
+            if (req.getParameter("img") == null || req.getParameter("img").length() == 0){
+            product_image = req.getParameter("current-image");
+            }
 
-    try {
-        // Retrieve and parse parameters with checks
-        int id = parseInteger(req.getParameter("id"), 0);
-        String name = req.getParameter("name");
-        float price = parseFloat(req.getParameter("price"), 0.0f);
-        String processor = req.getParameter("processor");
-        String graphicCard = req.getParameter("graphic_card");
-        String screenDetails = req.getParameter("screen_details");
-        String size = req.getParameter("size");
-        float weight = parseFloat(req.getParameter("weight"), 0.0f);
-        String operatingSystem = req.getParameter("operating_system");
-        String batteryLife = req.getParameter("battery_life");
-        String description = req.getParameter("description");
-        int brandId = parseInteger(req.getParameter("brandId"), 0);
+            // Create a Product object
+            Product product = new Product(product_id, product_name, product_image, brandId,
+                    price, product_processor, product_graphicCard, product_screenDetails, product_size, weight, product_operatingSystem, product_batteryLife, product_description, 1);
 
-        // Handle the image
-        String newImage = req.getParameter("img");
-        String currentImage = req.getParameter("current_image");
-        String image = (newImage == null || newImage.isEmpty()) ? currentImage : newImage;
-
-        // Create a Product object
-        Product product = new Product(id, name, image, brandId, price, processor, graphicCard, screenDetails, size, weight, operatingSystem, batteryLife, description, 1);
-
-        // Initialize ProductDAO
-        ProductDAO productDAO = new ProductDAO();
-
-        // Update the product in the database
-        success = productDAO.updateProduct(product);
-
-        // Check if product update was successful
-        if (success > 0) {
-            resp.sendRedirect("admin-production-list");
-        } else {
-            req.getRequestDispatcher("error-page").forward(req, resp);
-        }
-    } catch (NumberFormatException e) {
-        // Log the exception and show an error page
-        System.err.println("Number format exception: " + e.getMessage());
-        req.getRequestDispatcher("error-page").forward(req, resp);
+       
+       ProductDAO proDAO = new ProductDAO();
+       int success = proDAO.updateProduct(product_id, product);
+       if(success == 0){
+           resp.sendRedirect("error-page");
+       }
+       else{
+           List<Product> list = proDAO.getProductList();
+           req.setAttribute("list", list);
+           resp.sendRedirect("admin-production-list");
+       }
     }
-}
-
-// Helper methods to safely parse integers and floats
-private int parseInteger(String str, int defaultValue) {
-    try {
-        if (str == null || str.trim().isEmpty()) {
-            return defaultValue;
-        }
-        return Integer.parseInt(str);
-    } catch (NumberFormatException e) {
-        return defaultValue;
-    }
-}
-
-private float parseFloat(String str, float defaultValue) {
-    try {
-        if (str == null || str.trim().isEmpty()) {
-            return defaultValue;
-        }
-        return Float.parseFloat(str);
-    } catch (NumberFormatException e) {
-        return defaultValue;
-    }
-}
 
 }
