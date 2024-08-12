@@ -24,8 +24,6 @@ public class Admin_UpdateProductController extends HttpServlet {
 
         ProductDAO proDAO = new ProductDAO();
         Product product = proDAO.getProductById(productId);
-        
-
         BrandDAO brandDAO = new BrandDAO();
         List<Brand> brands = brandDAO.getAllBrands();
         req.setAttribute("product", product);
@@ -33,7 +31,6 @@ public class Admin_UpdateProductController extends HttpServlet {
         req.getRequestDispatcher("screens/Admin_UpdateProduct.jsp").forward(req, resp);
     }
 
-    @Override
     @Override
 protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     int success = 0;
@@ -69,7 +66,7 @@ protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws S
 
         // Check if product update was successful
         if (success > 0) {
-            resp.sendRedirect("admin-product-list");
+            resp.sendRedirect("admin-production-list");
         } else {
             req.getRequestDispatcher("error-page").forward(req, resp);
         }
@@ -83,6 +80,9 @@ protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws S
 // Helper methods to safely parse integers and floats
 private int parseInteger(String str, int defaultValue) {
     try {
+        if (str == null || str.trim().isEmpty()) {
+            return defaultValue;
+        }
         return Integer.parseInt(str);
     } catch (NumberFormatException e) {
         return defaultValue;
@@ -91,6 +91,9 @@ private int parseInteger(String str, int defaultValue) {
 
 private float parseFloat(String str, float defaultValue) {
     try {
+        if (str == null || str.trim().isEmpty()) {
+            return defaultValue;
+        }
         return Float.parseFloat(str);
     } catch (NumberFormatException e) {
         return defaultValue;

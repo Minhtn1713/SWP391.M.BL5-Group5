@@ -78,7 +78,7 @@ public class ProductDAO extends DBContext {
                     rs.getInt("id"),
                     rs.getString("name"),
                     rs.getString("img"),
-                    rs.getInt("brandId"),
+                    rs.getInt("brand"),
                     rs.getFloat("price"),
                     rs.getString("processor"),
                     rs.getString("graphic_card"),
