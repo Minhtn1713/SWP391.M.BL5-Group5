@@ -62,8 +62,8 @@
                             <label for="weight">Weight</label><br />
                             <input type="number" id="weight" name="weight" step="0.01" value="${product.weight}" /><br />
                             
-                            <label for="operating_system">Operating System</label><br />
-                            <input type="text" id="operating_system" name="operating_system" value="${product.operatingSystem}" /><br />
+                            <label for="operatingSystem">Operating System</label><br />
+                            <input type="text" id="operatingSystem" name="operatingSystem" value="${product.operatingSystem}" /><br />
                             
                             <label for="battery">Battery Life</label><br />
                             <input type="text" id="battery" name="battery" value="${product.battery}" /><br />
