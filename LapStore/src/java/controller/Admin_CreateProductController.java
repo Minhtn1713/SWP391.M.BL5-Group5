@@ -28,12 +28,10 @@ public class Admin_CreateProductController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int success = 0;
          
-        Product pro = new Product(0, req.getParameter("name"), Float.parseFloat(req.getParameter("price"))
-                , req.getParameter("processor"), req.getParameter("screen_details"), req.getParameter("size")
-                , req.getParameter("operating_system"), 
-                req.getParameter("battery_life"),
-                Float.parseFloat(req.getParameter("weight")),
-                req.getParameter("graphic_card"), 1 );
+        Product pro = new Product(0, req.getParameter("name"), Integer.parseInt(req.getParameter("brandId")), Float.parseFloat(req.getParameter("price"))
+                , req.getParameter("processor"), req.getParameter("graphic_card"), req.getParameter("screen_details"), req.getParameter("size"), Float.parseFloat(req.getParameter("weight"))
+                , req.getParameter("operatingSystem"), 
+                req.getParameter("battery"), 1 );
         ProductDAO proDao = new ProductDAO();
         success = proDao.createProduct(pro);
         if(success != 0){
@@ -47,3 +45,4 @@ public class Admin_CreateProductController extends HttpServlet {
     }
 
 }
+    

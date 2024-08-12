@@ -14,7 +14,7 @@
     <jsp:include page="../screens/sideBarAdmin.jsp"></jsp:include>
     <section class="product">
         <div class="top">
-            <h3 class="icon profile">Hi, Admin</h3>
+            <h3 class="icon profile">Admin</h3>
         </div>
         <div class="add-container">
             <div class="overview">

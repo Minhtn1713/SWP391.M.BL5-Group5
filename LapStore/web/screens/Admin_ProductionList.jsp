@@ -18,9 +18,9 @@
         <div class="top">
             <div class="search-box">
                 <i class="bx bx-search icon"></i>
-                <input type="text" placeholder="Search product by name here..." />
+                <input type="text" id="productSearch" placeholder="Search product by name here..." />
             </div>
-            <h3 class="icon profile">Hi, Admin</h3>
+            <h3 class="icon profile">Admin</h3>
         </div>
         <div class="product-content-container">
             <div class="overview">
@@ -56,9 +56,9 @@
                                         <th>Status</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="productTableBody">
                                     <c:forEach items="${list}" var="p">
-                                        <tr>
+                                        <tr class="product-row">
                                             <td>${p.id}</td>
                                             <td>${p.name}</td>
                                             <td>
@@ -94,12 +94,91 @@
                                     </c:forEach>
                                 </tbody>
                             </table>
+                            <!-- Pagination controls -->
+                            <div id="pagination"> </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <script src="js/dashboard.js"></script>
+    <script>
+        const rowsPerPage = 4;
+        let currentPage = 1;
+        const rows = document.querySelectorAll('.product-row');
+
+        function displayPage(page) {
+            const start = (page - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            rows.forEach((row, index) => {
+                row.style.display = index >= start && index < end ? '' : 'none';
+            });
+        }
+
+        function setupPagination() {
+            const totalPages = Math.ceil(rows.length / rowsPerPage);
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = ' ';
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageLink = document.createElement('a');
+                pageLink.textContent = i;
+                pageLink.href = '#';
+                pageLink.className = i === currentPage ? 'active' : ' ';
+
+                pageLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    currentPage = i;
+                    displayPage(currentPage);
+                    setupPagination();
+                });
+
+                pagination.appendChild(pageLink);
+            }
+        }
+
+        document.getElementById('productSearch').addEventListener('keyup', function() {
+            const filter = this.value.toLowerCase();
+            let filteredRows = Array.from(rows).filter(row => {
+                const productName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                return productName.includes(filter);
+            });
+
+            rows.forEach(row => row.style.display = 'none');
+            filteredRows.forEach((row, index) => {
+                if (index < rowsPerPage) {
+                    row.style.display = '';
+                }
+            });
+
+            currentPage = 1;
+            setupPagination(filteredRows.length);
+        });
+
+        function setupPagination(totalRows) {
+            const totalPages = Math.ceil(totalRows / rowsPerPage);
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = ' ';
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageLink = document.createElement('a');
+                pageLink.textContent = i;
+                pageLink.href = '#';
+                pageLink.className = i === currentPage ? 'active' : ' ';
+
+                pageLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    currentPage = i;
+                    displayPage(currentPage);
+                    setupPagination(totalRows);
+                });
+
+                pagination.appendChild(pageLink);
+            }
+        }
+
+        displayPage(currentPage);
+        setupPagination(rows.length);
+    </script>
 </body>
 </html>

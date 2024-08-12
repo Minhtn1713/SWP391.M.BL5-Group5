@@ -57,11 +57,12 @@ public class Product {
         this.graphic_card = graphic_card;
         this.description = description;
     }
-  public Product(int id, String name, float price, String processor, String screen_details,
-                   String size, String operatingSystem, String battery,  
-                   float weight, String graphic_card, int status ) {
+  public Product(int id, String name,  int brandId, float price, String processor, String graphic_card, String screen_details,
+                   String size,float weight, String operatingSystem, String battery,  
+                     int status ) {
         this.id = id;
         this.name = name;
+        this.brandId = brandId;
         this.price = price;
         this.processor = processor;
         this.screen_details = screen_details;
@@ -74,8 +75,8 @@ public class Product {
     }
 
     public Product() {
-    
     }
+
     
 
     // Getters and setters for all fields, including brandName

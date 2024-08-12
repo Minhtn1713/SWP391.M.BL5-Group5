@@ -19,7 +19,7 @@
                 <i class="bx bx-search icon"></i>
                 <input type="text" placeholder="Search here..." />
             </div>
-            <h3 class="icon profile">Hi, Admin</h3>
+            <h3 class="icon profile">Admin</h3>
         </div>
         <div class="add-container">
             <div class="overview">
@@ -36,6 +36,9 @@
                         <form class="add-product" action="admin-create-product" method="POST">
                             <label for="name">Name</label><br />
                             <input type="text" id="name" name="name" required /><br />
+                            
+                            <label for="brandId">BrandID</label><br />
+                            <input type="number" id="brandId" name="brandId" required /><br />
                             
                             <label for="price">Price</label><br />
                             <input type="number" id="price" name="price" step="0.01" required /><br />
@@ -55,16 +58,13 @@
                             <label for="weight">Weight</label><br />
                             <input type="number" id="weight" name="weight" step="0.01" /><br />
                             
-                            <label for="operating_system">Operating System</label><br />
-                            <input type="text" id="operating_system" name="operating_system" /><br />
+                            <label for="operatingSystem">Operating System</label><br />
+                            <input type="text" id="operatingSystem" name="operatingSystem" /><br />
                             
-                            <label for="battery_life">Battery Life</label><br />
-                            <input type="text" id="battery_life" name="battery_life" /><br />
+                            <label for="battery">Battery Life</label><br />
+                            <input type="text" id="battery" name="battery" /><br />
                            
-                         
-                            <label for="img">Image URL</label><br />
-                            <input type="text" id="img" name="img" /><br />
-                            
+                        
                             <br />
                             <br />
                             <button type="submit" id="add-btn">Add Product</button>

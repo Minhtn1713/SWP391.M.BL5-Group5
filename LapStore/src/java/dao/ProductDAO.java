@@ -43,7 +43,7 @@ public class ProductDAO extends DBContext {
                     rs.getString("graphic_card"),
                     rs.getString("description"),
                     rs.getDate("release_date"),
-                    rs.getString("brand_name")  // Assuming your Product class has a brandName field
+                    rs.getString("brand_name")
                 ));
             }
         } catch (SQLException e) {
@@ -163,12 +163,11 @@ public class ProductDAO extends DBContext {
 
    public int createProduct(Product product) {
     int success = 0;
-    String query = "INSERT INTO [Product] (name, price, processor, screen_details, img, size, " +
-            "operating_system, battery_life, status, brand, weight, graphic_card, description, release_date) " +
-            "VALUES ('"+ product.getName() + "', "+product.getPrice()+", '"+product.getProcessor()+"', '"+product.getScreen_details()+"', '"+product.getImg()+"', '"+product.getSize()+"', '"+product.getOperatingSystem()+"', '"+product.getBattery()+"', '"+product.getStatus()+"', '"+product.getBrandId()+"', "+product.getWeight()+", '"+product.getGraphic_card()+"', '"+product.getDescription()+"', '"+product.getRelease_date()+"')";
+    String sql = "INSERT INTO Product (name, brand, price, processor, graphic_card, screen_details, size, weight , operating_system, battery_life , status) "
+            + "VALUES ('" + product.getName() + "', " + product.getBrandId() + ", " + product.getPrice() + ", '" + product.getProcessor() + "' , '" + product.getGraphic_card()+"', '" + product.getScreen_details() + "', '" + product.getSize() + "', " + product.getWeight() + ",'" + product.getOperatingSystem() + "', '" + product.getBattery() + "' ,' " +product.getStatus()+ "')";
     
     try (Connection conn = connection;
-         PreparedStatement ps = conn.prepareStatement(query)) {
+         PreparedStatement ps = conn.prepareStatement(sql)) {
         success = ps.executeUpdate();
           ps.close();
     } catch (SQLException e) {
