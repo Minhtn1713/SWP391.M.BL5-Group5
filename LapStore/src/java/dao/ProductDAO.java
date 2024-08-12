@@ -16,9 +16,9 @@ public class ProductDAO extends DBContext {
 
     public List<Product> getProductList() {
         List<Product> productList = new ArrayList<>();
-        String query = "SELECT p.id, p.name, p.img, p.price, p.processor, p.screen_details, " +
-                       "p.size, p.operating_system, p.battery_life, p.status, p.brand, p.weight, " +
-                       "p.graphic_card, p.description, p.release_date, b.name AS brand_name " +
+        String query = "SELECT p.id, p.name, p.img, p.brand, p.price, p.processor, p.graphic_card, "
+                + "p.screen_details, p.size, p.weight, p.operating_system, p.battery_life, p.status,"
+                + " p.description, b.name AS brand_name, p.status "+
                        "FROM Product p " +
                        "JOIN Brand b ON p.brand = b.id";
 
@@ -31,19 +31,18 @@ public class ProductDAO extends DBContext {
                     rs.getInt("id"),
                     rs.getString("name"),
                     rs.getString("img"),
-                    rs.getFloat("price"),
+                    rs.getInt("brand"), 
+                    rs.getFloat("price"),       
                     rs.getString("processor"),
+                    rs.getString("graphic_card"),
                     rs.getString("screen_details"),
                     rs.getString("size"),
+                    rs.getFloat("weight"),
                     rs.getString("operating_system"),
                     rs.getString("battery_life"),
-                    rs.getInt("status"),
-                    rs.getInt("brand"),
-                    rs.getFloat("weight"),
-                    rs.getString("graphic_card"),
                     rs.getString("description"),
-                    rs.getDate("release_date"),
-                    rs.getString("brand_name")
+                    rs.getString("brand_name"),
+                    rs.getInt("status")
                 ));
             }
         } catch (SQLException e) {
@@ -68,71 +67,67 @@ public class ProductDAO extends DBContext {
         }
         return hashMap;
     }
-
-    public Product getProductById(int id) {
+        public Product getProductById(int id) {
         String query = "SELECT * FROM Product WHERE id = ?";
         try (Connection conn = connection;
-             PreparedStatement ps = conn.prepareStatement(query)) {
+         PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return new Product(
-                                rs.getInt("id"),
+            if (rs.next()) {
+                return new Product(
+                    rs.getInt("id"),
                     rs.getString("name"),
                     rs.getString("img"),
+                    rs.getInt("brandId"),
                     rs.getFloat("price"),
                     rs.getString("processor"),
+                    rs.getString("graphic_card"),
                     rs.getString("screen_details"),
                     rs.getString("size"),
+                    rs.getFloat("weight"),
                     rs.getString("operating_system"),
                     rs.getString("battery_life"),
-                    rs.getInt("status"),
-                    rs.getFloat("weight"),
-                    rs.getString("graphic_card"),
-                    rs.getString("description")
-                    );
-                }
+                    rs.getString("description"),
+                    rs.getInt("status")
+                );
             }
-        } catch (SQLException e) {
-            System.err.println("Error fetching product by ID: " + e.getMessage());
         }
-        return null;
+    } catch (SQLException e) {
+        System.err.println("Error fetching product by ID: " + e.getMessage());
     }
+    return null;
+}
+
 
     public int updateProduct(Product product) {
-    String query = "UPDATE Product SET name = ?, price = ?, processor = ?, screen_details = ?, img = ?, " +
-            "size = ?, operating_system = ?, battery_life = ?, status = ?, brandId = ?, weight = ?, " +
-            "graphic_card = ?, description = ?, release_date = ? WHERE id = ?";
-    
+    String query = "UPDATE Product SET name = ?, img = ?, brandId = ?, price = ?, processor = ?, graphic_card = ?, screen_details = ?, " +
+                   "size = ?, weight = ?, operating_system = ?, battery_life = ?, description = ?, status = ? WHERE id = ?";
+
     try (Connection conn = connection;
          PreparedStatement ps = conn.prepareStatement(query)) {
 
         ps.setString(1, product.getName());
-        ps.setFloat(2, product.getPrice());
-        ps.setString(3, product.getProcessor());
-        ps.setString(4, product.getScreen_details());
-        ps.setString(5, product.getImg());  // Updated to match the field name in SQL
-        ps.setString(6, product.getSize());
-        ps.setString(7, product.getOperatingSystem());
-        ps.setString(8, product.getBattery());
-        ps.setInt(9, product.getStatus());
-        ps.setInt(10, product.getBrandId());
-        ps.setFloat(11, product.getWeight());
-        ps.setString(12, product.getGraphic_card());
-        ps.setString(13, product.getDescription());
-        
-        // Convert release_date from String to java.sql.Date if needed
-        java.sql.Date releaseDate = product.getRelease_date();
-        ps.setDate(14, releaseDate);
-        
-        ps.setInt(15, product.getId());
-        
+        ps.setString(2, product.getImg());
+        ps.setInt(3, product.getBrandId());
+        ps.setFloat(4, product.getPrice());
+        ps.setString(5, product.getProcessor());
+        ps.setString(6, product.getGraphic_card());
+        ps.setString(7, product.getScreen_details());
+        ps.setString(8, product.getSize());
+        ps.setFloat(9, product.getWeight());
+        ps.setString(10, product.getOperatingSystem());
+        ps.setString(11, product.getBattery());
+        ps.setString(12, product.getDescription());
+        ps.setInt(13, product.getStatus());
+        ps.setInt(14, product.getId());
+
         return ps.executeUpdate();
     } catch (SQLException e) {
-        System.err.println("Error updating product: " + e.getMessage());
+        e.printStackTrace();
     }
     return 0;
 }
+
 
     public int updateProductStatus(int id, int status) {
         String query = "UPDATE Product SET status = ? WHERE id = ?";
@@ -163,8 +158,11 @@ public class ProductDAO extends DBContext {
 
    public int createProduct(Product product) {
     int success = 0;
-    String sql = "INSERT INTO Product (name, brand, price, processor, graphic_card, screen_details, size, weight , operating_system, battery_life , status) "
-            + "VALUES ('" + product.getName() + "', " + product.getBrandId() + ", " + product.getPrice() + ", '" + product.getProcessor() + "' , '" + product.getGraphic_card()+"', '" + product.getScreen_details() + "', '" + product.getSize() + "', " + product.getWeight() + ",'" + product.getOperatingSystem() + "', '" + product.getBattery() + "' ,' " +product.getStatus()+ "')";
+    String sql = "INSERT INTO Product (name, img, brand, price, processor, graphic_card, screen_details, size, weight , operating_system, battery_life, description, status) "
+            + "VALUES ('" + product.getName() + "', '" + product.getImg() + "' , " + product.getBrandId() 
+            + ", " + product.getPrice() + ", '" + product.getProcessor() + "' , '" + product.getGraphic_card()+"', '" 
+            + product.getScreen_details() + "', '" + product.getSize() + "', " + product.getWeight() + ",'" 
+            + product.getOperatingSystem() + "', '" + product.getBattery() + "' ,'" + product.getDescription() + "', " + product.getStatus()+ ")";
     
     try (Connection conn = connection;
          PreparedStatement ps = conn.prepareStatement(sql)) {

@@ -1,31 +1,25 @@
 <%@page import="java.util.List"%>
-<%@page import="model.Brand"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Product Dashboard</title>
+    <title>Create Product</title>
     <link rel="stylesheet" href="styles/create-product.css" type="text/css"/>
     <link rel="stylesheet" href="styles/sidebar.css" type="text/css"/>
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
 </head>
 <body>
     <jsp:include page="../screens/sideBarAdmin.jsp"></jsp:include>
     <section class="product">
         <div class="top">
-            <div class="search-box">
-                <i class="bx bx-search icon"></i>
-                <input type="text" placeholder="Search here..." />
-            </div>
             <h3 class="icon profile">Admin</h3>
         </div>
         <div class="add-container">
             <div class="overview">
                 <div class="title">
-                    <i class="bx bx-mobile-alt icon"></i>
-                    <span class="text">Product Dashboard</span>
+                    <span class="text">Create Product</span>
                 </div>
                 <div class="boxes">
                     <div class="add-form">
@@ -34,12 +28,20 @@
                         </div>
                         <hr />
                         <form class="add-product" action="admin-create-product" method="POST">
+                            
                             <label for="name">Name</label><br />
                             <input type="text" id="name" name="name" required /><br />
                             
-                            <label for="brandId">BrandID</label><br />
-                            <input type="number" id="brandId" name="brandId" required /><br />
+                            <label for="img">Image</label><br />
+                            <input type="file" id="img" name="img" required /><br />
                             
+                            <label for="brandId">Brand</label><br />
+                            <select id="brandId" name="brandId" required>
+                            <c:forEach var="brand" items="${brands}">
+                              <option value="${brand.id}">${brand.name}</option>
+                            </c:forEach>
+                            </select><br />
+
                             <label for="price">Price</label><br />
                             <input type="number" id="price" name="price" step="0.01" required /><br />
                             
@@ -63,18 +65,17 @@
                             
                             <label for="battery">Battery Life</label><br />
                             <input type="text" id="battery" name="battery" /><br />
-                           
-                        
-                            <br />
-                            <br />
-                            <button type="submit" id="add-btn">Add Product</button>
+                            
+                            <label for="description">Description</label><br />
+                            <textarea id="description" name="description" rows="5"></textarea><br />
+                            <br/>
+                            <br/>
+                            <button type="submit" id="create-btn">Create Product</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    
-    <script src="js/dashboard.js"></script>
 </body>
 </html>

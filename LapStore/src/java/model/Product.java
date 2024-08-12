@@ -6,6 +6,7 @@ public class Product {
     private int id;
     private String name;
     private String img;
+    private int brandId;
     private float price;
     private String processor;
     private String screen_details;
@@ -13,16 +14,13 @@ public class Product {
     private String operatingSystem;
     private String battery;
     private int status;
-    private int brandId;
     private float weight;
     private String graphic_card;
     private String description;
-    private Date release_date;
-    private String brandName;  // New field for brand name
+    private String brandName;  
 
-    public Product(int id, String name, String img, float price, String processor, String screen_details,
-                   String size, String operatingSystem, String battery, int status, int brandId,
-                   float weight, String graphic_card, String description, Date release_date, String brandName) {
+    public Product(int id, String name, String img, int brandId,float price, String processor, String graphic_card, String screen_details,
+                   String size, float weight, String operatingSystem, String battery, String description, String brandName, int status) {
         this.id = id;
         this.name = name;
         this.img = img;
@@ -37,12 +35,10 @@ public class Product {
         this.weight = weight;
         this.graphic_card = graphic_card;
         this.description = description;
-        this.release_date = release_date;
         this.brandName = brandName; 
     }
-      public Product(int id, String name, String img, float price, String processor, String screen_details,
-                   String size, String operatingSystem, String battery, int status, 
-                   float weight, String graphic_card, String description) {
+       public Product(int id, String name, String img, int brandId , float price, String processor, String graphic_card, String screen_details,
+                   String size, float weight, String operatingSystem, String battery,  String description, int status) {
         this.id = id;
         this.name = name;
         this.img = img;
@@ -53,32 +49,14 @@ public class Product {
         this.operatingSystem = operatingSystem;
         this.battery = battery;
         this.status = status;
-        this.weight = weight;
-        this.graphic_card = graphic_card;
-        this.description = description;
-    }
-  public Product(int id, String name,  int brandId, float price, String processor, String graphic_card, String screen_details,
-                   String size,float weight, String operatingSystem, String battery,  
-                     int status ) {
-        this.id = id;
-        this.name = name;
         this.brandId = brandId;
-        this.price = price;
-        this.processor = processor;
-        this.screen_details = screen_details;
-        this.size = size;
-        this.operatingSystem = operatingSystem;
-        this.battery = battery;
         this.weight = weight;
         this.graphic_card = graphic_card;
-        this.status = status;
+        this.description = description; 
     }
 
     public Product() {
     }
-
-    
-
     // Getters and setters for all fields, including brandName
     public int getId() {
         return id;
@@ -190,14 +168,6 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Date getRelease_date() {
-        return release_date;
-    }
-
-    public void setRelease_date(Date release_date) {
-        this.release_date = release_date;
     }
 
     public String getBrandName() {
