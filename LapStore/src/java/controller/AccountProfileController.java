@@ -16,7 +16,10 @@ import jakarta.servlet.http.HttpSession;
 import model.Account;
 import model.User;
 
-
+/**
+ *
+ * @author kienk
+ */
 public class AccountProfileController extends HttpServlet {
 
     /**
@@ -78,14 +81,60 @@ public class AccountProfileController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //Display profile
         String status = request.getParameter("status");
         if (status.equals("profile")) {
             String fullName = request.getParameter("fullName");
             String gender = request.getParameter("gender");
             String phone = request.getParameter("phone");
-            String email = request.getParameter("email");            
+            String email = request.getParameter("email");
             String address = request.getParameter("address");
+            
+             if (fullName == null || fullName.trim().isEmpty()) {
+            request.setAttribute("error6", "Full name cannot be empty.");
+            request.setAttribute("fullName", fullName);
+            request.setAttribute("gender", gender);
+            request.setAttribute("phone", phone);
+            request.setAttribute("email", email);
+            request.setAttribute("address", address);
+            request.getRequestDispatcher("screens/accountProfile.jsp").forward(request, response);
+            return;
+        }
+             
+              if (address == null || address.trim().isEmpty()) {
+            request.setAttribute("error7", "Address cannot be empty.");
+            request.setAttribute("fullName", fullName);
+            request.setAttribute("gender", gender);
+            request.setAttribute("phone", phone);
+            request.setAttribute("email", email);
+            request.setAttribute("address", address);
+            request.getRequestDispatcher("screens/accountProfile.jsp").forward(request, response);
+            return;
+        }
+
+            // Phone validation
+            if (phone == null || phone.length() < 5 || !phone.matches("\\d{5,}")) {
+                request.setAttribute("error3", "Phone number must be at least 5 digits.");
+                request.setAttribute("fullName", fullName);
+                request.setAttribute("gender", gender);
+                request.setAttribute("phone", phone);
+                request.setAttribute("email", email);
+                request.setAttribute("address", address);
+                request.getRequestDispatcher("screens/accountProfile.jsp").forward(request, response);
+                return;
+            }
+
+            // Email validation
+            if (email == null || !email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+                request.setAttribute("error4", "Invalid email format.");
+                request.setAttribute("fullName", fullName);
+                request.setAttribute("gender", gender);
+                request.setAttribute("phone", phone);
+                request.setAttribute("email", email);
+                request.setAttribute("address", address);
+                request.getRequestDispatcher("screens/accountProfile.jsp").forward(request, response);
+                return;
+            }
+
             UserDAO user = new UserDAO();
             AccountDAO accDao = new AccountDAO();
             HttpSession session = request.getSession();
@@ -94,30 +143,42 @@ public class AccountProfileController extends HttpServlet {
             user.updateUser(userId, fullName, phone, email, address, gender);
             request.getSession().setAttribute("updateSuccess", "Profile updated successfully!");
             response.sendRedirect("account-profile?status=profile");
+
         } else if (status.equals("setting")) {
             String password = request.getParameter("current-password");
             String newPassword = request.getParameter("newPassword");
             String rePassword = request.getParameter("rePassword");
-            AccountDAO accDao = new AccountDAO();
+
             HttpSession session = request.getSession();
             Account acc = (Account) session.getAttribute("account");
-            int userId = accDao.getAccountID(acc.getUsername());
+            int userId = new AccountDAO().getAccountID(acc.getUsername());
+
+            // Check current password
             if (password.equals(acc.getPassword())) {
+
+                // Validate new password against the pattern
+                String passwordPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&\\*]{8,31}$";
+                if (!newPassword.matches(passwordPattern)) {
+                    request.setAttribute("error5", "New password must be 8-31 characters long, and contain at least one lowercase letter, one uppercase letter, one digit, and one special character.");
+                    request.getRequestDispatcher("screens/accountProfile.jsp").forward(request, response);
+                    return;
+                }
+
+                // Check if new password and verify password match
                 if (rePassword.equals(newPassword)) {
-                    AccountDAO a = new AccountDAO();
-                    a.updatePassword(userId, newPassword);
+                    new AccountDAO().updatePassword(userId, newPassword);
                     request.getSession().setAttribute("updateSuccess", "Password changed successfully!");
                     response.sendRedirect("account-profile?status=setting");
                 } else {
-                    request.setAttribute("error2", "Re-password is incorrect");
+                    request.setAttribute("error2", "New password and verify password do not match.");
                     request.getRequestDispatcher("screens/accountProfile.jsp").forward(request, response);
                 }
+
             } else {
-                request.setAttribute("error", "Password is incorrect");
+                request.setAttribute("error", "Current password is incorrect.");
                 request.getRequestDispatcher("screens/accountProfile.jsp").forward(request, response);
             }
         }
-
     }
 
     /**

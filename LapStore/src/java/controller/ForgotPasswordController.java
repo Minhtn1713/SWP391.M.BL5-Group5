@@ -88,7 +88,7 @@ public class ForgotPasswordController extends HttpServlet {
             ArrayList<SecurityQuestion> list = dao.getSecurityQuestion();
             request.setAttribute("quest", list);
             request.setAttribute("mess", "This username does not exist!");
-            request.getRequestDispatcher("screens/forgotPassword.jsp");
+            request.getRequestDispatcher("screens/forgotPassword.jsp").forward(request, response);
         } else {
             Security infor = securityDao.getQuestAnswer(accountID);
             if (infor.getQuestion_id() != id_question

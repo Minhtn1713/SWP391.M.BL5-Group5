@@ -32,68 +32,57 @@
                     <div class="left-container">
                         <a id="profile" class="left-line" href="/LapStore_main/account-profile?status=profile"><i class='fa fa-user'></i> Profile</a><br/><br/>
                         <a id="setting" class="left-line" href="/LapStore_main/account-profile?status=setting"><i class="fa fa-cog" aria-hidden="true"></i> Change Password</a><br/><br/>
-
                     </div>
                     <div class="right-container" id="right-content">
-
-                    </div>
+                    <c:choose>
+                        <c:when test="${param.status == 'profile'}">
+                            <form method="POST" action="account-profile?status=profile">
+                                <p>Full name</p>
+                                <input name="fullName" class="user-inf" value="${param.fullName != null ? param.fullName : user.fullName}" required/><br/>
+                                <c:if test="${not empty error6}"><h3 style="color: red; text-align: center; width: 100%; margin: auto">${error6}</h3><br/></c:if>
+                                    <p>Gender</p>
+                                    <select name="gender" class="user-inf">
+                                        <option value="0" ${param.gender == '0' ? 'selected' : (user.gender == '0' ? 'selected' : '')}>Male</option>
+                                    <option value="1" ${param.gender == '1' ? 'selected' : (user.gender == '1' ? 'selected' : '')}>Female</option>
+                                </select><br/>
+                                <p>Phone</p>
+                                <input name="phone" type="number" class="user-inf" value="${param.phone != null ? param.phone : user.email}" required/><br/>
+                                <c:if test="${not empty error3}"><h3 style="color: red; text-align: center; width: 100%; margin: auto">${error3}</h3><br/></c:if>
+                                    <p>Email</p>
+                                    <input name="email"type="email" class="user-inf" value="${param.email != null ? param.email : user.phone}" required/><br/>  
+                                <c:if test="${not empty error4}"><h3 style="color: red; text-align: center; width: 100%; margin: auto">${error4}</h3><br/></c:if>
+                                    <p>Address</p>
+                                    <input name="address" class="user-inf" value="${param.address != null ? param.address : user.address}" required/>
+                                <c:if test="${not empty error7}"><h3 style="color: red; text-align: center; width: 100%; margin: auto">${error7}</h3><br/></c:if>
+                                    <input class="update" type="submit" value="Update">
+                                </form>
+                        </c:when>
+                        <c:when test="${param.status == 'setting'}">
+                            <form method="POST" action="account-profile?status=setting">
+                                <p>Current password</p>
+                                <input type="password" name="current-password" class="user-inf" required/><br/>
+                                <c:if test="${not empty error}"><h3 style="color: red; text-align: center; width: 100%; margin: auto">${error}</h3><br/></c:if>
+                                    <p>New password</p>
+                                    <input type="password" name="newPassword" class="user-inf" required/><br/>
+                                <c:if test="${not empty error5}"><h3 style="color: red; text-align: center; width: 100%; margin: auto">${error5}</h3><br/></c:if>
+                                    <p>Verify new password</p>
+                                    <input type="password" name="rePassword" class="user-inf"  required/>
+                                <c:if test="${not empty error2}"><h3 style="color: red; text-align: center; width: 100%; margin: auto">${error2}</h3><br/></c:if>
+                                    <input class="update" type="submit" value="Update">
+                                </form>
+                        </c:when>
+                    </c:choose>
                 </div>
             </div>
+        </div>
         <jsp:include page="../screens/footer.jsp"></jsp:include>
 
             <script>
-                const profile = `<form method="POST" action="account-profile?status=profile">
-                            <p>Full name</p>
-                            <input name="fullName" class="user-inf" value="${user.fullName}" required/><br/>
-                            <p>Gender</p>
-                            <select name="gender" class="user-inf">
-            <c:choose>
-                <c:when test="${user.gender == null}">
-                <option value="#" selected>Gender</option>
-                </c:when>
-            </c:choose>
-                            <option value="0" ${user.gender=="1"?"selected":""}>Male</option>
-                            <option value="1" ${user.gender=="0"?"selected":""}>Female</option> 
-                            </select><br/>
-                            <p>Phone</p>
-                            <input name="phone" class="user-inf" value="${user.phone}" required/><br/>
-                            <p>Email</p>
-                            <input name="email" class="user-inf" value="${user.email}" required/><br/>  
-                            <p>Address</p>
-                            <input name="address" class="user-inf" value="${user.address}" required/>
-                            <input class="update" type="submit" value="Update">
-                        </form>
-            `;
-                const setting = `<form method="POST" action="account-profile?status=setting">
-                                <p>Current password</p>
-                                <input type="password" name="current-password" class="user-inf" required/><br/>
-            <c:if test="${not empty error}"><h3 style="color: red; text-align: center; width: 100%; margin: auto">${error}</h3><br/></c:if>
-                                <p>New password</p>
-                                <input type="password" name="newPassword" class="user-inf" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&\*]{8,31}$" required/><br/>
-                                <p>Verify new password</p>
-                                <input type="password" name="rePassword" class="user-inf" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&\*]{8,31}$" required/>
-            <c:if test="${not empty error2}"><h3 style="color: red; text-align: center; width: 100%; margin: auto">${error2}</h3><br/></c:if>
-                                <input class="update" type="submit" value="Update">
-                            </form>`;
-                const handleContentTwo = () => {
-                const rightContent = document.getElementById('right-content');
-                var queryString = window.location.search;
-                var urlParams = new URLSearchParams(queryString);
-                var status = urlParams.get('status');
-                if (status.includes("profile")) {
-                rightContent.innerHTML = profile;
-                } else if (status.includes("setting")) {
-                rightContent.innerHTML = setting;
-                }
-
-
             <% String updateSuccess = (String) session.getAttribute("updateSuccess"); %>
             <% if (updateSuccess != null) { %>
                 alert("<%= updateSuccess %>");
             <% session.removeAttribute("updateSuccess"); %>
             <% } %>
-                };
-                handleContentTwo();
         </script>
     </body>
 </html>

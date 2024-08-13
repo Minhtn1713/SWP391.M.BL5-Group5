@@ -28,7 +28,7 @@
             <div class="forgot_password">
                 <form action="forgot-password" method="post" id="InfomationForm">
                     <label for="username">User Name:</label>
-                    <input type="text" name="username" id="username" placeholder="Enter your username">
+                    <input type="text" name="username" id="username" placeholder="Enter your username" required>
                     <label for="question">Security Question:</label>
                     <select name="question" id="question">
                     <% 
