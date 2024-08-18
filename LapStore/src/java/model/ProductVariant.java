@@ -12,26 +12,26 @@ package model;
 public class ProductVariant {
     private int id;
     private int product_Id;
-    private String ram;
-    private String storage;
+    private int ram;
+    private int storage;
     private int quantity;
     private float variantPrice;
     private int sale_Id;
     private int status;
+    private int imgId;
 
     public ProductVariant() {
     }
 
-    public ProductVariant(int id, int product_Id, String ram, String storage, int quantity, float variantPrice,
-            int sale_Id, int status) {
+    public ProductVariant(int id, int product_Id, int ram, int storage, int quantity, float variantPrice,  int status, int sale_Id) {
         this.id = id;
         this.product_Id = product_Id;
         this.ram = ram;
         this.storage = storage;
         this.quantity = quantity;
         this.variantPrice = variantPrice;
-        this.sale_Id = sale_Id;
         this.status = status;
+        this.sale_Id = sale_Id;
     }
 
     public int getId() {
@@ -42,27 +42,27 @@ public class ProductVariant {
         this.id = id;
     }
 
-    public int getProductId() {
+    public int getProduct_Id() {
         return product_Id;
     }
 
-    public void setProductId(int productId) {
-        this.product_Id = productId;
+    public void setProduct_Id(int product_Id) {
+        this.product_Id = product_Id;
     }
 
-    public String getRam() {
+    public int getRam() {
         return ram;
     }
 
-    public void setRam(String ram) {
+    public void setRam(int ram) {
         this.ram = ram;
     }
 
-    public String getStorage() {
+    public int getStorage() {
         return storage;
     }
 
-    public void setStorage(String storage) {
+    public void setStorage(int storage) {
         this.storage = storage;
     }
 
@@ -82,12 +82,12 @@ public class ProductVariant {
         this.variantPrice = variantPrice;
     }
 
-    public int getSaleId() {
+    public int getSale_Id() {
         return sale_Id;
     }
 
-    public void setSaleId(int saleId) {
-        this.sale_Id = saleId;
+    public void setSale_Id(int sale_Id) {
+        this.sale_Id = sale_Id;
     }
 
     public int getStatus() {
@@ -97,4 +97,13 @@ public class ProductVariant {
     public void setStatus(int status) {
         this.status = status;
     }
+
+    public int getImgId() {
+        return imgId;
+    }
+
+    public void setImg(int img) {
+        this.imgId = imgId;
+    }
+
 }

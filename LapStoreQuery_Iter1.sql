@@ -9,7 +9,6 @@ END
 -- Create the database
 CREATE DATABASE [LapStore];
 USE [LapStore];
-
 GO
 --Create Role table
 CREATE TABLE [dbo].[Role] (
@@ -61,28 +60,52 @@ CREATE TABLE Product (
 	constraint FK_Product_Brand Foreign key (brand) references Brand(id)
 );
 
-
--- Create ProductImage table
-CREATE TABLE ProductImage (
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    url NVARCHAR(255)
+-- **Create RAM table first:**
+CREATE TABLE [dbo].[Ram](
+	[Id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[RAM] [varchar](max) NOT NULL,
+	[Price_Bonus] [decimal](10, 2) NOT NULL,
+	[Status] [int] NULL,
+	
 );
 
--- Create ProductVariant table
+CREATE TABLE [dbo].[Storage](
+	[Id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[Storage_Size] [varchar](10) NULL,
+	[Price_Bonus] [decimal](10, 2) NOT NULL,
+	[Status] [int] NULL,
+	
+	);
+CREATE TABLE [dbo].[Sale](
+	[Id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[Percent] [decimal](5, 2) NULL,
+	);
+GO
+-- **Now create ProductVariant table:**
 CREATE TABLE ProductVariant (
     id INT IDENTITY(1,1) PRIMARY KEY,
     product_id INT NOT NULL,
-    image_id INT NOT NULL,
-    RAM NVARCHAR(100),
-    storage NVARCHAR(50),
+    RAM_id INT NOT NULL,
+    Storage_id INT NOT NULL,
     quantity INT,
     variant_price DECIMAL(10, 2),
     sale_id INT,
+	img VARCHAR(max) NULL,
     status INT NOT NULL,
-    CONSTRAINT FK_ProductVariant_Product FOREIGN KEY (product_id) REFERENCES Product(id),
-    CONSTRAINT FK_ProductVariant_ProductImage FOREIGN KEY (image_id) REFERENCES ProductImage(id)
+	CONSTRAINT FK_ProductVariant_Product FOREIGN KEY (product_id) REFERENCES Product(id),
+	CONSTRAINT FK_ProductVariant_RAM FOREIGN KEY (RAM_id) REFERENCES dbo.RAM(Id), 
+	CONSTRAINT FK_ProductVariant_Storage FOREIGN KEY (Storage_id) REFERENCES Storage(Id),
+	CONSTRAINT FK_ProductVariant_Sale FOREIGN KEY (sale_id) REFERENCES Sale(Id)
 );
 GO
+CREATE TABLE [dbo].[ProductImage](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[Url] [varchar](max) NOT NULL,
+	[Product_Id] [int] NOT NULL,
+	[Ram_Id] [int] NOT NULL,
+	CONSTRAINT FK_ProductImage_Product FOREIGN KEY (Product_Id) REFERENCES Product(Id),
+	CONSTRAINT FK_ProductImage_RAM FOREIGN KEY (Ram_Id) REFERENCES RAM(Id)
+);
 CREATE TABLE [dbo].[Security](
 	[question_Id] [bigint],
 	[account_Id] [bigint] NOT NULL PRIMARY KEY,
@@ -131,15 +154,6 @@ VALUES
 
 -- Insert sample data into the ProductImage table
 GO
-SET IDENTITY_INSERT [dbo].[ProductImage] ON;
-INSERT INTO ProductImage (id, url)
-VALUES 
-(1, N'DellXPS13.jpg'),
-(2, N'MacBookPro14.jpg'),
-(3, N'HPSpectrex360.jpg'),
-(4, N'AsusROGZephyrusG14.jpg'),
-(5, N'LenovoThinkPadX1Carbon.jpg');
-SET IDENTITY_INSERT [dbo].[ProductImage] OFF;
 -- Insert Security questions
 GO
 SET IDENTITY_INSERT [dbo].[SecurityQuestion] ON;
@@ -162,3 +176,19 @@ SELECT * FROM Role
 SET IDENTITY_INSERT [dbo].[Account] ON;
 INSERT INTO Account(id, username, password, role_Id, isActive) VALUES (2, 'admin', 'admin@123', '1', '1');
 SET IDENTITY_INSERT [dbo].[Account] OFF;
+INSERT INTO dbo.Storage (Storage_Size, Price_Bonus, Status) VALUES
+('256GB SSD', 0.00, 1),
+('512GB SSD', 25.00, 1),
+('1TB SSD', 50.00, 1);
+INSERT INTO dbo.RAM (RAM, Price_Bonus, Status) VALUES
+('8GB DDR4', 0.00, 1),
+('16GB DDR5', 50.00, 1),
+('32GB DDR5', 100.00, 1);
+-- Insert into ProductVariant table
+INSERT INTO ProductVariant (product_id, RAM_id, Storage_id, quantity, variant_price, sale_id, img, status)
+VALUES 
+(1, 1, 1, 10, 1099.99, NULL, 'DellXPS13_Variant.jpg', 1),
+(2, 2, 2, 5, 2299.99, NULL, 'MacBookPro14_Variant.jpg', 1),
+(3, 1, 1, 20, 1399.99, NULL, 'HPSpectrex360_Variant.jpg', 1),
+(4, 1, 2, 8, 1599.99, NULL, 'AsusROGZephyrusG14_Variant.jpg', 1),
+(5, 1, 2, 12, 1899.99, NULL, 'LenovoThinkPadX1Carbon_Variant.jpg', 1);

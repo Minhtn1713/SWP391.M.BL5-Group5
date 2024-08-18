@@ -74,11 +74,11 @@
     </servlet>
     <servlet>
         <servlet-name>AdminColorListController</servlet-name>
-        <servlet-class>controller.AdminColorListController</servlet-class>
+        <servlet-class>controller.AdminRamListController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AdminHideColor</servlet-name>
-        <servlet-class>controller.AdminHideColor</servlet-class>
+        <servlet-class>controller.AdminHideRam</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AdminCreateColorController</servlet-name>
@@ -86,7 +86,7 @@
     </servlet>
     <servlet>
         <servlet-name>AdminUpdateColor</servlet-name>
-        <servlet-class>controller.AdminUpdateColor</servlet-class>
+        <servlet-class>controller.AdminUpdateRam</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AdminStorageLListController</servlet-name>

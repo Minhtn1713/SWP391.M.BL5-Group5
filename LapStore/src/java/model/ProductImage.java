@@ -6,20 +6,22 @@ package model;
 
 /**
  *
- * @author hieu
+ * @author kienk
  */
 public class ProductImage {
     private int id;
     private String url;
     private int productId;
+    private int colorId;
 
     public ProductImage() {
     }
 
-    public ProductImage(int id, String url, int productId) {
+    public ProductImage(int id, String url, int productId, int colorId) {
         this.id = id;
         this.url = url;
         this.productId = productId;
+        this.colorId = colorId;
     }
 
     public int getId() {
@@ -45,4 +47,13 @@ public class ProductImage {
     public void setProductId(int productId) {
         this.productId = productId;
     }
+
+    public int getColorId() {
+        return colorId;
+    }
+
+    public void setColorId(int colorId) {
+        this.colorId = colorId;
+    }
+    
 }
