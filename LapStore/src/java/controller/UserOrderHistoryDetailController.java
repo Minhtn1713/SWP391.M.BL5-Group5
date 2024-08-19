@@ -5,49 +5,58 @@
 
 package controller;
 
-import dao.AccountDBContext;
+import dao.OrderDAO;
+import dao.OrderDetailDAO;
+import dao.OrderHistoryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 import model.Account;
+import model.Order;
+import model.OrderHistory;
 
 /**
  *
  * @author lords
  */
-public class SignInController extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+public class UserOrderHistoryDetailController extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SignInController</title>");  
+            out.println("<title>Servlet UserOrderHistoryDetailController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SignInController at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet UserOrderHistoryDetailController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -55,13 +64,28 @@ public class SignInController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        request.getRequestDispatcher("screens/signIn.jsp").forward(request, response);
+            throws ServletException, IOException {
+         HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        if (account == null) {
+            request.getRequestDispatcher("sign-in").forward(request, response);
+        }else{
+            OrderDetailDAO odd = new OrderDetailDAO();
+            String orderId = request.getParameter("orderId");
+            OrderDAO od = new OrderDAO();
+            Order ord = od.getOrderByOrderId(Integer.parseInt(orderId));
+            OrderHistoryDAO ohd = new OrderHistoryDAO();
+            List<OrderHistory> ohList = ohd.getListOrderHistoryByOrderId(Integer.parseInt(orderId));
+            request.setAttribute("order", ord);
+            request.setAttribute("orderId", orderId);
+            request.setAttribute("ohList", ohList);
+            request.getRequestDispatcher("screens/User_OrderHistoryDetail.jsp").forward(request, response);
+        }
+    }
 
-    } 
-
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -69,29 +93,13 @@ public class SignInController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        
-        AccountDBContext accountDB = new AccountDBContext();
-        Account account = accountDB.Login(username, password);
-        
-        if (account != null) { 
-            HttpSession session = request.getSession();
-            session.setAttribute("account", account);
-            if ("1".equals(account.getRole_id())){
-                response.sendRedirect("admin-dashboard");
-            }else{
-                response.sendRedirect("home");
-            }            
-        } else {
-            request.setAttribute("error", "Invalid username or password");
-            request.getRequestDispatcher("screens/signIn.jsp").forward(request, response);
-        }
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

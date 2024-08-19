@@ -97,4 +97,20 @@ public class AccountDAO extends DBContext{
         }
         return null;
     }
+         public int getTotalCustomer(){
+         String sql = "select count(*) from [Account] where role_id = 2";
+         int total = 0;
+          try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                total = rs.getInt(1);
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return total;
+    }
 }

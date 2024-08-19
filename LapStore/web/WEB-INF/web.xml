@@ -137,10 +137,6 @@
         <servlet-class>controller.Admin_OrderDetail</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>MyCartController</servlet-name>
-        <servlet-class>controller.MyOrderController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>UserOrderHistoryDetailController</servlet-name>
         <servlet-class>controller.UserOrderHistoryDetailController</servlet-class>
     </servlet>
@@ -215,6 +211,14 @@
     <servlet>
         <servlet-name>DashboardController</servlet-name>
         <servlet-class>controller.DashboardController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MyOrderController</servlet-name>
+        <servlet-class>controller.MyOrderController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Admin_BrandListController</servlet-name>
+        <servlet-class>controller.Admin_BrandListController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AccountProfileController</servlet-name>
@@ -345,10 +349,6 @@
         <url-pattern>/admin-order-detail</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>MyCartController</servlet-name>
-        <url-pattern>/my-cart</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>UserOrderHistoryDetailController</servlet-name>
         <url-pattern>/order-history</url-pattern>
     </servlet-mapping>
@@ -423,6 +423,14 @@
     <servlet-mapping>
         <servlet-name>DashboardController</servlet-name>
         <url-pattern>/admin-dashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MyOrderController</servlet-name>
+        <url-pattern>/my-order</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Admin_BrandListController</servlet-name>
+        <url-pattern>/admin-brand-list</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

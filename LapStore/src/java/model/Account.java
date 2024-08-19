@@ -17,7 +17,6 @@ public class Account {
 
     public Account() {
     }
-
     public Account(int id, String username, String password, String role_id, boolean isActive) {
         this.id = id;
         this.username = username;
@@ -25,12 +24,14 @@ public class Account {
         this.role_id = role_id;
         this.isActive = isActive;
     }
+
     public Account(int id, String username, String password, String role_id) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.role_id = role_id;
     }
+
     public int getId() {
         return id;
     }
@@ -70,6 +71,5 @@ public class Account {
     public void setisActive(boolean isActive) {
         this.isActive = isActive;
     }
-    
-    
+
 }
