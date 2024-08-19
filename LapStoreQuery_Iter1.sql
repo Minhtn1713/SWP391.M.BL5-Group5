@@ -90,6 +90,7 @@ CREATE TABLE ProductVariant (
     quantity INT,
     variant_price DECIMAL(10, 2),
     sale_id INT NOT NULL,
+	img VARCHAR(max) NULL,
     status INT NOT NULL,
 	CONSTRAINT FK_ProductVariant_Product FOREIGN KEY (product_id) REFERENCES Product(id),
 	CONSTRAINT FK_ProductVariant_RAM FOREIGN KEY (RAM_id) REFERENCES dbo.RAM(Id), 
@@ -102,7 +103,7 @@ CREATE TABLE [dbo].[ProductImage](
 	[Url] [varchar](max) NOT NULL,
 	[Product_Id] [int] NOT NULL,
 	[Ram_Id] [int] NOT NULL,
-	CONSTRAINT FK_ProductImage_Product FOREIGN KEY (Product_Id) REFERENCES Product(id),
+	CONSTRAINT FK_ProductImage_Product FOREIGN KEY (Product_Id) REFERENCES Product(Id),
 	CONSTRAINT FK_ProductImage_RAM FOREIGN KEY (Ram_Id) REFERENCES RAM(Id)
 );
 CREATE TABLE [dbo].[Security](
@@ -197,10 +198,20 @@ INSERT [dbo].[Sale] ([Id], [Percent]) VALUES (10, CAST(32.00 AS Decimal(5, 2)))
 INSERT [dbo].[Sale] ([Id], [Percent]) VALUES (11, CAST(50.00 AS Decimal(5, 2)))
 SET IDENTITY_INSERT [dbo].[Sale] OFF  
 -- Insert into ProductVariant table
-INSERT INTO ProductVariant (product_id, RAM_id, Storage_id, quantity, variant_price, sale_id, status)
+INSERT INTO ProductVariant (product_id, RAM_id, Storage_id, quantity, variant_price,  img, sale_id, status)
 VALUES 
-(1, 1, 1, 10, 1099.99, 1,1),
-(2, 2, 2, 5, 2299.99,  1, 1),
-(3, 1, 1, 20, 1399.99,   1,1),
-(4, 1, 2, 8, 1599.99, 1, 1),
-(5, 1, 2, 12, 1899.99,1, 1);
+(1, 1, 1, 10, 1099.99, 'DellXPS13.jpg', 1,1),
+(2, 2, 2, 5, 2299.99,  'MacBookPro14.jpg',1, 1),
+(3, 1, 1, 20, 1399.99,  'HPSpectrex360.jpg', 1,1),
+(4, 1, 2, 8, 1599.99, 'AsusROGZephyrusG14.jpg',1, 1),
+(5, 1, 2, 12, 1899.99,'LenovoThinkPadX1Carbon.jpg',1, 1);
+
+SET IDENTITY_INSERT [dbo].[ProductImage] ON
+INSERT INTO [ProductImage] ([Id],[Url], [Product_Id], [Ram_Id])
+VALUES 
+(1, N'DellXPS13.jpg', 1,2),
+(2, N'MacBookPro14.jpg',1, 2),
+(3, N'HPSpectrex360.jpg', 1,2),
+(4, N'AsusROGZephyrusG14.jpg',1, 2),
+(5, N'LenovoThinkPadX1Carbon.jpg',1, 2);
+SET IDENTITY_INSERT [dbo].[ProductImage] OFF
