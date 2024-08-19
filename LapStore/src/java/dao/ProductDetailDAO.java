@@ -78,9 +78,9 @@ public class ProductDetailDAO extends DBContext {
     
     public List<Ram> getRamListById(int id){
         List<Ram> RamList = new ArrayList<>();
-        String query = "Select distinct r.id, r.Ram, r.price_bonus, c.status from ProductImage p join "
+        String query = "Select distinct r.id, r.RAM, r.price_bonus, r.status from ProductImage p join "
                 + " Ram r on p.RAM_Id = r.Id"
-                + " Where p.Product_id = ?";
+                + " Where p.product_id = ?";
         try{
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, id);

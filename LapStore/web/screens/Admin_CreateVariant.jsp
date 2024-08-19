@@ -51,7 +51,7 @@
                   <br />
                 <label for="ram">Ram</label><br />
                 <select id="ram" name="ram">
-                  <c:forEach items="${list_Ram}" var="c">
+                  <c:forEach items="${list_Ram}" var="r">
                   <option value="${r.id}">${r.name}</option>
                   
                   </c:forEach></select

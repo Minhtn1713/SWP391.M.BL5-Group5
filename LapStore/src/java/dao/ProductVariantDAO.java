@@ -28,7 +28,7 @@ public class ProductVariantDAO extends DBContext {
             String orderBy, List<String> filterRam, List<String> filterStorage,
             Range range, List<Integer> search, String filter) {
         List<ProductVariant> product = new ArrayList<>();
-        String query = "select * from ProductVariant"
+        String query = "select * from productVariant"
                 + " where 1=1";
         
         int min = range.getMin();
@@ -37,16 +37,16 @@ public class ProductVariantDAO extends DBContext {
         if (!filterRam.isEmpty()) {
             query += " and ";
             if (filterRam.size() == 1){
-                query+= "RAM_id =" + filterRam.get(0);
+                query+= "ram_id =" + filterRam.get(0);
             }
             if (filterRam.size()>1){
                 query+= "(";
             
             for (int i = 0; i < filterRam.size(); i++) {
                 if (i <=filterRam.size() - 2){
-                    query+="RAM_id = " + filterRam.get(i) + " or ";
+                    query+="ram_id = " + filterRam.get(i) + " or ";
                 }if (i == filterRam.size() -1){
-                    query+="RAM_id = " + filterRam.get(i) + ") ";
+                    query+="ram_id = " + filterRam.get(i) + ") ";
                 }
                
             }
@@ -55,17 +55,17 @@ public class ProductVariantDAO extends DBContext {
         if (!filterStorage.isEmpty()) {
             query += " and ";
             if (filterStorage.size() == 1){
-                query+= "Storage_id =" + filterStorage.get(0);
+                query+= "storage_id =" + filterStorage.get(0);
             }
             if (filterStorage.size()>1){
                 query+= "(";
             
             for (int i = 0; i < filterStorage.size(); i++) {              
                 if (i <=filterStorage.size() - 2){
-                    query+="Storage_id = " + filterStorage.get(i) + " or ";
+                    query+="storage_id = " + filterStorage.get(i) + " or ";
                 }
                 if (i == filterStorage.size() -1){
-                    query+="Storage_id = " + filterStorage.get(i) + ") ";
+                    query+="storage_id = " + filterStorage.get(i) + ") ";
                 }
                
             }
@@ -123,15 +123,14 @@ public class ProductVariantDAO extends DBContext {
         String query = "Select top(1) * from ProductImage "
                 + " Where productImage.product_id = ? ";
         if (!ramId.equals("")) {
-            query += " AND RAM_id =  " + ramId;
+            query += " AND ram_id =  " + ramId;
         }
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                return (new ProductImage(rs.getInt(1), rs.getString(2),
-                        rs.getInt(3), rs.getInt(4)));
+                return (new ProductImage(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4)));
             }
             ps.close();
             rs.close();
@@ -170,16 +169,16 @@ public class ProductVariantDAO extends DBContext {
         if (!filterRam.isEmpty()) {
             query += " and ";
             if (filterRam.size() == 1){
-                query+= "RAM_id =" + filterRam.get(0);
+                query+= "ram_id =" + filterRam.get(0);
             }
             if (filterRam.size()>1){
                 query+= "(";
             
             for (int i = 0; i < filterRam.size(); i++) {
                 if (i <=filterRam.size() - 2){
-                    query+="RAM_id = " + filterRam.get(i) + " or ";
+                    query+="ram_id = " + filterRam.get(i) + " or ";
                 }if (i == filterRam.size() -1){
-                    query+="RAM_id = " + filterRam.get(i) + ") ";
+                    query+="ram_id = " + filterRam.get(i) + ") ";
                 }
                
             }
@@ -188,17 +187,17 @@ public class ProductVariantDAO extends DBContext {
         if (!filterStorage.isEmpty()) {
             query += " and ";
             if (filterStorage.size() == 1){
-                query+= "Storage_id =" + filterStorage.get(0);
+                query+= "storage_id =" + filterStorage.get(0);
             }
             if (filterStorage.size()>1){
                 query+= "(";
             
             for (int i = 0; i < filterStorage.size(); i++) {              
                 if (i <=filterStorage.size() - 2){
-                    query+="Storage_id = " + filterStorage.get(i) + " or ";
+                    query+="storage_id = " + filterStorage.get(i) + " or ";
                 }
                 if (i == filterStorage.size() -1){
-                    query+="Storage_id = " + filterStorage.get(i) + ") ";
+                    query+="storage_id = " + filterStorage.get(i) + ") ";
                 }
                
             }
@@ -284,7 +283,7 @@ public class ProductVariantDAO extends DBContext {
 
     public List<Ram> getListRam() {
         List<Ram> ram = new ArrayList<>();
-        String query = "SELECT * FROM Ram";
+        String query = "SELECT * FROM ram";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
@@ -436,7 +435,7 @@ public class ProductVariantDAO extends DBContext {
     }
       
       public void updateAllProductVariantByStorage(String storage_id, String status){
-         String sql = "Update [ProductVariant] SET status ="+ status + " WHERE Storage_Id LIKE  '" + storage_id+ "'";
+         String sql = "Update [ProductVariant] SET status ="+ status + " WHERE Storage_id LIKE  '" + storage_id+ "'";
          try{
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.executeUpdate();
@@ -448,7 +447,7 @@ public class ProductVariantDAO extends DBContext {
     
     public int deleteProductVariant(String id){
         int succes = 0;
-         String sql = "Delete FROM [ProductVariant] WHERE Id LIKE  '" + id + "'";
+         String sql = "Delete FROM [ProductVariant] WHERE id LIKE  '" + id + "'";
          try{
             PreparedStatement ps = connection.prepareStatement(sql);
             succes = ps.executeUpdate();
@@ -462,10 +461,10 @@ public class ProductVariantDAO extends DBContext {
     public int updateProduct( ProductVariant pro_variant){
         int succes = 0;
         String query = "UPDATE [ProductVariant] SET RAM_id = " + pro_variant.getRamId() + 
-                                       ", Storage_Id = " + pro_variant.getStorageId() +
+                                       ", Storage_id = " + pro_variant.getStorageId() +
                                        ", quantity = " + pro_variant.getQuantity() +
-                                       ", variant_Price = " + pro_variant.getVariantPrice() +
-                                       " where Id = " + pro_variant.getId();
+                                       ", variant_price = " + pro_variant.getVariantPrice() +
+                                       " where id = " + pro_variant.getId();
           try{
             PreparedStatement ps = connection.prepareStatement(query);
             succes = ps.executeUpdate();
@@ -541,14 +540,14 @@ public class ProductVariantDAO extends DBContext {
     } 
 public List<ProductVariantInfomation> getListNameProductVariantById(List<Integer> id) {
     List<ProductVariantInfomation> product = new ArrayList<>();
-    String query = (
-        "SELECT pv.id AS productVariant_id, p.name AS product_name, r.ram AS ram_name, s.storage_Size AS storage_name, " +
+    String query = 
+        "SELECT pv.id AS productVariant_id, p.name AS product_name, r.ram AS ram_name, s.storage_Size AS storage_name,  pv.sale_id " +
         "FROM ProductVariant pv " +
         "JOIN product p ON pv.product_id = p.id " +
-        "JOIN ram r ON pv.ram_id = r.id " +
-        "JOIN storage s ON pv.storage_id = s.id "
+        "JOIN ram r ON pv.ram_id = r.Id " +
+        "JOIN storage s ON pv.storage_id = s.Id "
         + "WHERE "
-    );
+    ;
 
      if (!id.isEmpty()) {
             if (id.size() == 1){

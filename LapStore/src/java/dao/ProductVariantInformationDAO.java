@@ -16,9 +16,8 @@ import model.ProductVariantInfomation;
     public class ProductVariantInformationDAO extends DBContext {
     public ProductVariantInfomation getDetailInformation(int variantId) {
         ProductVariantInfomation list = null;
-        String query = "SELECT p.id, p.[name], p.processor, p.screen_details, p.operating_system, p.battery_life, p.graphic_card, p.img" +
-                       "v.RAM_id, v.Storage_Id v.quantity, v.variant_price,  v.status, v.sale_id \n" +
-                       "FROM Product p JOIN ProductVariant v ON p.id = v.product_id WHERE v.id = ?";
+        String query = "SELECT p.id, p.name, p.processor, p.screen_details, p.operating_system, p.battery_life, p.graphic_card, p.img, v.RAM_id, v.Storage_id, v.quantity, v.variant_price,  v.status, v.sale_id \n" +
+                       "FROM Product p JOIN ProductVariant v ON p.id = v.product_id WHERE v.id = " + variantId;; 
        try{
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();

@@ -55,7 +55,7 @@ public class RamDAO extends DBContext {
     
       public Ram getRambyId(int id){
         String query = "SELECT * FROM Ram"
-                + " Where id = ?";
+                + " Where Id = ?";
         try{
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, id);
@@ -88,10 +88,9 @@ public class RamDAO extends DBContext {
      
      public int updateRam(String id, String ram, float priceBonus){
         int succes = 0;
-        String query = "UPDATE [Ram] SET " +
-                                       " RAM= '" + ram +
+        String query = "UPDATE [Ram] SET RAM= '" + ram +
                                         "', price_bonus = " + priceBonus +
-                                       "' where id = " + id;
+                                       " where id = " + id;
           try{
             PreparedStatement ps = connection.prepareStatement(query);
             succes = ps.executeUpdate();
@@ -118,6 +117,6 @@ public class RamDAO extends DBContext {
      
      public static void main(String[] args) {
         RamDAO r = new RamDAO();
-        r.updateRam("13", "Yellow", 100);
+        r.updateRam("4", "Yellow", 100);
     }
 }
