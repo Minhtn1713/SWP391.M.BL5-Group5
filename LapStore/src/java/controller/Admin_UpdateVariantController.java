@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import model.RAM;
+import model.Ram;
 import model.Product;
 import model.ProductImage;
 import model.ProductVariant;
@@ -50,13 +50,13 @@ public class Admin_UpdateVariantController extends HttpServlet {
         }
         List<Product> list = proDao.getProductList();
         List<Storage> list_Storage = stoDao.getAllStorage();
-        List<RAM> list_Ram= ramDao.getAllRam();
+        List<Ram> list_Ram= ramDao.getAllRam();
         req.setAttribute("list_Storage", list_Storage);
         req.setAttribute("list_Ram", list_Ram);
         req.setAttribute("list", list);
 
         variant = variantDao.getProductVariantByID(product_id);
-        List<ProductImage> listImg = pdDao.getProductImage(variant.getProduct_Id(), variant.getRam() + "");
+        List<ProductImage> listImg = pdDao.getProductImage(variant.getProductId(), variant.getRamId() + "");
         String imgs = "";
         for (ProductImage productImage : listImg) {
             imgs += productImage.getUrl() + "|" + productImage.getId() + ",";
@@ -90,7 +90,7 @@ public class Admin_UpdateVariantController extends HttpServlet {
         ProductDAO pDao = new ProductDAO();
         Product product = pDao.getProductById(pro_id);
         ProductDetailDAO pdDao = new ProductDetailDAO();
-        RAM ram = pdDao.getRambyId(ram_id + "");
+        Ram ram = pdDao.getRambyId(ram_id + "");
         Storage sto = pdDao.getStoragebyId(storage_id + "");
         float price = product.getPrice() + ram.getPriceBonus() + sto.getPriceBonus();
 
@@ -111,7 +111,7 @@ public class Admin_UpdateVariantController extends HttpServlet {
         int success = varDao.updateProduct(var);
 
         if (success == 1) {
-            response.sendRedirect("/Durian_Shop/admin-variant-list");
+            response.sendRedirect("/LapStore/admin-variant-list");
         } else {
             response.sendRedirect("error-page");
         }

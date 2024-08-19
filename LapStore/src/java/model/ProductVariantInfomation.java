@@ -13,39 +13,33 @@ public class ProductVariantInfomation {
     private String name;
     private String processor;
     private String screenDetails;
-    private String size;
     private String operatingSystem;
     private String battery;
-    private float weight;
     private String graphicCard;
     private String url;
-    private int ram;
-    private int storage;
+    private String ram;
+    private String storage;
     private int quantity;
     private float variantPrice;
-    private int saleId;
     private int status;
     private float sale;
 
     public ProductVariantInfomation() {
     }
 
-    public ProductVariantInfomation(int id, String name, String processor, String screenDetails, String size, String operatingSystem, String battery, float weight, String graphicCard, String url, int ram, int storage, int quantity, float variantPrice, int saleId, int status, float sale) {
+    public ProductVariantInfomation(int id, String name, String processor, String screenDetails, String operatingSystem, String battery, String graphicCard, String url, String ram, String storage, int quantity, float variantPrice, int status, float sale) {
         this.id = id;
         this.name = name;
         this.processor = processor;
         this.screenDetails = screenDetails;
-        this.size = size;
         this.operatingSystem = operatingSystem;
         this.battery = battery;
-        this.weight = weight;
         this.graphicCard = graphicCard;
         this.url = url;
         this.ram = ram;
         this.storage = storage;
         this.quantity = quantity;
         this.variantPrice = variantPrice;
-        this.saleId = saleId;
         this.status = status;
         this.sale = sale;
     }
@@ -83,14 +77,6 @@ public class ProductVariantInfomation {
         this.screenDetails = screenDetails;
     }
 
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
-
     public String getOperatingSystem() {
         return operatingSystem;
     }
@@ -105,14 +91,6 @@ public class ProductVariantInfomation {
 
     public void setBattery(String battery) {
         this.battery = battery;
-    }
-
-    public float getWeight() {
-        return weight;
-    }
-
-    public void setWeight(float weight) {
-        this.weight = weight;
     }
 
     public String getGraphicCard() {
@@ -131,19 +109,19 @@ public class ProductVariantInfomation {
         this.url = url;
     }
 
-    public int getRam() {
+    public String getRam() {
         return ram;
     }
 
-    public void setRam(int ram) {
+    public void setRam(String ram) {
         this.ram = ram;
     }
 
-    public int getStorage() {
+    public String getStorage() {
         return storage;
     }
 
-    public void setStorage(int storage) {
+    public void setStorage(String storage) {
         this.storage = storage;
     }
 
@@ -163,14 +141,6 @@ public class ProductVariantInfomation {
         this.variantPrice = variantPrice;
     }
 
-    public int getSaleId() {
-        return saleId;
-    }
-
-    public void setSaleId(int saleId) {
-        this.saleId = saleId;
-    }
-
     public int getStatus() {
         return status;
     }
@@ -187,6 +157,4 @@ public class ProductVariantInfomation {
         this.sale = sale;
     }
 
-   
-   
 }

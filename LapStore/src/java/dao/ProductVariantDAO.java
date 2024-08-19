@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import model.RAM;
+import model.Ram;
 import model.ProductImage;
 import model.ProductVariant;
 import model.ProductVariantInfomation;
@@ -28,7 +28,7 @@ public class ProductVariantDAO extends DBContext {
             String orderBy, List<String> filterRam, List<String> filterStorage,
             Range range, List<Integer> search, String filter) {
         List<ProductVariant> product = new ArrayList<>();
-        String query = "select * from productVariant"
+        String query = "select * from ProductVariant"
                 + " where 1=1";
         
         int min = range.getMin();
@@ -37,16 +37,16 @@ public class ProductVariantDAO extends DBContext {
         if (!filterRam.isEmpty()) {
             query += " and ";
             if (filterRam.size() == 1){
-                query+= "Ram_id =" + filterRam.get(0);
+                query+= "RAM_id =" + filterRam.get(0);
             }
             if (filterRam.size()>1){
                 query+= "(";
             
             for (int i = 0; i < filterRam.size(); i++) {
                 if (i <=filterRam.size() - 2){
-                    query+="Ram_id = " + filterRam.get(i) + " or ";
+                    query+="RAM_id = " + filterRam.get(i) + " or ";
                 }if (i == filterRam.size() -1){
-                    query+="Ram_id = " + filterRam.get(i) + ") ";
+                    query+="RAM_id = " + filterRam.get(i) + ") ";
                 }
                
             }
@@ -55,17 +55,17 @@ public class ProductVariantDAO extends DBContext {
         if (!filterStorage.isEmpty()) {
             query += " and ";
             if (filterStorage.size() == 1){
-                query+= "storage_id =" + filterStorage.get(0);
+                query+= "Storage_id =" + filterStorage.get(0);
             }
             if (filterStorage.size()>1){
                 query+= "(";
             
             for (int i = 0; i < filterStorage.size(); i++) {              
                 if (i <=filterStorage.size() - 2){
-                    query+="storage_id = " + filterStorage.get(i) + " or ";
+                    query+="Storage_id = " + filterStorage.get(i) + " or ";
                 }
                 if (i == filterStorage.size() -1){
-                    query+="storage_id = " + filterStorage.get(i) + ") ";
+                    query+="Storage_id = " + filterStorage.get(i) + ") ";
                 }
                
             }
@@ -123,7 +123,7 @@ public class ProductVariantDAO extends DBContext {
         String query = "Select top(1) * from ProductImage "
                 + " Where productImage.product_id = ? ";
         if (!ramId.equals("")) {
-            query += " AND Ram_id =  " + ramId;
+            query += " AND RAM_id =  " + ramId;
         }
         try {
             PreparedStatement ps = connection.prepareStatement(query);
@@ -170,16 +170,16 @@ public class ProductVariantDAO extends DBContext {
         if (!filterRam.isEmpty()) {
             query += " and ";
             if (filterRam.size() == 1){
-                query+= "Ram_id =" + filterRam.get(0);
+                query+= "RAM_id =" + filterRam.get(0);
             }
             if (filterRam.size()>1){
                 query+= "(";
             
             for (int i = 0; i < filterRam.size(); i++) {
                 if (i <=filterRam.size() - 2){
-                    query+="Ram_id = " + filterRam.get(i) + " or ";
+                    query+="RAM_id = " + filterRam.get(i) + " or ";
                 }if (i == filterRam.size() -1){
-                    query+="Ram_id = " + filterRam.get(i) + ") ";
+                    query+="RAM_id = " + filterRam.get(i) + ") ";
                 }
                
             }
@@ -188,17 +188,17 @@ public class ProductVariantDAO extends DBContext {
         if (!filterStorage.isEmpty()) {
             query += " and ";
             if (filterStorage.size() == 1){
-                query+= "storage_id =" + filterStorage.get(0);
+                query+= "Storage_id =" + filterStorage.get(0);
             }
             if (filterStorage.size()>1){
                 query+= "(";
             
             for (int i = 0; i < filterStorage.size(); i++) {              
                 if (i <=filterStorage.size() - 2){
-                    query+="storage_id = " + filterStorage.get(i) + " or ";
+                    query+="Storage_id = " + filterStorage.get(i) + " or ";
                 }
                 if (i == filterStorage.size() -1){
-                    query+="storage_id = " + filterStorage.get(i) + ") ";
+                    query+="Storage_id = " + filterStorage.get(i) + ") ";
                 }
                
             }
@@ -246,7 +246,7 @@ public class ProductVariantDAO extends DBContext {
         return 0;
     }
 
-    public String getColorNameById(int id) {
+    public String getRamNameById(int id) {
         String query = "Select ram from ram "
                 + "Where id = ?";
         try {
@@ -265,7 +265,7 @@ public class ProductVariantDAO extends DBContext {
     }
 
     public String getStorageSizeById(int id) {
-        String query = "Select [Storage_Size] from [DURIAN_SHOP].[dbo].[Storage] "
+        String query = "Select [Storage_Size] from [LapStore].[dbo].[Storage] "
                 + "Where id = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
@@ -282,14 +282,14 @@ public class ProductVariantDAO extends DBContext {
         return null;
     }
 
-    public List<RAM> getListColor() {
-        List<RAM> ram = new ArrayList<>();
+    public List<Ram> getListRam() {
+        List<Ram> ram = new ArrayList<>();
         String query = "SELECT * FROM Ram";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                ram.add(new RAM(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getInt(5)));
+                ram.add(new Ram(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getInt(4)));
             }
             ps.close();
             rs.close();
@@ -353,7 +353,7 @@ public class ProductVariantDAO extends DBContext {
     
     public ProductVariant getProductVariant(String ramId, String productId, String storageId){
         ProductVariant product = new ProductVariant();
-        String sql = "SELECT * FROM [ProductVariant] WHERE product_id = " + productId + " and Ram_id = " +ramId+ " and storage_id = " + storageId;
+        String sql = "SELECT * FROM [ProductVariant] WHERE product_id = " + productId + " and RAM_id = " +ramId+ " and Storage_id = " + storageId;
          try{
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -370,7 +370,7 @@ public class ProductVariantDAO extends DBContext {
     
     public ProductVariant getColdProductVariant(){
         ProductVariant cold_product = new ProductVariant();
-        String sql = "select * from [ProductVariant] where Quantity = (select MAX(Quantity) from [ProductVariant]) ";
+        String sql = "select * from [ProductVariant] where quantity = (select MAX(quantity) from [ProductVariant]) ";
          try{
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -387,7 +387,7 @@ public class ProductVariantDAO extends DBContext {
     
      public List<ProductVariant> getListProductVariantByID(String id){
         List<ProductVariant> variant_list = new ArrayList<>();
-        String sql = "SELECT * FROM [ProductVariant] WHERE Product_Id LIKE  '" + id + "'";
+        String sql = "SELECT * FROM [ProductVariant] WHERE product_id LIKE  '" + id + "'";
          try{
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -403,7 +403,7 @@ public class ProductVariantDAO extends DBContext {
     } 
      
      public void deleteAllProductVariant(String product_id){
-         String sql = "Delete FROM [ProductVariant] WHERE Product_Id LIKE  '" + product_id + "'";
+         String sql = "Delete FROM [ProductVariant] WHERE product_id LIKE  '" + product_id + "'";
          try{
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.executeUpdate();
@@ -414,7 +414,7 @@ public class ProductVariantDAO extends DBContext {
     }
      
       public void updateAllProductVariant(String product_id, String status){
-         String sql = "Update [ProductVariant] SET status ="+ status + " WHERE Product_Id LIKE  '" + product_id + "'";
+         String sql = "Update [ProductVariant] SET status ="+ status + " WHERE product_id LIKE  '" + product_id + "'";
          try{
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.executeUpdate();
@@ -424,8 +424,8 @@ public class ProductVariantDAO extends DBContext {
         }
     }
       
-      public void updateAllProductVariantByColor(String Ram_id, String status){
-         String sql = "Update [ProductVariant] SET status ="+ status + " WHERE Ram_id LIKE  '" + Ram_id+ "'";
+      public void updateAllProductVariantByRam(String Ram_id, String status){
+         String sql = "Update [ProductVariant] SET status ="+ status + " WHERE RAM_id LIKE  '" + Ram_id+ "'";
          try{
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.executeUpdate();
@@ -436,7 +436,7 @@ public class ProductVariantDAO extends DBContext {
     }
       
       public void updateAllProductVariantByStorage(String storage_id, String status){
-         String sql = "Update [ProductVariant] SET status ="+ status + " WHERE storage_Id LIKE  '" + storage_id+ "'";
+         String sql = "Update [ProductVariant] SET status ="+ status + " WHERE Storage_Id LIKE  '" + storage_id+ "'";
          try{
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.executeUpdate();
@@ -461,10 +461,10 @@ public class ProductVariantDAO extends DBContext {
     
     public int updateProduct( ProductVariant pro_variant){
         int succes = 0;
-        String query = "UPDATE [ProductVariant] SET Ram_id = " + pro_variant.getRam() + 
-                                       ", Storage_Id = " + pro_variant.getStorage() +
-                                       ", Quantity = " + pro_variant.getQuantity() +
-                                       ", Variant_Price = " + pro_variant.getVariantPrice() +
+        String query = "UPDATE [ProductVariant] SET RAM_id = " + pro_variant.getRamId() + 
+                                       ", Storage_Id = " + pro_variant.getStorageId() +
+                                       ", quantity = " + pro_variant.getQuantity() +
+                                       ", variant_Price = " + pro_variant.getVariantPrice() +
                                        " where Id = " + pro_variant.getId();
           try{
             PreparedStatement ps = connection.prepareStatement(query);
@@ -478,9 +478,9 @@ public class ProductVariantDAO extends DBContext {
     
       public int updateProduct(String id, String status){
         int succes = 0;
-        String query = "UPDATE [ProductVariant] SET [Status] = " + status + 
+        String query = "UPDATE [ProductVariant] SET [status] = " + status + 
                                        
-                                       " where Id = " + id;
+                                       " where id = " + id;
           try{
             PreparedStatement ps = connection.prepareStatement(query);
             succes = ps.executeUpdate();
@@ -494,7 +494,7 @@ public class ProductVariantDAO extends DBContext {
         int succes = 0;
         String query = "UPDATE [ProductVariant] SET [sale_id] = " + sale + 
                                        
-                                       " where Id = " + id;
+                                       " where id = " + id;
           try{
             PreparedStatement ps = connection.prepareStatement(query);
             succes = ps.executeUpdate();
@@ -508,8 +508,8 @@ public class ProductVariantDAO extends DBContext {
     public int createVariant(ProductVariant pro_variant){
         int succes = 0;
         System.out.println(pro_variant);
-        String query = "INSERT INTO [ProductVariant]([Product_Id],[Ram_Id],[Storage_Id],[Quantity],[Variant_Price])"
-                + "values ('" + pro_variant.getProduct_Id() + "', '" + pro_variant.getRam() + "' ,'" + pro_variant.getStorage()
+        String query = "INSERT INTO [ProductVariant]([product_id],[RAM_id],[Storage_id],[quantity],[variant_price])"
+                + "values ('" + pro_variant.getProductId() + "', '" + pro_variant.getRamId() + "' ,'" + pro_variant.getStorageId()
                 + "' ,'" + pro_variant.getQuantity() + "', '" + pro_variant.getVariantPrice() + "')";
           try{
             PreparedStatement ps = connection.prepareStatement(query);
@@ -522,7 +522,7 @@ public class ProductVariantDAO extends DBContext {
     }
     
      public ProductVariant productVariantIsExist(int productId, int ramId, int storageId){
-        String sql = "SELECT * FROM [ProductVariant] WHERE product_Id = ? and Ram_id = ? and storage_id = ?";
+        String sql = "SELECT * FROM [ProductVariant] WHERE product_id = ? and RAM_id = ? and Storage_id = ?";
          try{
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, productId);
@@ -540,67 +540,65 @@ public class ProductVariantDAO extends DBContext {
          return null;
     } 
 public List<ProductVariantInfomation> getListNameProductVariantById(List<Integer> id) {
-    List<ProductVariantInfomation> productVariants = new ArrayList<>();
-    StringBuilder query = new StringBuilder(
+    List<ProductVariantInfomation> product = new ArrayList<>();
+    String query = (
         "SELECT pv.id AS productVariant_id, p.name AS product_name, r.ram AS ram_name, s.storage_Size AS storage_name, " +
-        "pv.processor, pv.screenDetails, pv.size, pv.operatingSystem, pv.battery, pv.weight, pv.graphicCard, " +
-        "pv.url, pv.quantity, pv.variantPrice, pv.sale_id, pv.status, pv.sale " +
         "FROM ProductVariant pv " +
         "JOIN product p ON pv.product_id = p.id " +
         "JOIN ram r ON pv.ram_id = r.id " +
-        "JOIN storage s ON pv.storage_id = s.id WHERE "
+        "JOIN storage s ON pv.storage_id = s.id "
+        + "WHERE "
     );
 
-    if (!id.isEmpty()) {
-        query.append("pv.id IN (");
-        for (int i = 0; i < id.size(); i++) {
-            query.append("?");
-            if (i < id.size() - 1) {
-                query.append(", ");
+     if (!id.isEmpty()) {
+            if (id.size() == 1){
+                query+= " pv.id =" + id.get(0);
+            }
+            if (id.size()>1){
+                query+= "(";
+            
+            for (int i = 0; i < id.size(); i++) {              
+                if (i <=id.size() - 2){
+                    query+="pv.id = " + id.get(i) + " or ";
+                }
+                if (i == id.size() -1){
+                    query+="pv.id = " + id.get(i) + ") ";
+                }
+               
+            }
             }
         }
-        query.append(")");
-    }
-
-    try (PreparedStatement ps = connection.prepareStatement(query.toString())) {
-        // Set the id parameters dynamically
-        for (int i = 0; i < id.size(); i++) {
-            ps.setInt(i + 1, id.get(i));
+         try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+            product.add(new ProductVariantInfomation(
+                rs.getInt(1),
+                rs.getString(2),
+                rs.getString(""),
+                rs.getString(""),
+                rs.getString(""),
+                rs.getString(""),
+                rs.getString(""),
+                rs.getString(""),
+                rs.getString(3),
+                rs.getString(4),
+                0,
+                0,
+                0, 
+                rs.getInt(5))
+            );
+      }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println(e);
         }
-
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            productVariants.add(new ProductVariantInfomation(
-                rs.getInt("productVariant_id"),
-                rs.getString("product_name"),
-                rs.getString("processor"),
-                rs.getString("screenDetails"),
-                rs.getString("size"),
-                rs.getString("operatingSystem"),
-                rs.getString("battery"),
-                rs.getFloat("weight"),
-                rs.getString("graphicCard"),
-                rs.getString("url"),
-                rs.getInt("ram_name"),
-                rs.getInt("storage_name"),
-                rs.getInt("quantity"),
-                rs.getFloat("variantPrice"),
-                rs.getInt("sale_id"),
-                rs.getInt("status"),
-                rs.getFloat("sale")
-            ));
-        }
-
-    } catch (SQLException e) {
-        System.out.println(e);
-    }
-
-    return productVariants;
-}
-
+        return product;
+     }
      public int getRemainById(int variantId) {
         int remain = 0;
-        String sql = "select [Quantity] from ProductVariant where [Id] = " + variantId;
+        String sql = "select [quantity] from ProductVariant where [id] = " + variantId;
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -617,7 +615,7 @@ public List<ProductVariantInfomation> getListNameProductVariantById(List<Integer
 
     public double getPriceById(int variantId) {
         double price = 0;
-        String sql = "select [Variant_Price] from ProductVariant where [Id] " + variantId;
+        String sql = "select [variant_price] from ProductVariant where [id] " + variantId;
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -634,7 +632,7 @@ public List<ProductVariantInfomation> getListNameProductVariantById(List<Integer
 
     public int minusQuantity(int id, int quantity) {
         int succes = 0;
-        String sql = "update [ProductVariant] set [Quantity] = [Quantity] - ? where Id = ?";
+        String sql = "update [ProductVariant] set [quantity] = [quantity] - ? where id = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, quantity);

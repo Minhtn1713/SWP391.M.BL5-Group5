@@ -11,27 +11,16 @@ package model;
  */
 public class ProductVariant {
     private int id;
-    private int product_Id;
-    private int ram;
-    private int storage;
+    private int productId;
+    private int ramId;
+    private int storageId;
     private int quantity;
     private float variantPrice;
-    private int sale_Id;
     private int status;
-    private int imgId;
+    private int sale_Id;
+    
 
     public ProductVariant() {
-    }
-
-    public ProductVariant(int id, int product_Id, int ram, int storage, int quantity, float variantPrice,  int status, int sale_Id) {
-        this.id = id;
-        this.product_Id = product_Id;
-        this.ram = ram;
-        this.storage = storage;
-        this.quantity = quantity;
-        this.variantPrice = variantPrice;
-        this.status = status;
-        this.sale_Id = sale_Id;
     }
 
     public int getId() {
@@ -42,28 +31,28 @@ public class ProductVariant {
         this.id = id;
     }
 
-    public int getProduct_Id() {
-        return product_Id;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setProduct_Id(int product_Id) {
-        this.product_Id = product_Id;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
-    public int getRam() {
-        return ram;
+    public int getRamId() {
+        return ramId;
     }
 
-    public void setRam(int ram) {
-        this.ram = ram;
+    public void setRamId(int ramId) {
+        this.ramId = ramId;
     }
 
-    public int getStorage() {
-        return storage;
+    public int getStorageId() {
+        return storageId;
     }
 
-    public void setStorage(int storage) {
-        this.storage = storage;
+    public void setStorageId(int storageId) {
+        this.storageId = storageId;
     }
 
     public int getQuantity() {
@@ -82,14 +71,6 @@ public class ProductVariant {
         this.variantPrice = variantPrice;
     }
 
-    public int getSale_Id() {
-        return sale_Id;
-    }
-
-    public void setSale_Id(int sale_Id) {
-        this.sale_Id = sale_Id;
-    }
-
     public int getStatus() {
         return status;
     }
@@ -98,12 +79,23 @@ public class ProductVariant {
         this.status = status;
     }
 
-    public int getImgId() {
-        return imgId;
+    public int getSale_Id() {
+        return sale_Id;
     }
 
-    public void setImg(int img) {
-        this.imgId = imgId;
+    public void setSale_Id(int sale_Id) {
+        this.sale_Id = sale_Id;
+    }
+
+    public ProductVariant(int id, int productId, int ramId, int storageId, int quantity, float variantPrice, int status, int sale_Id) {
+        this.id = id;
+        this.productId = productId;
+        this.ramId = ramId;
+        this.storageId = storageId;
+        this.quantity = quantity;
+        this.variantPrice = variantPrice;
+        this.status = status;
+        this.sale_Id = sale_Id;
     }
 
 }

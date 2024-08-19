@@ -8,16 +8,16 @@ package model;
  *
  * @author kienk
  */
-public class RAM {
+public class Ram {
     private int id;
     private String name;
     private float priceBonus;
     private int status;
 
-    public RAM() {
+    public Ram() {
     }
 
-    public RAM(int id, String name, float priceBonus, int status) {
+    public Ram(int id, String name, float priceBonus, int status) {
         this.id = id;
         this.name = name;
         this.priceBonus = priceBonus;

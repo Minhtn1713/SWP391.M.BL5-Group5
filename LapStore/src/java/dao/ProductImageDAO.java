@@ -54,8 +54,8 @@ public class ProductImageDAO extends DBContext {
 
     public int createImage(ProductImage img) {
         int success = 0;
-        String query = "Insert Into [ProductImage]([Url],[Product_Id],[Color_Id])"
-                + " values ('" + img.getUrl() + "', '" + img.getProductId() + "', '" + img.getColorId() + "')";
+        String query = "Insert Into [ProductImage]([Url],[Product_Id],[Ram_Id])"
+                + " values ('" + img.getUrl() + "', '" + img.getProductId() + "', '" + img.getRamId() + "')";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             success = ps.executeUpdate();
@@ -99,7 +99,7 @@ public class ProductImageDAO extends DBContext {
 
     public static void main(String[] args) {
         ProductImageDAO d = new ProductImageDAO();
-        ProductImage p = new ProductImage(0, "hello", 138, 6);
+        ProductImage p = new ProductImage(0, "hello", 5, 1);
         d.createImage(p);
     }
 }

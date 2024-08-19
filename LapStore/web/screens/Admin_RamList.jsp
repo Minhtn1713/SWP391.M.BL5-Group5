@@ -35,39 +35,35 @@
         <div class="overview">
           <div class="title">
             <i class="bx bx-palette icon"></i>
-            <span class="text">Color Dashboard</span>
+            <span class="text">Ram Dashboard</span>
           </div>
 
           <div class="boxes">
             <div class="recent-order">
               <div class="product-title">
-                <i class="bx bx-time icon"></i>&nbsp;Color
+                <i class="bx bx-time icon"></i>&nbsp;Ram
               </div>
-              <div class="product-add"><a  href="create-color">Add new Color</a></div>
+              <div class="product-add"><a  href="create-ram">Add new Ram</a></div>
               <div class="product-content">
                 <table>
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <th>Color</th>
-                      <th>Hex code</th>
-                      <th></th>
+                      <th>Ram</th>
                       <th>Price Bonus</th>
                       <th>Edit</th>
                       <th>Status</th>
                     </tr>
                   </thead>
                   <tbody>
-                  <c:forEach items="${color}" var="c">
+                  <c:forEach items="${ram}" var="r">
                     <tr>
-                      <td>${c.id}</td>
-                      <td>${c.name}</td>
-                      <td>${c.hexCode}</td>
-                      <td><canvas style="width: 100px; height: 100px; background-color: ${c.hexCode}"></canvas></td>
-                      <td>${c.priceBonus}$</td>
-                      <td><a href="update-color?id=${c.id}"><i class="bx bxs-edit-alt icon"></i></a></td>
-                      <td><c:if test="${c.status == 1}"><a href="admin-hide-color?id=${c.id}&sta=2"><i class='bx bx-show-alt icon'></i></a></c:if>
-                      <c:if test="${c.status != 1}"><a href="admin-hide-color?id=${c.id}&sta=1"><i class='bx bx-low-vision icon' ></i></a></c:if></td>
+                      <td>${r.id}</td>
+                      <td>${r.name}</td>
+                      <td>${r.priceBonus}$</td>
+                      <td><a href="update-ram?id=${r.id}"><i class="bx bxs-edit-alt icon"></i></a></td>
+                      <td><c:if test="${r.status == 1}"><a href="admin-hide-ram?id=${r.id}&sta=2"><i class='bx bx-show-alt icon'></i></a></c:if>
+                      <c:if test="${r.status != 1}"><a href="admin-hide-ram?id=${r.id}&sta=1"><i class='bx bx-low-vision icon' ></i></a></c:if></td>
                     </tr>
                     </c:forEach>
                     

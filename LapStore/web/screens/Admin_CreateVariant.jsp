@@ -49,8 +49,8 @@
                   </c:forEach>
                 </select>
                   <br />
-                <label for="ram">Ram</label><br />
-                <select id="ram" name="ram">
+                <label for="Ram">Ram</label><br />
+                <select id="Ram" name="Ram">
                   <c:forEach items="${list_Ram}" var="c">
                   <option value="${r.id}">${r.name}</option>
                   

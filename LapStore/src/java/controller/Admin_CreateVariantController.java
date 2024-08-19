@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-import model.RAM;
+import model.Ram;
 import model.Product;
 import model.ProductImage;
 import model.ProductVariant;
@@ -37,7 +37,7 @@ public class Admin_CreateVariantController extends HttpServlet {
 
         List<Product> list = proDao.getProductList();
         List<Storage> list_Storage = stoDao.getAllStorage();
-        List<RAM> list_Ram = ramDao.getAllRam();
+        List<Ram> list_Ram = ramDao.getAllRam();
 
         req.setAttribute("list", list);
         req.setAttribute("list_Storage", list_Storage);
@@ -57,7 +57,7 @@ public class Admin_CreateVariantController extends HttpServlet {
         ProductDAO pDao = new ProductDAO();
         Product product = pDao.getProductById(pro_id);
         ProductDetailDAO pdDao = new ProductDetailDAO();
-        RAM ram = pdDao.getRambyId(ram_id + "");
+        Ram ram = pdDao.getRambyId(ram_id + "");
         Storage sto = pdDao.getStoragebyId(storage_id + "");
         float price = product.getPrice() + ram.getPriceBonus() + sto.getPriceBonus();
         ProductVariantDAO varDao = new ProductVariantDAO();
@@ -73,7 +73,7 @@ public class Admin_CreateVariantController extends HttpServlet {
             int success = varDao.createVariant(var);
 
             if (success == 1) {
-                resp.sendRedirect("/Durian_Shop/admin-variant-list");
+                resp.sendRedirect("/LapStore/admin-variant-list");
             } else {
                 resp.sendRedirect("error-page");
             }

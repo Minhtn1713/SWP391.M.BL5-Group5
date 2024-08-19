@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import model.RAM;
+import model.Ram;
 
 /**
  *
@@ -21,7 +21,7 @@ import model.RAM;
 public class RamDAO extends DBContext {
     public Map<Integer, String> getHashMapRam(){
         Map<Integer, String> hashMap = new HashMap<>();
-        String query = "select Id, Ram from [Ram]";
+        String query = "select Id, RAM from [Ram]";
         try{
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
@@ -36,14 +36,14 @@ public class RamDAO extends DBContext {
         return hashMap;
     }
     
-    public List<RAM> getAllRam(){
-        List<RAM> list = new ArrayList<>();
+    public List<Ram> getAllRam(){
+        List<Ram> list = new ArrayList<>();
          String query = "select * from [Ram]";
         try{
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                list.add(new RAM(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getInt(5)));
+                list.add(new Ram(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getInt(4)));
             }
             ps.close();
             rs.close();
@@ -53,7 +53,7 @@ public class RamDAO extends DBContext {
         return list;
     }
     
-      public RAM getColorbyId(int id){
+      public Ram getRambyId(int id){
         String query = "SELECT * FROM Ram"
                 + " Where id = ?";
         try{
@@ -61,7 +61,7 @@ public class RamDAO extends DBContext {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                return new RAM(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getInt(5));
+                return new Ram(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getInt(4));
             }
             ps.close();
             rs.close();
@@ -71,7 +71,7 @@ public class RamDAO extends DBContext {
         return null;
     }
     
-     public int updateColor(String id, String status){
+     public int updateRam(String id, String status){
         int succes = 0;
         String query = "UPDATE [Ram] SET " +
                                        "status = " + status +
@@ -102,7 +102,7 @@ public class RamDAO extends DBContext {
           return succes;
     } 
      
-     public int createRAM(RAM ram) {
+     public int createRam(Ram ram) {
         int success = 0;
         String query = "Insert Into [Ram]([RAM],[price_bonus], [status])"
                 + " values ('" + ram.getName() + "', " + ram.getPriceBonus() + ", 1)";

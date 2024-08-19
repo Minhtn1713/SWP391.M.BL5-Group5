@@ -70,7 +70,7 @@ public class AdminHideStorageController extends HttpServlet {
         }
         int succes = sd.updateStorage(id, status);
         if (succes != 0) {
-            response.sendRedirect("/Durian_Shop/storage-list");
+            response.sendRedirect("/LapStore/storage-list");
         } else //todo: add error page
         {
             response.sendRedirect("error-page");

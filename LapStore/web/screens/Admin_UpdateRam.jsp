@@ -33,18 +33,18 @@
         <div class="overview">
           <div class="title">
             <i class="bx bx-mobile-alt icon"></i>
-            <span class="text">Color Dashboard</span>
+            <span class="text">Ram Dashboard</span>
           </div>
           <div class="boxes">
             <div class="add-form">
               <div class="product-title">
-                <i class="bx bx-palette icon"></i>&nbsp;Update color
+                <i class="bx bx-palette icon"></i>&nbsp;Update ram
               </div>
               <hr />
-              <form class="add-product" action="update-color" method="POST">
-                  <input type="hidden" id="colorId" name="colorId" value="${colorId}" />
-                <label for="color">Color</label><br />
-                <input type="text" id="color" name="color" value="${color}" required /><br />
+              <form class="add-product" action="update-ram" method="POST">
+                  <input type="hidden" id="ramId" name="ramId" value="${ramId}" />
+                <label for="ram">Ram</label><br />
+                <input type="text" id="ram" name="ram" value="${ram}" required /><br />
                 <label for="hex">Hex Code</label><br />
                 <input type="text" id="hex" name="hex" value="${hex}" required /><br />
                 <label for="price">Price Bonus</label><br />

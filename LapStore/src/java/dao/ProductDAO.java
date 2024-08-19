@@ -97,6 +97,36 @@ public class ProductDAO extends DBContext {
     }
     return null;
 }
+        public Product getProductByID(String id) {
+        String query = "SELECT * FROM Product WHERE id = ?";
+        try (Connection conn = connection;
+         PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return new Product(
+                    rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getString("img"),
+                    rs.getInt("brand"),
+                    rs.getFloat("price"),
+                    rs.getString("processor"),
+                    rs.getString("graphic_card"),
+                    rs.getString("screen_details"),
+                    rs.getString("size"),
+                    rs.getFloat("weight"),
+                    rs.getString("operating_system"),
+                    rs.getString("battery_life"),
+                    rs.getString("description"),
+                    rs.getInt("status")
+                );
+            }
+        }
+    } catch (SQLException e) {
+        System.err.println("Error fetching product by ID: " + e.getMessage());
+    }
+    return null;
+}
 
 
     public int updateProduct(int id, Product product) {

@@ -53,7 +53,7 @@
                                             <th><input type="checkbox" id="check-all"/></th>
                                             <th>Image</th>
                                             <th>Name</th>
-                                            <th>RAM</th>
+                                            <th>Ram</th>
                                             <th>Storage</th>
                                             <th>Quantity</th>
                                             <th>Price</th>
@@ -70,7 +70,7 @@
                                                 <td>
                                                     <img
                                                         src="img/${p.url}"
-                                                        alt="iphone"
+                                                       
                                                         width="200px"
                                                         />
                                                 </td>

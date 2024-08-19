@@ -12,16 +12,9 @@ public class ProductImage {
     private int id;
     private String url;
     private int productId;
-    private int colorId;
+    private int ramId;
 
     public ProductImage() {
-    }
-
-    public ProductImage(int id, String url, int productId, int colorId) {
-        this.id = id;
-        this.url = url;
-        this.productId = productId;
-        this.colorId = colorId;
     }
 
     public int getId() {
@@ -48,12 +41,20 @@ public class ProductImage {
         this.productId = productId;
     }
 
-    public int getColorId() {
-        return colorId;
+    public int getRamId() {
+        return ramId;
     }
 
-    public void setColorId(int colorId) {
-        this.colorId = colorId;
+    public void setRamId(int ramId) {
+        this.ramId = ramId;
     }
+
+    public ProductImage(int id, String url, int productId, int ramId) {
+        this.id = id;
+        this.url = url;
+        this.productId = productId;
+        this.ramId = ramId;
+    }
+
     
 }

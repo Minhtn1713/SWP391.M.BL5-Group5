@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Product;
 import model.ProductImage;
-import model.RAM;
+import model.Ram;
 import model.Storage;
 
 /**
@@ -30,21 +30,20 @@ public class ProductDetailDAO extends DBContext {
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 return new Product(
-                    rs.getInt("id"),
-                    rs.getString("name"),
-                    rs.getString("img"),
-                    rs.getInt("brand"), 
-                    rs.getFloat("price"),       
-                    rs.getString("processor"),
-                    rs.getString("graphic_card"),
-                    rs.getString("screen_details"),
-                    rs.getString("size"),
-                    rs.getFloat("weight"),
-                    rs.getString("operating_system"),
-                    rs.getString("battery_life"),
-                    rs.getString("description"),
-                    rs.getString("brand_name"),
-                    rs.getInt("status"));
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getInt(4), 
+                    rs.getFloat(5),       
+                    rs.getString(6),
+                    rs.getString(7),
+                    rs.getString(8),
+                    rs.getString(9),
+                    rs.getFloat(10),
+                    rs.getString(11),
+                    rs.getString(12),
+                    rs.getString(13),
+                    rs.getInt(14));
             }
             ps.close();
             rs.close();
@@ -54,12 +53,12 @@ public class ProductDetailDAO extends DBContext {
         return null;
     }
     
-    public List<ProductImage> getProductImage(int id, String RamId){
+    public List<ProductImage> getProductImage(int id, String ramId){
         List<ProductImage> pImage = new ArrayList<>();
         String query = "Select * from ProductImage "
                 + " Where productImage.product_id = ? ";
-        if (!RamId.equals("")){
-                query+= " AND Ram_id =  " + RamId;
+        if (!ramId.equals("")){
+                query+= " AND ram_id =  " + ramId;
             }
         try{
             PreparedStatement ps = connection.prepareStatement(query);
@@ -77,17 +76,17 @@ public class ProductDetailDAO extends DBContext {
         return pImage;
     }
     
-    public List<RAM> getRamListById(int id){
-        List<RAM> RamList = new ArrayList<>();
+    public List<Ram> getRamListById(int id){
+        List<Ram> RamList = new ArrayList<>();
         String query = "Select distinct r.id, r.Ram, r.price_bonus, c.status from ProductImage p join "
-                + " Ram r on p.Ram_Id = r.Id"
+                + " Ram r on p.RAM_Id = r.Id"
                 + " Where p.Product_id = ?";
         try{
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                RamList.add(new RAM(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getInt(5)));
+                RamList.add(new Ram(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getInt(5)));
             }
             ps.close();
             rs.close();
@@ -120,7 +119,7 @@ public class ProductDetailDAO extends DBContext {
     public int getRamIdByName(String name){
         int id;
         String query = "Select id from Ram "
-                + "Where Ram = ?";
+                + "Where RAM = ?";
         try{
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, name);
@@ -170,15 +169,15 @@ public class ProductDetailDAO extends DBContext {
         return null;
     }
     
-    public RAM getRambyId(String id){
-        String query = "SELECT * FROM Ram"
+    public Ram getRambyId(String id){
+        String query = "SELECT * FROM ram"
                 + " Where id = ?";
         try{
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, id);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                return new RAM(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getInt(5));
+                return new Ram(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getInt(5));
             }
             ps.close();
             rs.close();
@@ -189,15 +188,15 @@ public class ProductDetailDAO extends DBContext {
     }
     
     
-    public static void main(String[] args) {
-        ProductDetailDAO d = new ProductDetailDAO();
-        Product p = d.getProductbyName("iphone 14 pro");
-        String rid = d.getRamIdByName("purple") + "";
+//    public static void main(String[] args) {
+//        ProductDetailDAO d = new ProductDetailDAO();
+//        Product p = d.getProductbyName("iphone 14 pro");
+//        String rid = d.getRamIdByName("purple") + "";
 //        List<Storage> s = d.getAllStorageList();
 //        for (Storage storage : s) {
 //            System.out.println(storage.getStorageSize());
 //        }
-        
-    }
+//        
+//}
     
 }

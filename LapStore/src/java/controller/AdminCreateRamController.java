@@ -5,19 +5,16 @@
 package controller;
 
 import dao.RamDAO;
-import dao.ProductDAO;
-import dao.ProductVariantDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
-import model.ProductVariant;
+import model.Ram;
 
 
-public class AdminHideRam extends HttpServlet {
+public class AdminCreateRamController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,10 +33,10 @@ public class AdminHideRam extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AdminHideRam</title>");
+            out.println("<title>Servlet AdminCreateColorController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AdminHideRam at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AdminCreateColorController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,40 +54,26 @@ public class AdminHideRam extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ProductVariantDAO variantDao = new ProductVariantDAO();
-        ProductDAO productDao = new ProductDAO();
-        RamDAO ramD = new RamDAO();
-
-        String id = (String) request.getParameter("id");
-        String status = (String) request.getParameter("sta");
-        List<ProductVariant> list = variantDao.getListProductVariantByID(id);
-        if (!list.isEmpty()) {
-            variantDao.updateAllProductVariantByRam(id, status);
-        }
-        int succes = ramD.updateRam(id, status);
-        if (succes != 0) {
-            response.sendRedirect("/LapStore/ram-list");
-        } else //todo: add error page
-        {
-            response.sendRedirect("error-page");
-        }
-
+        request.getRequestDispatcher("screens/Admin_CreateRam.jsp").forward(request, response);
     }
 
-
-
-/**
- * Handles the HTTP <code>POST</code> method.
- *
- * @param request servlet request
- * @param response servlet response
- * @throws ServletException if a servlet-specific error occurs
- * @throws IOException if an I/O error occurs
- */
-@Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        RamDAO rd = new RamDAO ();
+        String ram = request.getParameter("ram");
+        float priceBonus = Float.parseFloat(request.getParameter("price"));
+        Ram r = new Ram(0, ram, priceBonus, 1);
+        rd.createRam(r);
+        response.sendRedirect("ram-list");
     }
 
     /**
@@ -99,7 +82,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
      * @return a String containing servlet description
      */
     @Override
-public String getServletInfo() {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 
