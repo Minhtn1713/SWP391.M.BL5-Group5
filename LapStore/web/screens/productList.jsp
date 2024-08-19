@@ -15,6 +15,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Shadows+Into+Light&display=swap" rel="stylesheet"/>
         <!-- Favicon -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
     <body>
         <div class="header-container">
@@ -27,32 +28,36 @@
                         <!-- Filter and Search Section -->
                         <div class="filter-section">
                             <!-- Search by Name -->
+                            <!-- Search by Name -->
                             <div class="search-box">
-                                <form action="ProductListController" method="get">
-                                    <input type="hidden" name="items-per-page" value="${itemsPerPage}">
-                                <input type="hidden" name="sort-by" value="${sortBy}">
-                                <input type="text" name="search" placeholder="Search by name" value="${param.search}">
-                                <button type="submit">Search</button>
-                            </form>
+                                <input type="text" id="search" name="search" placeholder="Search by name" value="${param.search}">
                         </div>
-
 
                         <!-- Product Status Filter -->
                         <div class="status-filter">
-                            <form action="ProductListController" method="get">
-                                <input type="hidden" name="items-per-page" value="${itemsPerPage}">
-                                <input type="hidden" name="sort-by" value="${sortBy}">
-                                <fieldset>
-                                    <legend>Status</legend>
-                                    <label><input type="radio" name="status" value="all" ${param.status == 'all' ? 'checked' : ''}> All</label>
-                                    <label><input type="radio" name="status" value="in-stock" ${param.status == 'in-stock' ? 'checked' : ''}> In Stock</label>
-                                    <label><input type="radio" name="status" value="out-of-stock" ${param.status == 'out-of-stock' ? 'checked' : ''}> Out of Stock</label>
-                                </fieldset>
-                                <button type="submit">Filter</button>
-                            </form>
+                            <fieldset>
+                                <legend>Status</legend>
+                                <label><input type="radio" name="status" value="all" ${param.status == 'all' ? 'checked' : ''}> All</label>
+                                <label><input type="radio" name="status" value="in-stock" ${param.status == 'in-stock' ? 'checked' : ''}> In Stock</label>
+                                <label><input type="radio" name="status" value="out-of-stock" ${param.status == 'out-of-stock' ? 'checked' : ''}> Out of Stock</label>
+                            </fieldset>
                         </div>
-                                
-                                
+
+                        <!-- Price Filter -->
+                        <div class="price-filter">
+                            <fieldset>
+                                <legend>Price</legend>
+                                <label><input type="radio" name="price" value="under-500" ${param.price == 'under-500' ? 'checked' : ''}> Under $500</label><br>
+                                <label><input type="radio" name="price" value="500-1000" ${param.price == '500-1000' ? 'checked' : ''}> $500 - $1000</label><br>
+                                <label><input type="radio" name="price" value="1000-1500" ${param.price == '1000-1500' ? 'checked' : ''}> $1000 - $1500</label><br>
+                                <label><input type="radio" name="price" value="1500-2000" ${param.price == '1500-2000' ? 'checked' : ''}> $1500 - $2000</label><br>
+                                <label><input type="radio" name="price" value="2000-2500" ${param.price == '2000-2500' ? 'checked' : ''}> $2000 - $2500</label><br>
+                                <label><input type="radio" name="price" value="over-2500" ${param.price == 'over-2500' ? 'checked' : ''}> Over $2500</label>
+                            </fieldset>
+                        </div>
+
+
+
                     </div>
                 </div>
 
@@ -128,5 +133,56 @@
             </div>
         </div>
         <jsp:include page="../screens/footer.jsp"></jsp:include>
+            <script>
+                $(document).ready(function () {
+                    // Function to handle AJAX call
+                    function fetchProducts() {
+                        $.ajax({
+                            url: 'ProductListController',
+                            type: 'GET',
+                            data: {
+                                search: $('#search').val(),
+                                status: $('input[name="status"]:checked').val(),
+                                itemsPerPage: $('select[name="items-per-page"]').val(),
+                                sortBy: $('#sort-by').val(),
+                                page: ${currentPage},
+                                price: $('input[name="price"]:checked').val()  // Get the selected price range
+                            },
+                            success: function (response) {
+                                $('.right-container').html($(response).find('.right-container').html());
+                                $('#pagination').html($(response).find('#pagination').html());
+                            }
+                        });
+                    }
+
+                    // Trigger AJAX on search input change
+                    $('#search').on('keyup', function () {
+                        fetchProducts();
+                    });
+
+                    // Trigger AJAX on status filter change
+                    $('input[name="status"]').on('change', function () {
+                        fetchProducts();
+                    });
+
+                    // Trigger AJAX on price filter change
+                    $('input[name="price"]').on('change', function () {
+                        fetchProducts();
+                    });
+
+                    // Trigger AJAX on items per page change
+                    $('select[name="items-per-page"]').on('change', function () {
+                        fetchProducts();
+                    });
+
+                    // Trigger AJAX on sort by change
+                    $('#sort-by').on('change', function () {
+                        fetchProducts();
+                    });
+                });
+        </script>
+
+
+
     </body>
 </html>

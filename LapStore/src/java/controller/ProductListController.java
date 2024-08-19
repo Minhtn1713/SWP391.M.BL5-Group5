@@ -34,20 +34,20 @@ public class ProductListController extends HttpServlet {
         String search = request.getParameter("search");
         if (search != null && !search.trim().isEmpty()) {
             allProducts = allProducts.stream()
-                .filter(p -> p.getName().toLowerCase().contains(search.toLowerCase()))
-                .collect(Collectors.toList());
+                    .filter(p -> p.getName().toLowerCase().contains(search.toLowerCase()))
+                    .collect(Collectors.toList());
         }
 
         // Get status parameter
         String status = request.getParameter("status");
         if ("in-stock".equals(status)) {
             allProducts = allProducts.stream()
-                .filter(p -> p.getStatus() == 1)
-                .collect(Collectors.toList());
+                    .filter(p -> p.getStatus() == 1)
+                    .collect(Collectors.toList());
         } else if ("out-of-stock".equals(status)) {
             allProducts = allProducts.stream()
-                .filter(p -> p.getStatus() == 0)
-                .collect(Collectors.toList());
+                    .filter(p -> p.getStatus() == 0)
+                    .collect(Collectors.toList());
         }
 
         // Get size filter parameter
@@ -55,8 +55,8 @@ public class ProductListController extends HttpServlet {
         if (sizes != null && sizes.length > 0) {
             List<String> sizeList = Arrays.asList(sizes);
             allProducts = allProducts.stream()
-                .filter(p -> sizeList.contains(p.getSize()))
-                .collect(Collectors.toList());
+                    .filter(p -> sizeList.contains(p.getSize()))
+                    .collect(Collectors.toList());
         }
 
         // Get sorting parameter
@@ -85,6 +85,42 @@ public class ProductListController extends HttpServlet {
             default:
                 // Fallback for any unsupported sort-by value
                 break;
+        }
+
+        String priceRange = request.getParameter("price");
+        if (priceRange != null && !priceRange.trim().isEmpty()) {
+            switch (priceRange) {
+                case "under-500":
+                    allProducts = allProducts.stream()
+                            .filter(p -> p.getPrice() < 500)
+                            .collect(Collectors.toList());
+                    break;
+                case "500-1000":
+                    allProducts = allProducts.stream()
+                            .filter(p -> p.getPrice() >= 500 && p.getPrice() <= 1000)
+                            .collect(Collectors.toList());
+                    break;
+                case "1000-1500":
+                    allProducts = allProducts.stream()
+                            .filter(p -> p.getPrice() >= 1000 && p.getPrice() <= 1500)
+                            .collect(Collectors.toList());
+                    break;
+                case "1500-2000":
+                    allProducts = allProducts.stream()
+                            .filter(p -> p.getPrice() >= 1500 && p.getPrice() <= 2000)
+                            .collect(Collectors.toList());
+                    break;
+                case "2000-2500":
+                    allProducts = allProducts.stream()
+                            .filter(p -> p.getPrice() >= 2000 && p.getPrice() <= 2500)
+                            .collect(Collectors.toList());
+                    break;
+                case "over-2500":
+                    allProducts = allProducts.stream()
+                            .filter(p -> p.getPrice() > 2500)
+                            .collect(Collectors.toList());
+                    break;
+            }
         }
 
         // Pagination parameters
@@ -124,5 +160,3 @@ public class ProductListController extends HttpServlet {
         request.getRequestDispatcher("screens/productList.jsp").forward(request, response);
     }
 }
-
-
