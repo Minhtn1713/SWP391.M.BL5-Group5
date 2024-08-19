@@ -50,6 +50,38 @@ public class ProductDAO extends DBContext {
         }
         return productList;
     }
+ public List<Product> getListProduct() {
+        List<Product> productList = new ArrayList<>();
+        String query = "SELECT p.id, p.name, p.img,  p.price, p.processor, p.graphic_card, "
+                + "p.screen_details, p.size, p.weight, p.operating_system, p.battery_life, p.status,"
+                + " p.description, p.status Where price <= 1000";
+
+        try (Connection conn = connection;
+             PreparedStatement ps = conn.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                productList.add(new Product(
+                    rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getString("img"),
+                    rs.getFloat("price"),       
+                    rs.getString("processor"),
+                    rs.getString("graphic_card"),
+                    rs.getString("screen_details"),
+                    rs.getString("size"),
+                    rs.getFloat("weight"),
+                    rs.getString("operating_system"),
+                    rs.getString("battery_life"),
+                    rs.getString("description"),
+                    rs.getInt("status")
+                ));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching product list: " + e.getMessage());
+        }
+        return productList;
+    }
 
     public Map<Integer, String> getHashMapProduct() {
         Map<Integer, String> hashMap = new HashMap<>();

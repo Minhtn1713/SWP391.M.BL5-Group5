@@ -215,3 +215,4 @@ VALUES
 (4, N'AsusROGZephyrusG14.jpg',1, 2),
 (5, N'LenovoThinkPadX1Carbon.jpg',1, 2);
 SET IDENTITY_INSERT [dbo].[ProductImage] OFF
+SELECT * FROM Ram Where Id = 1

@@ -91,7 +91,7 @@ public class Admin_ProductVariantListController extends HttpServlet {
         RamDAO ramDao = new RamDAO();
 
          String id = (String) req.getParameter("pro");
-        List<Product> list = proDao.getProductList();
+        List<Product> list = proDao.getListProduct();
         List<ProductVariant> list_variant = variantDao.getListProductVariantByID("%%");
         if(id != "%%")
             list_variant = variantDao.getListProductVariantByID(id);

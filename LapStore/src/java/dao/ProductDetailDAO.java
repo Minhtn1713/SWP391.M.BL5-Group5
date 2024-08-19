@@ -78,9 +78,9 @@ public class ProductDetailDAO extends DBContext {
     
     public List<Ram> getRamListById(int id){
         List<Ram> RamList = new ArrayList<>();
-        String query = "Select distinct r.id, r.RAM, r.price_bonus, r.status from ProductImage p join "
-                + " Ram r on p.RAM_Id = r.Id"
-                + " Where p.product_id = ?";
+        String query = "Select distinct r.id, r.ram, r.price_bonus, r.status from ProductImage p join "
+                + " Ram r on p.Ram_Id = r.Id"
+                + " Where p.Product_Id = ?";
         try{
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, id);
@@ -119,7 +119,7 @@ public class ProductDetailDAO extends DBContext {
     public int getRamIdByName(String name){
         int id;
         String query = "Select id from Ram "
-                + "Where RAM = ?";
+                + "Where ram = ?";
         try{
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, name);
@@ -153,7 +153,7 @@ public class ProductDetailDAO extends DBContext {
     }
     public Storage getStoragebyId(String id){
         String query = "SELECT * FROM storage"
-                + " Where id = ?";
+                + " Where Id = ?";
         try{
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, id);
@@ -171,7 +171,7 @@ public class ProductDetailDAO extends DBContext {
     
     public Ram getRambyId(String id){
         String query = "SELECT * FROM Ram"
-                + " Where id = ?";
+                + " Where Id = ?";
         try{
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, id);
@@ -188,15 +188,15 @@ public class ProductDetailDAO extends DBContext {
     }
     
     
-//    public static void main(String[] args) {
-//        ProductDetailDAO d = new ProductDetailDAO();
-//        Product p = d.getProductbyName("iphone 14 pro");
-//        String rid = d.getRamIdByName("purple") + "";
-//        List<Storage> s = d.getAllStorageList();
-//        for (Storage storage : s) {
-//            System.out.println(storage.getStorageSize());
-//        }
-//        
-//}
+    public static void main(String[] args) {
+        ProductDetailDAO d = new ProductDetailDAO();
+        Product p = d.getProductbyName("iphone 14 pro");
+        String rid = d.getRamIdByName("purple") + "";
+        List<Storage> s = d.getAllStorageList();
+        for (Storage storage : s) {
+            System.out.println(storage.getStorageSize());
+        }
+        
+}
     
 }
