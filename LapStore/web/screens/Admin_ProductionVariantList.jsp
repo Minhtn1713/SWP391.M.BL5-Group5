@@ -78,7 +78,7 @@
                                                 <td>${p.ram}</td>
                                                 <td>${p.storage}</td>
                                                 <td>${p.quantity}</td>
-                                                <td>0$</td>
+                                                <td>$0</td>
                                                 <td>${p.sale == 0?"None":p.sale}${p.sale == 0?"":"%"}</td>
                                                 <td>0$</td>
                                                 <td><a href="admin-update-variant?id=${p.id}"><i class="bx bxs-edit-alt icon"></i></a></td>
