@@ -89,7 +89,7 @@ CREATE TABLE ProductVariant (
     Storage_id INT NOT NULL,
     quantity INT,
     variant_price DECIMAL(10, 2),
-    sale_id INT,
+    sale_id INT NOT NULL,
 	img VARCHAR(max) NULL,
     status INT NOT NULL,
 	CONSTRAINT FK_ProductVariant_Product FOREIGN KEY (product_id) REFERENCES Product(id),
@@ -184,11 +184,24 @@ INSERT INTO dbo.RAM (RAM, Price_Bonus, Status) VALUES
 ('8GB DDR4', 0.00, 1),
 ('16GB DDR5', 50.00, 1),
 ('32GB DDR5', 100.00, 1);
+SET IDENTITY_INSERT [dbo].[Sale] ON 
+
+INSERT [dbo].[Sale] ([Id], [Percent]) VALUES (1, CAST(0.00 AS Decimal(5, 2)))
+INSERT [dbo].[Sale] ([Id], [Percent]) VALUES (2, CAST(10.00 AS Decimal(5, 2)))
+INSERT [dbo].[Sale] ([Id], [Percent]) VALUES (3, CAST(15.00 AS Decimal(5, 2)))
+INSERT [dbo].[Sale] ([Id], [Percent]) VALUES (4, CAST(20.00 AS Decimal(5, 2)))
+INSERT [dbo].[Sale] ([Id], [Percent]) VALUES (5, CAST(25.00 AS Decimal(5, 2)))
+INSERT [dbo].[Sale] ([Id], [Percent]) VALUES (6, CAST(30.00 AS Decimal(5, 2)))
+INSERT [dbo].[Sale] ([Id], [Percent]) VALUES (7, CAST(40.00 AS Decimal(5, 2)))
+INSERT [dbo].[Sale] ([Id], [Percent]) VALUES (9, CAST(45.00 AS Decimal(5, 2)))
+INSERT [dbo].[Sale] ([Id], [Percent]) VALUES (10, CAST(32.00 AS Decimal(5, 2)))
+INSERT [dbo].[Sale] ([Id], [Percent]) VALUES (11, CAST(50.00 AS Decimal(5, 2)))
+SET IDENTITY_INSERT [dbo].[Sale] OFF  
 -- Insert into ProductVariant table
-INSERT INTO ProductVariant (product_id, RAM_id, Storage_id, quantity, variant_price, sale_id, img, status)
+INSERT INTO ProductVariant (product_id, RAM_id, Storage_id, quantity, variant_price,  img, sale_id, status)
 VALUES 
-(1, 1, 1, 10, 1099.99, NULL, 'DellXPS13_Variant.jpg', 1),
-(2, 2, 2, 5, 2299.99, NULL, 'MacBookPro14_Variant.jpg', 1),
-(3, 1, 1, 20, 1399.99, NULL, 'HPSpectrex360_Variant.jpg', 1),
-(4, 1, 2, 8, 1599.99, NULL, 'AsusROGZephyrusG14_Variant.jpg', 1),
-(5, 1, 2, 12, 1899.99, NULL, 'LenovoThinkPadX1Carbon_Variant.jpg', 1);
+(1, 1, 1, 10, 1099.99, 'DellXPS13.jpg', 1,1),
+(2, 2, 2, 5, 2299.99,  'MacBookPro14.jpg',1, 1),
+(3, 1, 1, 20, 1399.99,  'HPSpectrex360.jpg', 1,1),
+(4, 1, 2, 8, 1599.99, 'AsusROGZephyrusG14.jpg',1, 1),
+(5, 1, 2, 12, 1899.99,'LenovoThinkPadX1Carbon.jpg',1, 1);

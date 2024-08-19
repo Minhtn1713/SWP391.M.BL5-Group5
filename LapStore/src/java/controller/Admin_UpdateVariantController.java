@@ -39,7 +39,7 @@ public class Admin_UpdateVariantController extends HttpServlet {
         ProductVariantDAO variantDao = new ProductVariantDAO();
         ProductDetailDAO pdDao = new ProductDetailDAO();
         StorageDAO stoDao = new StorageDAO();
-        RamDAO colorDao = new RamDAO();
+        RamDAO ramDao = new RamDAO();
         String id = (String) req.getParameter("id");
 
         int product_id = 0;
@@ -50,13 +50,13 @@ public class Admin_UpdateVariantController extends HttpServlet {
         }
         List<Product> list = proDao.getProductList();
         List<Storage> list_Storage = stoDao.getAllStorage();
-        List<RAM> list_Color = colorDao.getAllColor();
+        List<RAM> list_Ram= ramDao.getAllRam();
         req.setAttribute("list_Storage", list_Storage);
-        req.setAttribute("list_Color", list_Color);
+        req.setAttribute("list_Ram", list_Ram);
         req.setAttribute("list", list);
 
         variant = variantDao.getProductVariantByID(product_id);
-        List<ProductImage> listImg = pdDao.getProductImage(variant.getProductId(), variant.getColorId() + "");
+        List<ProductImage> listImg = pdDao.getProductImage(variant.getProduct_Id(), variant.getRam() + "");
         String imgs = "";
         for (ProductImage productImage : listImg) {
             imgs += productImage.getUrl() + "|" + productImage.getId() + ",";
@@ -72,7 +72,7 @@ public class Admin_UpdateVariantController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("varid"));
         int pro_id = Integer.parseInt(request.getParameter("name"));
-        int color_id = Integer.parseInt(request.getParameter("color"));
+        int ram_id = Integer.parseInt(request.getParameter("ram"));
         int storage_id = Integer.parseInt(request.getParameter("storage"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
         String img = request.getParameter("imgList");
@@ -88,18 +88,18 @@ public class Admin_UpdateVariantController extends HttpServlet {
             removeImgList = removeImg.split(",");
         }
         ProductDAO pDao = new ProductDAO();
-        Product product = pDao.getProductByID(pro_id);
+        Product product = pDao.getProductById(pro_id);
         ProductDetailDAO pdDao = new ProductDetailDAO();
-        RAM color = pdDao.getColorbyId(color_id + "");
+        RAM ram = pdDao.getRambyId(ram_id + "");
         Storage sto = pdDao.getStoragebyId(storage_id + "");
-        float price = product.getPrice() + color.getPriceBonus() + sto.getPriceBonus();
+        float price = product.getPrice() + ram.getPriceBonus() + sto.getPriceBonus();
 
-        ProductVariant var = new ProductVariant(id, pro_id, color_id, storage_id, quantity, price, 1, 1);
+        ProductVariant var = new ProductVariant(id, pro_id, ram_id, storage_id, quantity, price, 1, 1);
         ProductVariantDAO varDao = new ProductVariantDAO();
         ProductImageDAO prid = new ProductImageDAO();
         if (imgList.length > 0) {
             for (String string : imgList) {
-                ProductImage pimg = new ProductImage(0, string, pro_id, color_id);
+                ProductImage pimg = new ProductImage(0, string, pro_id, ram_id);
                 prid.createImage(pimg);
             }
         }

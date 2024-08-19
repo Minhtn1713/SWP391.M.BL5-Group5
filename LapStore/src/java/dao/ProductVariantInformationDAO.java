@@ -13,26 +13,44 @@ import model.ProductVariantInfomation;
  *
  * @author 84834
  */
-public class ProductVariantInformationDAO extends DBContext{
-    public ProductVariantInfomation getDetailInformation(int variantId){
-        ProductVariantInfomation list = null;
-        String query = "select p.Id, p.[Name], p.[Screen], p.[Camera], p.Ram, p.Pin, p.Chipset, p.Screen_resolution, p.img, v.Color_Id, v.Storage_Id, v.Quantity, v.Variant_Price, v.[Status], v.Sale_id\n" +
-                "from Product p join ProductVariant v on p.Id = v.Product_Id where v.Id = " + variantId;
-        try{
+    public class ProductVariantInformationDAO extends DBContext {
+    public ProductVariantInfomation getDetailInformation(int variantId) {
+        ProductVariantInfomation productVariant = null;
+        String query = "SELECT p.Id, p.[name], p.processor, p.screen_details, p.size, p.operating_system, p.battery_life, p.weight, p.graphic_card, " +
+                       "v.ram, v.storage, v.quantity, v.variant_price, v.sale_id, v.status, v.img_Id " +
+                       "FROM Product p JOIN ProductVariant v ON p.Id = v.product_id WHERE v.Id = ?";
+        try {
             PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, variantId);  // Use parameterized query
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                list = new ProductVariantInfomation(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), 
-                        rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11), rs.getInt(12), rs.getFloat(13),  rs.getInt(14), rs.getFloat(15));
+            if (rs.next()) {
+                productVariant = new ProductVariantInfomation(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("nrocessor"),
+                        rs.getString("screen_details"),
+                        rs.getString("size"),
+                        rs.getString("operating_system"),
+                        rs.getString("battery_life"),
+                        rs.getFloat("weight"),
+                        rs.getString("graphic_card"),
+                        rs.getString("img_Id"),
+                        rs.getInt("ram"),
+                        rs.getInt("storage"),
+                        rs.getInt("quantity"),
+                        rs.getFloat("variant_Price"),
+                        rs.getInt("sale_Id"),
+                        rs.getInt("status"),
+                        rs.getFloat("sale")
+                );
             }
             ps.close();
             rs.close();
-        }catch(SQLException e){
-            System.out.println(e);
+        } catch (SQLException e) {
+            e.printStackTrace();  // Better error handling
         }
-        return list;
+        return productVariant;
     }
-    
     public static void main(String[] args) {
         ProductVariantInformationDAO d = new ProductVariantInformationDAO();
         ProductVariantInfomation test = d.getDetailInformation(2);

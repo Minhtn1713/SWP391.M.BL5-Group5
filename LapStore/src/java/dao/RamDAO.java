@@ -21,7 +21,7 @@ import model.RAM;
 public class RamDAO extends DBContext {
     public Map<Integer, String> getHashMapRam(){
         Map<Integer, String> hashMap = new HashMap<>();
-        String query = "select Id, RAM from [Ram]";
+        String query = "select Id, Ram from [Ram]";
         try{
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
@@ -86,7 +86,7 @@ public class RamDAO extends DBContext {
           return succes;
     }  
      
-     public int updateColor(String id, String ram, String hex, float priceBonus){
+     public int updateRam(String id, String ram, float priceBonus){
         int succes = 0;
         String query = "UPDATE [Ram] SET " +
                                        " RAM= '" + ram +
@@ -117,7 +117,7 @@ public class RamDAO extends DBContext {
     }
      
      public static void main(String[] args) {
-        RamDAO c = new RamDAO();
-        c.updateColor("13", "Yellow", "#ffff00", 100);
+        RamDAO r = new RamDAO();
+        r.updateRam("13", "Yellow", 100);
     }
 }

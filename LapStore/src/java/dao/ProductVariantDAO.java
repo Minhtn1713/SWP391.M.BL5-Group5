@@ -37,16 +37,16 @@ public class ProductVariantDAO extends DBContext {
         if (!filterRam.isEmpty()) {
             query += " and ";
             if (filterRam.size() == 1){
-                query+= "color_id =" + filterRam.get(0);
+                query+= "Ram_id =" + filterRam.get(0);
             }
             if (filterRam.size()>1){
                 query+= "(";
             
             for (int i = 0; i < filterRam.size(); i++) {
                 if (i <=filterRam.size() - 2){
-                    query+="color_id = " + filterRam.get(i) + " or ";
+                    query+="Ram_id = " + filterRam.get(i) + " or ";
                 }if (i == filterRam.size() -1){
-                    query+="color_id = " + filterRam.get(i) + ") ";
+                    query+="Ram_id = " + filterRam.get(i) + ") ";
                 }
                
             }
@@ -119,11 +119,11 @@ public class ProductVariantDAO extends DBContext {
     }
     
 
-    public ProductImage getOneProductVariantImage(int id, String colorId) {
+    public ProductImage getOneProductVariantImage(int id, String ramId) {
         String query = "Select top(1) * from ProductImage "
                 + " Where productImage.product_id = ? ";
-        if (!colorId.equals("")) {
-            query += " AND color_id =  " + colorId;
+        if (!ramId.equals("")) {
+            query += " AND Ram_id =  " + ramId;
         }
         try {
             PreparedStatement ps = connection.prepareStatement(query);
@@ -170,16 +170,16 @@ public class ProductVariantDAO extends DBContext {
         if (!filterRam.isEmpty()) {
             query += " and ";
             if (filterRam.size() == 1){
-                query+= "color_id =" + filterRam.get(0);
+                query+= "Ram_id =" + filterRam.get(0);
             }
             if (filterRam.size()>1){
                 query+= "(";
             
             for (int i = 0; i < filterRam.size(); i++) {
                 if (i <=filterRam.size() - 2){
-                    query+="color_id = " + filterRam.get(i) + " or ";
+                    query+="Ram_id = " + filterRam.get(i) + " or ";
                 }if (i == filterRam.size() -1){
-                    query+="color_id = " + filterRam.get(i) + ") ";
+                    query+="Ram_id = " + filterRam.get(i) + ") ";
                 }
                
             }
@@ -247,7 +247,7 @@ public class ProductVariantDAO extends DBContext {
     }
 
     public String getColorNameById(int id) {
-        String query = "Select color from color "
+        String query = "Select ram from ram "
                 + "Where id = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
@@ -283,20 +283,20 @@ public class ProductVariantDAO extends DBContext {
     }
 
     public List<RAM> getListColor() {
-        List<RAM> color = new ArrayList<>();
-        String query = "SELECT * FROM color";
+        List<RAM> ram = new ArrayList<>();
+        String query = "SELECT * FROM Ram";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                color.add(new RAM(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getString(4), rs.getInt(5)));
+                ram.add(new RAM(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getInt(5)));
             }
             ps.close();
             rs.close();
         } catch (SQLException e) {
             System.out.println(e);
         }
-        return color;
+        return ram;
     }
 
     public List<Storage> getListStorage() {
@@ -351,9 +351,9 @@ public class ProductVariantDAO extends DBContext {
          return null;
     } 
     
-    public ProductVariant getProductVariant(String colorId, String productId, String storageId){
+    public ProductVariant getProductVariant(String ramId, String productId, String storageId){
         ProductVariant product = new ProductVariant();
-        String sql = "SELECT * FROM [ProductVariant] WHERE product_id = " + productId + " and color_Id = " +colorId+ " and storage_id = " + storageId;
+        String sql = "SELECT * FROM [ProductVariant] WHERE product_id = " + productId + " and Ram_id = " +ramId+ " and storage_id = " + storageId;
          try{
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -424,8 +424,8 @@ public class ProductVariantDAO extends DBContext {
         }
     }
       
-      public void updateAllProductVariantByColor(String color_id, String status){
-         String sql = "Update [ProductVariant] SET status ="+ status + " WHERE color_Id LIKE  '" + color_id+ "'";
+      public void updateAllProductVariantByColor(String Ram_id, String status){
+         String sql = "Update [ProductVariant] SET status ="+ status + " WHERE Ram_id LIKE  '" + Ram_id+ "'";
          try{
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.executeUpdate();
@@ -461,8 +461,8 @@ public class ProductVariantDAO extends DBContext {
     
     public int updateProduct( ProductVariant pro_variant){
         int succes = 0;
-        String query = "UPDATE [ProductVariant] SET Color_Id = " + pro_variant.getColorId() + 
-                                       ", Storage_Id = " + pro_variant.getStorageId() +
+        String query = "UPDATE [ProductVariant] SET Ram_id = " + pro_variant.getRam() + 
+                                       ", Storage_Id = " + pro_variant.getStorage() +
                                        ", Quantity = " + pro_variant.getQuantity() +
                                        ", Variant_Price = " + pro_variant.getVariantPrice() +
                                        " where Id = " + pro_variant.getId();
@@ -509,7 +509,7 @@ public class ProductVariantDAO extends DBContext {
         int succes = 0;
         System.out.println(pro_variant);
         String query = "INSERT INTO [ProductVariant]([Product_Id],[Ram_Id],[Storage_Id],[Quantity],[Variant_Price])"
-                + "values ('" + pro_variant.getProductId() + "', '" + pro_variant.getRam() + "' ,'" + pro_variant.getStorage()
+                + "values ('" + pro_variant.getProduct_Id() + "', '" + pro_variant.getRam() + "' ,'" + pro_variant.getStorage()
                 + "' ,'" + pro_variant.getQuantity() + "', '" + pro_variant.getVariantPrice() + "')";
           try{
             PreparedStatement ps = connection.prepareStatement(query);
@@ -539,45 +539,65 @@ public class ProductVariantDAO extends DBContext {
         }
          return null;
     } 
-     
-     public List<ProductVariantInfomation> getListNameProductVariantById(List<Integer> id){
-         List<ProductVariantInfomation> product = new ArrayList<>();
-         String query = "Select pv.id AS productVariant_id, p.name AS product_name,c.color AS color_name,s.storage_Size AS storage_name, pv.sale_id"
-                 + " From ProductVariant pv JOIN product p ON pv.product_id = p.id JOIN color c ON pv.color_id = c.id JOIN storage s ON pv.storage_id = s.id"
-                 + " where";
-         
-         if (!id.isEmpty()) {
-            if (id.size() == 1){
-                query+= " pv.id =" + id.get(0);
-            }
-            if (id.size()>1){
-                query+= "(";
-            
-            for (int i = 0; i < id.size(); i++) {              
-                if (i <=id.size() - 2){
-                    query+="pv.id = " + id.get(i) + " or ";
-                }
-                if (i == id.size() -1){
-                    query+="pv.id = " + id.get(i) + ") ";
-                }
-               
-            }
+public List<ProductVariantInfomation> getListNameProductVariantById(List<Integer> id) {
+    List<ProductVariantInfomation> productVariants = new ArrayList<>();
+    StringBuilder query = new StringBuilder(
+        "SELECT pv.id AS productVariant_id, p.name AS product_name, r.ram AS ram_name, s.storage_Size AS storage_name, " +
+        "pv.processor, pv.screenDetails, pv.size, pv.operatingSystem, pv.battery, pv.weight, pv.graphicCard, " +
+        "pv.url, pv.quantity, pv.variantPrice, pv.sale_id, pv.status, pv.sale " +
+        "FROM ProductVariant pv " +
+        "JOIN product p ON pv.product_id = p.id " +
+        "JOIN ram r ON pv.ram_id = r.id " +
+        "JOIN storage s ON pv.storage_id = s.id WHERE "
+    );
+
+    if (!id.isEmpty()) {
+        query.append("pv.id IN (");
+        for (int i = 0; i < id.size(); i++) {
+            query.append("?");
+            if (i < id.size() - 1) {
+                query.append(", ");
             }
         }
-         try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                product.add(new ProductVariantInfomation(rs.getInt(1), rs.getString(2), "", "", "", "", "", "", "", rs.getString(3), rs.getString(4), 0, 0, 0, rs.getInt(5)));
-            }
-            ps.close();
-            rs.close();
-        } catch (SQLException e) {
-            System.out.println(e);
+        query.append(")");
+    }
+
+    try (PreparedStatement ps = connection.prepareStatement(query.toString())) {
+        // Set the id parameters dynamically
+        for (int i = 0; i < id.size(); i++) {
+            ps.setInt(i + 1, id.get(i));
         }
-        return product;
-     }
-     
+
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            productVariants.add(new ProductVariantInfomation(
+                rs.getInt("productVariant_id"),
+                rs.getString("product_name"),
+                rs.getString("processor"),
+                rs.getString("screenDetails"),
+                rs.getString("size"),
+                rs.getString("operatingSystem"),
+                rs.getString("battery"),
+                rs.getFloat("weight"),
+                rs.getString("graphicCard"),
+                rs.getString("url"),
+                rs.getInt("ram_name"),
+                rs.getInt("storage_name"),
+                rs.getInt("quantity"),
+                rs.getFloat("variantPrice"),
+                rs.getInt("sale_id"),
+                rs.getInt("status"),
+                rs.getFloat("sale")
+            ));
+        }
+
+    } catch (SQLException e) {
+        System.out.println(e);
+    }
+
+    return productVariants;
+}
+
      public int getRemainById(int variantId) {
         int remain = 0;
         String sql = "select [Quantity] from ProductVariant where [Id] = " + variantId;
