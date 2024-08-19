@@ -68,7 +68,7 @@ public class Admin_ProductVariantListController extends HttpServlet {
             productVarInfo.add(new ProductVariantInfomation(p.getId(), pr.getName(), pr.getProcessor(),
                     pr.getScreen_details(), pr.getOperatingSystem(), pr.getBattery(), pr.getGraphic_card(),
                     pi.getUrl(), productVarDao.getRamNameById(p.getRamId()),
-                    productVarDao.getStorageSizeById(p.getStorageId()), p.getQuantity(), p.getVariantPrice(), p.getStatus(), sale.getSaleById(p.getSale_Id()).getPercent()));
+                    productVarDao.getStorageSizeById(p.getStorageId()), p.getQuantity(), p.getVariantPrice(), p.getStatus(), sale.getSaleById(p.getSaleId()).getPercent()));
         }
         List<Sale> saleList = sale.getListSale();
         request.setAttribute("filter", filter);
@@ -90,10 +90,11 @@ public class Admin_ProductVariantListController extends HttpServlet {
         StorageDAO stoDao = new StorageDAO();
         RamDAO ramDao = new RamDAO();
 
-        String id = req.getParameter("pro");
+         String id = (String) req.getParameter("pro");
         List<Product> list = proDao.getProductList();
-        List<ProductVariant> listVariant = (id != null && !id.equals("%%")) ? variantDao.getListProductVariantByID(id) : variantDao.getListProductVariantByID("%%");
-
+        List<ProductVariant> list_variant = variantDao.getListProductVariantByID("%%");
+        if(id != "%%")
+            list_variant = variantDao.getListProductVariantByID(id);
         HashMap<Integer, String> storageMap = (HashMap<Integer, String>) stoDao.getHashMapStorage();
         HashMap<Integer, String> ramMap = (HashMap<Integer, String>) ramDao.getHashMapRam();
         HashMap<Integer, String> productMap = (HashMap<Integer, String>)  proDao.getHashMapProduct();
@@ -102,7 +103,7 @@ public class Admin_ProductVariantListController extends HttpServlet {
         req.setAttribute("ramMap", ramMap);
         req.setAttribute("productMap", productMap);
         req.setAttribute("id", id);
-        req.setAttribute("variant", listVariant);
+        req.setAttribute("variant", list_variant);
         req.setAttribute("list", list);
         req.getRequestDispatcher("screens/Admin_ProductionVariantList.jsp").forward(req, resp);
     }

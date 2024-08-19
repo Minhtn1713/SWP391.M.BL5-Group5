@@ -170,14 +170,14 @@ public class ProductDetailDAO extends DBContext {
     }
     
     public Ram getRambyId(String id){
-        String query = "SELECT * FROM ram"
+        String query = "SELECT * FROM Ram"
                 + " Where id = ?";
         try{
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, id);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                return new Ram(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getInt(5));
+                return new Ram(rs.getInt(1), rs.getString(2), rs.getFloat(3), rs.getInt(4));
             }
             ps.close();
             rs.close();

@@ -17,7 +17,7 @@ public class ProductVariant {
     private int quantity;
     private float variantPrice;
     private int status;
-    private int sale_Id;
+    private int saleId;
     
 
     public ProductVariant() {
@@ -79,15 +79,15 @@ public class ProductVariant {
         this.status = status;
     }
 
-    public int getSale_Id() {
-        return sale_Id;
+    public int getSaleId() {
+        return saleId;
     }
 
-    public void setSale_Id(int sale_Id) {
-        this.sale_Id = sale_Id;
+    public void setSaleId(int saleId) {
+        this.saleId = saleId;
     }
 
-    public ProductVariant(int id, int productId, int ramId, int storageId, int quantity, float variantPrice, int status, int sale_Id) {
+    public ProductVariant(int id, int productId, int ramId, int storageId, int quantity, float variantPrice, int status, int saleId) {
         this.id = id;
         this.productId = productId;
         this.ramId = ramId;
@@ -95,7 +95,7 @@ public class ProductVariant {
         this.quantity = quantity;
         this.variantPrice = variantPrice;
         this.status = status;
-        this.sale_Id = sale_Id;
+        this.saleId = saleId;
     }
 
 }

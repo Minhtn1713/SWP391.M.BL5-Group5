@@ -69,7 +69,7 @@ public class AdminHideRam extends HttpServlet {
         }
         int succes = ramD.updateRam(id, status);
         if (succes != 0) {
-            response.sendRedirect("/LapStore/ram-list");
+            response.sendRedirect("/LapStore_main/ram-list");
         } else //todo: add error page
         {
             response.sendRedirect("error-page");

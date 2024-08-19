@@ -45,8 +45,6 @@
                   <input type="hidden" id="ramId" name="ramId" value="${ramId}" />
                 <label for="ram">Ram</label><br />
                 <input type="text" id="ram" name="ram" value="${ram}" required /><br />
-                <label for="hex">Hex Code</label><br />
-                <input type="text" id="hex" name="hex" value="${hex}" required /><br />
                 <label for="price">Price Bonus</label><br />
                 <input
                   type="number"
