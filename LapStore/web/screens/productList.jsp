@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -27,7 +28,7 @@
                     <div class="left">
                         <!-- Filter and Search Section -->
                         <div class="filter-section">
-                            <!-- Search by Name -->
+
                             <!-- Search by Name -->
                             <div class="search-box">
                                 <input type="text" id="search" name="search" placeholder="Search by name" value="${param.search}">
@@ -56,6 +57,20 @@
                             </fieldset>
                         </div>
 
+                        <div class="brand-filter">
+                            <fieldset>
+                                <legend>Brand</legend>
+                                <c:forEach items="${brands}" var="brand">
+                                    <label class="radio-label">
+                                        <input type="radio" name="brand" value="${brand.id}" ${param.brand == brand.id ? 'checked' : ''}>
+                                        <span>${brand.name}</span>
+                                    </label>
+                                </c:forEach>
+                            </fieldset>
+                        </div>
+
+
+
 
 
                     </div>
@@ -63,9 +78,6 @@
 
                 <div class="right">
                     <div class="right-sort">
-                        <div class="products-showing">
-                            Showing <strong>${list.size()}</strong> products
-                        </div>
                         <div class="current-showing">
                             <strong>Show</strong>
                             <form action="ProductListController" method="get" class="products-show-form">
@@ -158,7 +170,8 @@
                                 itemsPerPage: $('select[name="items-per-page"]').val(),
                                 sortBy: $('#sort-by').val(),
                                 page: ${currentPage},
-                                price: $('input[name="price"]:checked').val()  // Get the selected price range
+                                price: $('input[name="price"]:checked').val(),
+                                brand: $('input[name="brand"]:checked').val() // Get the selected brand ID
                             },
                             success: function (response) {
                                 $('.right-container').html($(response).find('.right-container').html());
@@ -191,6 +204,13 @@
                     $('#sort-by').on('change', function () {
                         fetchProducts();
                     });
+
+                    $('input[name="brand"]').on('change', function () {
+                        fetchProducts();
+                    });
+
+
+
                 });
         </script>
 

@@ -46,6 +46,9 @@
 
                 <div class="product-specs">
                     <h2 class="product-title">${productDetail.name}</h2>
+                    <div class="brand-container">
+                        Brand: <a href="ProductListController?brand=${brand.id}">${brand.name}</a>
+                    </div>
                     <div class="product-price">${productDetail.price} $</div>
                     <div class="stock-status">
                         <span class="dot ${productDetail.status == 0 ? 'out-of-stock' : 'in-stock'}"></span>

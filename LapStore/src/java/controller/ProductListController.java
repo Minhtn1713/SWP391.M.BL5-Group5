@@ -4,6 +4,7 @@ package controller;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+import dao.BrandDAO;
 import dao.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,6 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import model.Brand;
 import model.Product;
 
 /**
@@ -28,7 +30,9 @@ public class ProductListController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ProductDAO proDao = new ProductDAO();
+        BrandDAO bDao = new BrandDAO();
         List<Product> allProducts = proDao.getProductList();
+        List<Brand> allBrands = bDao.getAllBrands();
 
         // Get search parameter
         String search = request.getParameter("search");
@@ -47,15 +51,6 @@ public class ProductListController extends HttpServlet {
         } else if ("out-of-stock".equals(status)) {
             allProducts = allProducts.stream()
                     .filter(p -> p.getStatus() == 0)
-                    .collect(Collectors.toList());
-        }
-
-        // Get size filter parameter
-        String[] sizes = request.getParameterValues("size");
-        if (sizes != null && sizes.length > 0) {
-            List<String> sizeList = Arrays.asList(sizes);
-            allProducts = allProducts.stream()
-                    .filter(p -> sizeList.contains(p.getSize()))
                     .collect(Collectors.toList());
         }
 
@@ -123,6 +118,16 @@ public class ProductListController extends HttpServlet {
             }
         }
 
+        String[] selectedBrands = request.getParameterValues("brand");
+        if (selectedBrands != null && selectedBrands.length > 0) {
+            List<Integer> brandIds = Arrays.stream(selectedBrands)
+                    .map(Integer::parseInt)
+                    .collect(Collectors.toList());
+            allProducts = allProducts.stream()
+                    .filter(p -> brandIds.contains(p.getBrandId()))
+                    .collect(Collectors.toList());
+        }
+
         // Pagination parameters
         int itemsPerPage = 6; // Default to 6 items per page
         String itemsPerPageParam = request.getParameter("items-per-page");
@@ -150,6 +155,8 @@ public class ProductListController extends HttpServlet {
         int end = Math.min(start + itemsPerPage, totalProducts);
 
         List<Product> productsToShow = allProducts.subList(start, end);
+
+        request.setAttribute("brands", allBrands);
 
         request.setAttribute("list", productsToShow);
         request.setAttribute("currentPage", page);

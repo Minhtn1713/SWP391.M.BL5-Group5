@@ -378,3 +378,44 @@ body {
     cursor: not-allowed; /* No pointer cursor */
     pointer-events: auto; /* Allows the button to be clicked to trigger the alert */
 }
+.brand-filter {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.brand-filter fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+.brand-filter legend {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.radio-label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    background-color: white;
+    border: 1px solid #ddd;
+    transition: background-color 0.3s ease;
+}
+
+.radio-label:hover {
+    background-color: #f0f0f0;
+}
+
+.radio-label input[type="radio"] {
+    margin-right: 8px;
+    accent-color: #007bff; /* Thay đổi màu theo yêu cầu */
+}
