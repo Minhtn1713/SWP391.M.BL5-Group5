@@ -1,10 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
+
 package controller;
 
 import dao.OrderDAO;
+import dao.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,17 +11,17 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import model.Account;
 import model.Cart;
 import model.Item;
 import model.ProductVariant;
+import model.User;
 
-/**
- *
- * @author Admin
- */
-@WebServlet(name = "CartController", urlPatterns = {"/cart"})
-public class CartController extends HttpServlet {
+
+@WebServlet(name = "CheckoutController", urlPatterns = {"/checkout"})
+public class CheckoutController extends HttpServlet {
 
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -34,10 +32,10 @@ public class CartController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CartController</title>");            
+            out.println("<title>Servlet CheckoutController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CartController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CheckoutController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -47,16 +45,32 @@ public class CartController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+    }
+
+    
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        int id;
+        String name,phone,address;
+        Account a = (Account) session.getAttribute("account");
+        if(a!=null){
+        UserDAO user = new UserDAO();
+        User u = user.getUserById(a.getId());
+        id = a.getId();
+        name = u.getFullName();
+        phone = u.getPhone();
+        address = u.getAddress();
+        }else{
+            name="";
+            phone="";
+            address="";
+        }
+        Cookie[] arr=request.getCookies();
         OrderDAO o= new OrderDAO();
         List<ProductVariant> list = o.getAllProductVariant();
-        
-        
-        //temp
-        Cookie c=new Cookie("cart","2:1-3:2");
-        c.setMaxAge(2*24*60*60);
-        response.addCookie(c);
-        //temp
-        Cookie[] arr=request.getCookies();
 
         String txt="";
         if(arr!=null){
@@ -66,7 +80,9 @@ public class CartController extends HttpServlet {
                 }
             }
         }
+        if(!txt.isEmpty() && txt!=null){
         Cart cart = new Cart(txt,list);
+        
         List<Item> listItem= cart.getItems();
         int n;
         if(listItem!=null){
@@ -74,24 +90,19 @@ public class CartController extends HttpServlet {
         }else{
             n=0;
         }
+        request.setAttribute("name", name);
+        request.setAttribute("phone", phone);
+        request.setAttribute("address", address);
         request.setAttribute("size", n);
         request.setAttribute("cart",cart);
-        request.getRequestDispatcher("screens/mycart.jsp").forward(request, response);
-        
-        
+        request.getRequestDispatcher("screens/checkout.jsp").forward(request, response);
+        }else{
+            
+            response.sendRedirect("/LapStore_main/cart");
+        }
     }
 
     
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }
+   
 
 }

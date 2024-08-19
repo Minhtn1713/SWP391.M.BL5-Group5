@@ -1,0 +1,114 @@
+.container {
+    width: 70%;
+    margin: 0 auto;
+    font-family: 'Montserrat', sans-serif;
+}
+
+h2, h3 {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.address-box {
+    border: 1px solid #000;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.cart-table th, .cart-table td {
+    border: 1px solid #000;
+    padding: 10px;
+    text-align: left;
+}
+
+.payment-section {
+    margin-bottom: 20px;
+}
+
+.total-section {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.total-section p {
+    display: flex;
+    justify-content: space-between;
+}
+
+.button-row {
+    display: flex;
+    justify-content: center; /* Horizontally centers the button */
+    padding: 20px 0; /* Optional: Adds vertical space around the button */
+}
+
+.finish-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.finish-button:hover {
+    background-color: #0056b3;
+}
+
+a {
+    color: Black;
+    text-decoration: none;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+a:hover {
+    color: darkorange;
+}
+
+.shipping-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.full-width {
+    flex: 0 0 100%;
+}
+
+.form-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-control {
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.text-danger {
+    color: #dc3545;
+    font-size: 0.875em;
+    margin-top: 5px;
+}

@@ -1,4 +1,3 @@
-
 package dao;
 
 import java.sql.Connection;
@@ -10,10 +9,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.OrderDetail;
 import model.ProductVariant;
-
-
+import model.User;
 
 public class OrderDAO extends DBContext {
+
     public List<Order> getAllOrder() {
         List<Order> list = new ArrayList<>();
         String sql = "select * from [Order]";
@@ -30,7 +29,7 @@ public class OrderDAO extends DBContext {
         }
         return list;
     }
-    
+
     public Order getOrderById(int id) {
         String query = "select * from [Order] where id=?";
         try {
@@ -47,16 +46,16 @@ public class OrderDAO extends DBContext {
         }
         return null;
     }
-    
-    public List<ProductVariant> getAllProductVariantById(int id){
+
+    public List<ProductVariant> getAllProductVariantById(int id) {
         String query = "select pv.id,p.name,pv.RAM,pv.storage,od.quantity,p.price,pv.variant_price from [Order] o join [OrderDetail] od on od.order_id=o.id  join ProductVariant pv on pv.id = od.productVariant_id join Product p on p.id = pv.product_id where o.id=?";
         List<ProductVariant> list = new ArrayList<>();
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1,id);
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                list.add(new ProductVariant(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),rs.getInt(5),rs.getFloat(7),rs.getFloat(6)));
+                list.add(new ProductVariant(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getFloat(7), rs.getFloat(6)));
             }
             ps.close();
             rs.close();
@@ -65,16 +64,16 @@ public class OrderDAO extends DBContext {
         }
         return list;
     }
-    
-    public List<ProductVariant> getAllProductVariant(){
+
+    public List<ProductVariant> getAllProductVariant() {
         String query = "select pv.id,p.name,pv.RAM,pv.storage,pv.quantity,p.price,pv.variant_price from Product p join ProductVariant pv on p.id = pv.product_id";
         List<ProductVariant> list = new ArrayList<>();
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            
+
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                list.add(new ProductVariant(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),rs.getInt(5),rs.getFloat(7),rs.getFloat(6)));
+                list.add(new ProductVariant(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getFloat(7), rs.getFloat(6)));
             }
             ps.close();
             rs.close();
@@ -83,16 +82,16 @@ public class OrderDAO extends DBContext {
         }
         return list;
     }
-    
-    public ProductVariant getProductVariantById(int id){
+
+    public ProductVariant getProductVariantById(int id) {
         String query = "select pv.id,p.name,pv.RAM,pv.storage,pv.quantity,p.price,pv.variant_price from Product p join ProductVariant pv on p.id = pv.product_id where pv.id=?";
         List<ProductVariant> list = new ArrayList<>();
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1,id);
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                return new ProductVariant(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),rs.getInt(5),rs.getFloat(7),rs.getFloat(6));
+                return new ProductVariant(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getFloat(7), rs.getFloat(6));
             }
             ps.close();
             rs.close();
@@ -101,13 +100,13 @@ public class OrderDAO extends DBContext {
         }
         return null;
     }
-    
+
     public List<OrderDetail> getAllOrderDetailByOrderId(int id) {
         String query = "select * from [OrderDetail] where order_id=?";
         List<OrderDetail> list = new ArrayList<>();
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1,id);
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new OrderDetail(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4)));
@@ -119,15 +118,15 @@ public class OrderDAO extends DBContext {
         }
         return list;
     }
-    
+
     public ProductVariant getProductVariantById2(int id) {
         String query = "select * from [ProductVariant] where id=?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1,id);
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                return new ProductVariant(rs.getInt(1), rs.getInt(2), rs.getString(4), rs.getString(5),rs.getInt(6),rs.getFloat(7),rs.getInt(8),rs.getInt(9));
+                return new ProductVariant(rs.getInt(1), rs.getInt(2), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getFloat(7), rs.getInt(8), rs.getInt(9));
             }
             ps.close();
             rs.close();
@@ -136,8 +135,8 @@ public class OrderDAO extends DBContext {
         }
         return null;
     }
-    
-    public boolean toggleById(int status,int id) {
+
+    public boolean toggleById(int status, int id) {
         int check = 0;
         Connection con = null;
         int oldStatus = getOrderById(id).getStatus(); // Get current status
@@ -173,4 +172,113 @@ public class OrderDAO extends DBContext {
 
         return check > 0; // Return true if the update was successful
     }
+
+    public int createOrder(User u, String name, String phone, String address, float total_price, int status) {
+        int succes = 0;
+        if(u!=null){
+        String sql = "insert into [LapStore].[dbo].[Order](user_id,total_price,name,address,phone,status) values (?, ?, ?, ?, ?, ?);";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            
+            ps.setInt(1, u.getId());
+            ps.setFloat(2, total_price);
+            ps.setString(3, name);
+            ps.setString(4, address);
+            ps.setString(5, phone);
+            ps.setInt(6, status);
+            System.out.println(sql);
+            succes = ps.executeUpdate();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        }else{
+            String sql = "insert into [LapStore].[dbo].[Order](total_price,name,address,phone,status) values ( ?, ?, ?, ?, ?);";
+            try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            
+            
+            ps.setFloat(1, total_price);
+            ps.setString(2, name);
+            ps.setString(3, address);
+            ps.setString(4, phone);
+            ps.setInt(5, status);
+            System.out.println(sql);
+            succes = ps.executeUpdate();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        }
+        return succes;
+    }
+
+    public int createOrderDetail(Order o, ProductVariant productVariant, int quantity) {
+        int succes = 0;
+        String sql = "insert into [LapStore].[dbo].[OrderDetail](order_id,productVariant_id,quantity) values (?, ?, ?);";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, o.getId());
+            ps.setInt(2, productVariant.getId());
+            ps.setInt(3, quantity);
+            System.out.println(sql);
+            succes = ps.executeUpdate();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return succes;
+    }
+
+    public int setProductVariantId(int quantity, int id) {
+        int succes = 0;
+        String sql = "UPDATE ProductVariant\n"
+                + "SET quantity = ?\n"
+                + "WHERE id = ?;";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, quantity);
+            ps.setInt(2, id);
+            System.out.println(sql);
+            succes = ps.executeUpdate();
+            ps.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return succes;
+    }
+
+    public int getOrderId() {
+        int succes = 0;
+        String sql = "SELECT TOP 1 * from [Order] Order by id desc;";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+            ps.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return -1;
+    }
+    
+    public int getProductVariantQuantity(int id) {
+        int succes = 0;
+        String sql = "select * from ProductVariant where id = ?;";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(6);
+            }
+            ps.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return -1;
+    }
+    
 }

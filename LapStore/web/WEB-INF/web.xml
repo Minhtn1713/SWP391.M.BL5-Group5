@@ -116,10 +116,7 @@
         <servlet-name>AddToOrderController</servlet-name>
         <servlet-class>controller.AddToOrderController</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>CheckoutController</servlet-name>
-        <servlet-class>controller.CheckoutController</servlet-class>
-    </servlet>
+    
     <servlet>
         <servlet-name>DeleteOrderDetailController</servlet-name>
         <servlet-class>controller.DeleteOrderDetailController</servlet-class>
@@ -284,10 +281,7 @@
         <servlet-name>AddToOrderController</servlet-name>
         <url-pattern>/add-to-cart</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CheckoutController</servlet-name>
-        <url-pattern>/checkout</url-pattern>
-    </servlet-mapping>
+    
     <servlet-mapping>
         <servlet-name>DeleteOrderDetailController</servlet-name>
         <url-pattern>/delete-detail</url-pattern>

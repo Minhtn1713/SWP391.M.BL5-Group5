@@ -17,7 +17,7 @@
         <li class="nav-link"><a href="about-us">ABOUT</a></li>
         <li class="nav-link"><a href="contact">CONTACT</a></li>
         <li class="nav-link">
-            <a href="checkout"><i class='fa fa-shopping-bag bag-icon'></i></i></a>
+            <a href="/LapStore_main/cart"><i class='fa fa-shopping-bag bag-icon'></i></i></a>
         </li>
         <c:if test="${not empty sessionScope.userName}">
             <li class="nav-link">

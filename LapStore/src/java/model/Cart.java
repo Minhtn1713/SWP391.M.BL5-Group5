@@ -71,13 +71,13 @@ public class Cart {
         items = new ArrayList<>();
         try{
         if(txt !=null && txt.length() !=0){
-            String[] s=txt.split(",");
+            String[] s=txt.split("-");
             for(String i:s){
                 String[] n = i.split(":");
                 int id=Integer.parseInt(n[0]);
                 int quantity = Integer.parseInt(n[1]);
                 ProductVariant p = getProductById(id,list);
-                Item t= new Item(p,quantity,p.getProductPrice());
+                Item t= new Item(p,quantity,p.getProductPrice()+p.getVariantPrice());
                 addItem(t);
             }
         }
