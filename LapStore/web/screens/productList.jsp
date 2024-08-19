@@ -109,8 +109,20 @@
                                                 <button class="btn-info">${product.size}</button>
                                             </div>
                                             <div class="btn">
-                                                <a href="order?product_id=${product.id}" class="btn-buy-now">BUY NOW</a>
+                                                <c:choose>
+                                                    <c:when test="${product.status == 0}">
+                                                        <a href="#" class="btn-buy-now out-of-stock" onclick="alert('This product is out of stock'); return false;">
+                                                            BUY NOW
+                                                        </a>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <a href="order?product_id=${product.id}" class="btn-buy-now">
+                                                            BUY NOW
+                                                        </a>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </div>
+
                                         </div>
                                     </div>
                                 </a>

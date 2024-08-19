@@ -55,6 +55,23 @@ public class Product {
         this.description = description; 
     }
 
+    public Product(int id, String name, String img, float price, String processor, String screen_details, String size, String operatingSystem, String battery, int status, float weight, String graphic_card, String description, String brandName) {
+        this.id = id;
+        this.name = name;
+        this.img = img;
+        this.price = price;
+        this.processor = processor;
+        this.screen_details = screen_details;
+        this.size = size;
+        this.operatingSystem = operatingSystem;
+        this.battery = battery;
+        this.status = status;
+        this.weight = weight;
+        this.graphic_card = graphic_card;
+        this.description = description;
+        this.brandName = brandName;
+    }
+
     public Product() {
     }
 

@@ -7,7 +7,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 import model.Product;
+import model.ProductImage;
 
 @WebServlet(name = "ProductDetailController", urlPatterns = {"/product-detail"})
 public class ProductDetailController extends HttpServlet {
@@ -20,12 +22,16 @@ public class ProductDetailController extends HttpServlet {
             String id = request.getParameter("id");
             int idp = Integer.parseInt(id);
             Product product = proDao.getProductbyId(idp);
-            
+
+            List<ProductImage> pImageList;
+            pImageList = proDao.getProductImage(idp);
+
             if (product == null) {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Product not found");
                 return;
             }
 
+            request.setAttribute("image", pImageList);
             request.setAttribute("productDetail", product);
             request.getRequestDispatcher("screens/productDetail.jsp").forward(request, response);
         } catch (NumberFormatException e) {

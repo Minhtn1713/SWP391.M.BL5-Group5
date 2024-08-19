@@ -170,7 +170,7 @@ body {
     .right {
         width: 75%;
     }
-    
+
     .right-sort {
         flex-direction: row;
         align-items: center;
@@ -371,4 +371,10 @@ body {
     text-align: center;
     line-height: 18px;
     border-radius: 3px;
+}
+.btn-buy-now.out-of-stock {
+    background-color: #d3d3d3; /* Grey background to indicate disabled */
+    color: #fff; /* White text */
+    cursor: not-allowed; /* No pointer cursor */
+    pointer-events: auto; /* Allows the button to be clicked to trigger the alert */
 }

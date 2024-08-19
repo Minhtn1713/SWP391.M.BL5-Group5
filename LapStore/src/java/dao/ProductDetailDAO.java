@@ -1,29 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dao;
 
-import dao.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import model.Product;
+import model.ProductImage;
 
-/**
- *
- * @author kienk
- */
 public class ProductDetailDAO extends DBContext {
 
     public Product getProductbyId(int id) {
-        String query = "SELECT * FROM product"
-                + " Where product.id = ?";
+        String query = "SELECT * FROM product WHERE id = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
+            if (rs.next()) {
                 return new Product(rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("img"),
@@ -37,15 +30,32 @@ public class ProductDetailDAO extends DBContext {
                         rs.getString("operating_system"),
                         rs.getString("battery_life"),
                         rs.getString("description"),
-                        rs.getString("brand_name"),
                         rs.getInt("status"));
             }
             ps.close();
             rs.close();
         } catch (SQLException e) {
-            System.out.println(e);
+            System.out.println("SQL Exception: " + e.getMessage());
         }
+        System.out.println("Product with ID " + id + " not found.");
         return null;
     }
-
+    public List<ProductImage> getProductImage(int id){
+        List<ProductImage> pImage = new ArrayList<>();
+        String query = "Select * from ProductImage Where productImage.product_id = ? ";
+        try{
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                pImage.add(new ProductImage(rs.getInt(1), rs.getString(2), 
+                        rs.getInt(3)));
+            }
+            ps.close();
+            rs.close();
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+        return pImage;
+    }
 }
