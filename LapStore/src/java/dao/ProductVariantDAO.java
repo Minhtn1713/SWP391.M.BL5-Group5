@@ -28,7 +28,7 @@ public class ProductVariantDAO extends DBContext {
             String orderBy, List<String> filterRam, List<String> filterStorage,
             Range range, List<Integer> search, String filter) {
         List<ProductVariant> product = new ArrayList<>();
-        String query = "select * from productVariant"
+        String query = "select * from ProductVariant"
                 + " where 1=1";
         
         int min = range.getMin();
@@ -37,16 +37,16 @@ public class ProductVariantDAO extends DBContext {
         if (!filterRam.isEmpty()) {
             query += " and ";
             if (filterRam.size() == 1){
-                query+= "ram_id =" + filterRam.get(0);
+                query+= "RAM_id =" + filterRam.get(0);
             }
             if (filterRam.size()>1){
                 query+= "(";
             
             for (int i = 0; i < filterRam.size(); i++) {
                 if (i <=filterRam.size() - 2){
-                    query+="ram_id = " + filterRam.get(i) + " or ";
+                    query+="RAM_id = " + filterRam.get(i) + " or ";
                 }if (i == filterRam.size() -1){
-                    query+="ram_id = " + filterRam.get(i) + ") ";
+                    query+="RAM_id = " + filterRam.get(i) + ") ";
                 }
                
             }
@@ -55,17 +55,17 @@ public class ProductVariantDAO extends DBContext {
         if (!filterStorage.isEmpty()) {
             query += " and ";
             if (filterStorage.size() == 1){
-                query+= "storage_id =" + filterStorage.get(0);
+                query+= "Storage_id =" + filterStorage.get(0);
             }
             if (filterStorage.size()>1){
                 query+= "(";
             
             for (int i = 0; i < filterStorage.size(); i++) {              
                 if (i <=filterStorage.size() - 2){
-                    query+="storage_id = " + filterStorage.get(i) + " or ";
+                    query+="Storage_id = " + filterStorage.get(i) + " or ";
                 }
                 if (i == filterStorage.size() -1){
-                    query+="storage_id = " + filterStorage.get(i) + ") ";
+                    query+="Storage_id = " + filterStorage.get(i) + ") ";
                 }
                
             }
@@ -121,7 +121,7 @@ public class ProductVariantDAO extends DBContext {
 
     public ProductImage getOneProductVariantImage(int id, String ramId) {
         String query = "Select top(1) * from ProductImage "
-                + " Where productImage.product_id = ? ";
+                + " Where productImage.Product_Id = ? ";
         if (!ramId.equals("")) {
             query += " AND ram_id =  " + ramId;
         }
@@ -352,7 +352,7 @@ public class ProductVariantDAO extends DBContext {
     
     public ProductVariant getProductVariant(String ramId, String productId, String storageId){
         ProductVariant product = new ProductVariant();
-        String sql = "SELECT * FROM [ProductVariant] WHERE product_id = " + productId + " and RAM_id = " +ramId+ " and Storage_id = " + storageId;
+        String sql = "SELECT * FROM [ProductVariant] WHERE product_id = " + productId + " and ram_id = " +ramId+ " and storage_id = " + storageId;
          try{
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -643,5 +643,50 @@ public List<ProductVariantInfomation> getListNameProductVariantById(List<Integer
         }
         return succes;
     }
+ public static void main(String[] args) {
+        ProductVariantDAO productVariantDAO = new ProductVariantDAO();
 
+        // Test getListProductVariant method
+        List<ProductVariant> productVariants = productVariantDAO.getListProductVariant(
+            1, // offset
+            10, // fetch
+            "variant_price", // orderBy
+            Arrays.asList("1", "2"), // filterRam
+            Arrays.asList("1", "2"), // filterStorage
+            new Range(100, 1000), // range
+            Arrays.asList(1, 2), // search (product_id list)
+            "2" // filter
+        );
+        System.out.println("Product Variants:");
+        for (ProductVariant variant : productVariants) {
+            System.out.println(variant);
+        }
+//
+//        // Test getOneProductVariantImage method
+//        ProductImage productImage = productVariantDAO.getOneProductVariantImage(1, "2");
+//        System.out.println("\nProduct Variant Image:");
+//        System.out.println(productImage);
+////
+//        // Test getTotalProductVariant method
+//        int totalProductVariants = productVariantDAO.getTotalProductVariant();
+//        System.out.println("\nTotal Product Variants: " + totalProductVariants);
+//
+//        // Test getRamNameById method
+//        String ramName = productVariantDAO.getRamNameById(1);
+//        System.out.println("\nRAM Name for ID 1: " + ramName);
+//
+//        // Test getStorageSizeById method
+//        String storageSize = productVariantDAO.getStorageSizeById(1);
+//        System.out.println("\nStorage Size for ID 1: " + storageSize);
+//
+        // Test getProductVariantByID method
+        ProductVariant productVariantById = productVariantDAO.getProductVariantByID(1);
+        System.out.println("\nProduct Variant by ID 1:");
+        System.out.println(productVariantById);
+//
+        // Test getProductVariant method
+        ProductVariant productVariantByRamStorage = productVariantDAO.getProductVariant("1", "1", "1");
+        System.out.println("\nProduct Variant by RAM ID, Product ID, and Storage ID:");
+        System.out.println(productVariantByRamStorage);
+    }
 }
