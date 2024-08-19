@@ -78,9 +78,9 @@
                                                 <td>${p.ram}</td>
                                                 <td>${p.storage}</td>
                                                 <td>${p.quantity}</td>
-                                                <td>${p.variant_price}$</td>
+                                                <td>0$</td>
                                                 <td>${p.sale == 0?"None":p.sale}${p.sale == 0?"":"%"}</td>
-                                                <td>${p.variant_price - (p.variant_price*p.sale)/100}$</td>
+                                                <td>0$</td>
                                                 <td><a href="admin-update-variant?id=${p.id}"><i class="bx bxs-edit-alt icon"></i></a></td>
                                                 <td><c:if test="${p.status == 1}"><a href="admin-delete-variant?id=${p.id}&sta=2"><i class='bx bx-show-alt icon'></i></a></c:if>
                                                     <c:if test="${p.status != 1}"><a href="admin-delete-variant?id=${p.id}&sta=1"><i class='bx bx-low-vision icon' ></i></a></c:if></td>

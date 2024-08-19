@@ -29,6 +29,15 @@ public class DBContext {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+     public void closeConnection() {
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
     public static void main(String[] args) {
         DBContext dbContext = new DBContext();
         if (dbContext.connection != null) {

@@ -27,6 +27,7 @@ public class Admin_ProductVariantListController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("run get");
         ProductDAO pDao = new ProductDAO();
         ProductVariantDAO productVarDao = new ProductVariantDAO();
         SaleDAO sale = new SaleDAO();
@@ -34,7 +35,7 @@ public class Admin_ProductVariantListController extends HttpServlet {
         String fetchRaw = request.getParameter("f");
         String tagRaw = request.getParameter("tag");
         String sr = request.getParameter("sr");
-        String search = (sr == null) ? "HP Omen" : sr;
+        String search = (sr == null) ? "" : sr;
         List<Integer> listId = productVarDao.getListIdProductByName(search);
         List<String> ramF = new ArrayList<>();
         List<String> storageF = new ArrayList<>();
@@ -50,13 +51,12 @@ public class Admin_ProductVariantListController extends HttpServlet {
         if (offsetRaw != null && fetchRaw != null) {
             offset = Integer.parseInt(offsetRaw);
             fetch = Integer.parseInt(fetchRaw);
-            totalProduct = productVarDao.getTotalProductVariant(offset, fetch, "id", ramF, storageF, range, listId, filter);
+            totalProduct = productVarDao.getTotalProductVariant(offset, fetch, "id", ramF, storageF, range, new ArrayList<>(), filter);
             endPage = Helper.getEndPage(totalProduct, fetch);
-            productVar = productVarDao.getListProductVariant(offset, fetch, "id desc", ramF, storageF, range, listId, filter);
-            
+            productVar = productVarDao.getListProductVariant(offset, fetch, "id desc", ramF, storageF, range, new ArrayList<>(), filter);
         } else {
-            totalProduct = productVarDao.getTotalProductVariant(1, 6, "id", ramF, storageF, range, listId, filter);
-            productVar = productVarDao.getListProductVariant(1, 6, "id desc", ramF, storageF, range, listId, filter);
+            totalProduct = productVarDao.getTotalProductVariant(1, 6, "id", ramF, storageF, range, new ArrayList<>(), filter);
+            productVar = productVarDao.getListProductVariant(1, 6, "id desc", ramF, storageF, range, new ArrayList<>(), filter);
             endPage = Helper.getEndPage(totalProduct, 6);
         }
         List<ProductVariantInfomation> productVarInfo = new ArrayList<>();
@@ -67,7 +67,7 @@ public class Admin_ProductVariantListController extends HttpServlet {
             pi = productVarDao.getOneProductVariantImage(p.getProductId(), p.getRamId() + "");
             productVarInfo.add(new ProductVariantInfomation(p.getId(), pr.getName(), pr.getProcessor(),
                     pr.getScreen_details(), pr.getOperatingSystem(), pr.getBattery(), pr.getGraphic_card(),
-                    pi.getUrl(), productVarDao.getRamNameById(p.getRamId()),
+                    (pi != null ? pi.getUrl(): ""), productVarDao.getRamNameById(p.getRamId()),
                     productVarDao.getStorageSizeById(p.getStorageId()), p.getQuantity(), p.getVariantPrice(), p.getStatus(), sale.getSaleById(p.getSaleId()).getPercent()));
         }
         List<Sale> saleList = sale.getListSale();
@@ -85,6 +85,7 @@ public class Admin_ProductVariantListController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("run post");
         ProductDAO proDao = new ProductDAO();
         ProductVariantDAO variantDao = new ProductVariantDAO();
         StorageDAO stoDao = new StorageDAO();
@@ -107,4 +108,5 @@ public class Admin_ProductVariantListController extends HttpServlet {
         req.setAttribute("list", list);
         req.getRequestDispatcher("screens/Admin_ProductionVariantList.jsp").forward(req, resp);
     }
+    
 }

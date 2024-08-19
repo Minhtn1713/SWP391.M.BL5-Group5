@@ -131,8 +131,9 @@ public class ProductDAO extends DBContext {
 }
         public Product getProductByID(String id) {
         String query = "SELECT * FROM Product WHERE id = ?";
-        try (Connection conn = connection;
-         PreparedStatement ps = conn.prepareStatement(query)) {
+        try {
+            Connection conn = connection;
+         PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, id);
             try (ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
@@ -253,5 +254,6 @@ public class ProductDAO extends DBContext {
         }
         return -1;
     }
+    
 
 }
