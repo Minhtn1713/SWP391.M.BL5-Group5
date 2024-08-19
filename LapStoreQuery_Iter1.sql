@@ -1,14 +1,3 @@
-USE [master];
-GO
--- Drop the database if it exists
-IF DB_ID('LapStore') IS NOT NULL
-BEGIN
-    ALTER DATABASE LapStore SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-    DROP DATABASE [LapStore];
-END
--- Create the database
-CREATE DATABASE [LapStore];
-USE [LapStore];
 
 GO
 --Create Role table
@@ -61,28 +50,51 @@ CREATE TABLE Product (
 	constraint FK_Product_Brand Foreign key (brand) references Brand(id)
 );
 
-
--- Create ProductImage table
-CREATE TABLE ProductImage (
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    url NVARCHAR(255)
+-- **Create RAM table first:**
+CREATE TABLE [dbo].[Ram](
+	[Id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[RAM] [varchar](max) NOT NULL,
+	[Price_Bonus] [decimal](10, 2) NOT NULL,
+	[Status] [int] NULL,
+	
 );
 
--- Create ProductVariant table
+CREATE TABLE [dbo].[Storage](
+	[Id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[Storage_Size] [varchar](10) NULL,
+	[Price_Bonus] [decimal](10, 2) NOT NULL,
+	[Status] [int] NULL,
+	
+	);
+CREATE TABLE [dbo].[Sale](
+	[Id] [int] IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[Percent] [decimal](5, 2) NULL,
+	);
+GO
+-- **Now create ProductVariant table:**
 CREATE TABLE ProductVariant (
     id INT IDENTITY(1,1) PRIMARY KEY,
     product_id INT NOT NULL,
-    image_id INT NOT NULL,
-    RAM NVARCHAR(100),
-    storage NVARCHAR(50),
+    RAM_id INT NOT NULL,
+    Storage_id INT NOT NULL,
     quantity INT,
     variant_price DECIMAL(10, 2),
-    sale_id INT,
+    sale_id INT NOT NULL,
     status INT NOT NULL,
-    CONSTRAINT FK_ProductVariant_Product FOREIGN KEY (product_id) REFERENCES Product(id),
-    CONSTRAINT FK_ProductVariant_ProductImage FOREIGN KEY (image_id) REFERENCES ProductImage(id)
+	CONSTRAINT FK_ProductVariant_Product FOREIGN KEY (product_id) REFERENCES Product(id),
+	CONSTRAINT FK_ProductVariant_Ram FOREIGN KEY (RAM_id) REFERENCES dbo.Ram(Id), 
+	CONSTRAINT FK_ProductVariant_Storage FOREIGN KEY (Storage_id) REFERENCES Storage(Id),
+	CONSTRAINT FK_ProductVariant_Sale FOREIGN KEY (sale_id) REFERENCES Sale(Id)
 );
 GO
+CREATE TABLE [dbo].[ProductImage](
+	[Id] [bigint] IDENTITY(1,1) NOT NULL PRIMARY KEY,
+	[Url] [varchar](max) NOT NULL,
+	[Product_Id] [int] NOT NULL,
+	[Ram_Id] [int] NOT NULL,
+	CONSTRAINT FK_ProductImage_Product FOREIGN KEY (Product_Id) REFERENCES Product(Id),
+	CONSTRAINT FK_ProductImage_RAM FOREIGN KEY (Ram_Id) REFERENCES RAM(Id)
+);
 CREATE TABLE [dbo].[Security](
 	[question_Id] [bigint],
 	[account_Id] [bigint] NOT NULL PRIMARY KEY,
@@ -131,15 +143,6 @@ VALUES
 
 -- Insert sample data into the ProductImage table
 GO
-SET IDENTITY_INSERT [dbo].[ProductImage] ON;
-INSERT INTO ProductImage (id, url)
-VALUES 
-(1, N'DellXPS13.jpg'),
-(2, N'MacBookPro14.jpg'),
-(3, N'HPSpectrex360.jpg'),
-(4, N'AsusROGZephyrusG14.jpg'),
-(5, N'LenovoThinkPadX1Carbon.jpg');
-SET IDENTITY_INSERT [dbo].[ProductImage] OFF;
 -- Insert Security questions
 GO
 SET IDENTITY_INSERT [dbo].[SecurityQuestion] ON;
@@ -162,3 +165,42 @@ SELECT * FROM Role
 SET IDENTITY_INSERT [dbo].[Account] ON;
 INSERT INTO Account(id, username, password, role_Id, isActive) VALUES (2, 'admin', 'admin@123', '1', '1');
 SET IDENTITY_INSERT [dbo].[Account] OFF;
+INSERT INTO dbo.Storage (Storage_Size, Price_Bonus, Status) VALUES
+('256GB SSD', 0.00, 1),
+('512GB SSD', 25.00, 1),
+('1TB SSD', 50.00, 1);
+INSERT INTO dbo.RAM (RAM, Price_Bonus, Status) VALUES
+('8GB DDR4', 0.00, 1),
+('16GB DDR5', 50.00, 1),
+('32GB DDR5', 100.00, 1);
+SET IDENTITY_INSERT [dbo].[Sale] ON 
+
+INSERT [dbo].[Sale] ([Id], [Percent]) VALUES (1, CAST(0.00 AS Decimal(5, 2)))
+INSERT [dbo].[Sale] ([Id], [Percent]) VALUES (2, CAST(10.00 AS Decimal(5, 2)))
+INSERT [dbo].[Sale] ([Id], [Percent]) VALUES (3, CAST(15.00 AS Decimal(5, 2)))
+INSERT [dbo].[Sale] ([Id], [Percent]) VALUES (4, CAST(20.00 AS Decimal(5, 2)))
+INSERT [dbo].[Sale] ([Id], [Percent]) VALUES (5, CAST(25.00 AS Decimal(5, 2)))
+INSERT [dbo].[Sale] ([Id], [Percent]) VALUES (6, CAST(30.00 AS Decimal(5, 2)))
+INSERT [dbo].[Sale] ([Id], [Percent]) VALUES (7, CAST(40.00 AS Decimal(5, 2)))
+INSERT [dbo].[Sale] ([Id], [Percent]) VALUES (9, CAST(45.00 AS Decimal(5, 2)))
+INSERT [dbo].[Sale] ([Id], [Percent]) VALUES (10, CAST(32.00 AS Decimal(5, 2)))
+INSERT [dbo].[Sale] ([Id], [Percent]) VALUES (11, CAST(50.00 AS Decimal(5, 2)))
+SET IDENTITY_INSERT [dbo].[Sale] OFF  
+-- Insert into ProductVariant table
+INSERT INTO ProductVariant (product_id, Ram_id, Storage_id, quantity, variant_price,  sale_id, status)
+VALUES 
+(1, 1, 1, 10, 1099.99,  1,1),
+(2, 2, 2, 5, 2299.99,  1, 1),
+(3, 1, 1, 20, 1399.99,  1,1),
+(4, 1, 2, 8, 1599.99, 1, 1),
+(5, 1, 2, 12, 1899.99,1, 1);
+
+SET IDENTITY_INSERT [dbo].[ProductImage] ON
+INSERT INTO [ProductImage] ([Id],[Url], [Product_Id], [Ram_Id])
+VALUES 
+(1, N'DellXPS13.jpg', 1,2),
+(2, N'MacBookPro14.jpg',1, 2),
+(3, N'HPSpectrex360.jpg', 1,2),
+(4, N'AsusROGZephyrusG14.jpg',1, 2),
+(5, N'LenovoThinkPadX1Carbon.jpg',1, 2);
+SET IDENTITY_INSERT [dbo].[ProductImage] OFF

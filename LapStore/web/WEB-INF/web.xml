@@ -73,20 +73,20 @@
         <servlet-class>controller.Admin_CreateProductController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AdminColorListController</servlet-name>
-        <servlet-class>controller.AdminColorListController</servlet-class>
+        <servlet-name>AdminRamListController</servlet-name>
+        <servlet-class>controller.AdminRamListController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AdminHideColor</servlet-name>
-        <servlet-class>controller.AdminHideColor</servlet-class>
+        <servlet-name>AdminHideRam</servlet-name>
+        <servlet-class>controller.AdminHideRam</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AdminCreateColorController</servlet-name>
-        <servlet-class>controller.AdminCreateColorController</servlet-class>
+        <servlet-name>AdminCreateRamController</servlet-name>
+        <servlet-class>controller.AdminCreateRamController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AdminUpdateColor</servlet-name>
-        <servlet-class>controller.AdminUpdateColor</servlet-class>
+        <servlet-name>AdminUpdateRam</servlet-name>
+        <servlet-class>controller.AdminUpdateRam</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AdminStorageLListController</servlet-name>
@@ -293,20 +293,20 @@
         <url-pattern>/admin-create-product</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AdminColorListController</servlet-name>
-        <url-pattern>/color-list</url-pattern>
+        <servlet-name>AdminRamListController</servlet-name>
+        <url-pattern>/ram-list</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AdminHideColor</servlet-name>
-        <url-pattern>/admin-hide-color</url-pattern>
+        <servlet-name>AdminHideRam</servlet-name>
+        <url-pattern>/admin-hide-ram</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AdminCreateColorController</servlet-name>
-        <url-pattern>/create-color</url-pattern>
+        <servlet-name>AdminCreateRamController</servlet-name>
+        <url-pattern>/create-ram</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AdminUpdateColor</servlet-name>
-        <url-pattern>/update-color</url-pattern>
+        <servlet-name>AdminUpdateRam</servlet-name>
+        <url-pattern>/update-ram</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AdminStorageLListController</servlet-name>
