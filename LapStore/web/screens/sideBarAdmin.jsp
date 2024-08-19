@@ -60,13 +60,13 @@
               </a>
             </li>
             <li class="nav-link">
-              <a href="#">
+              <a href="/LapStore_main/order">
                 <i class="bx bx-bell icon"></i>
-                <span class="text nav-text">Notifications</span>
+                <span class="text nav-text">Order</span>
               </a>
             </li>
             <li class="nav-link">
-              <a href="/LapStore_main/user  ">
+              <a href="/LapStore_main/user">
                 <i class="bx bx-user icon"></i>
                 <span class="text nav-text">User</span>
               </a>
