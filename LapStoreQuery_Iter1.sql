@@ -67,7 +67,10 @@ CREATE TABLE ProductImage (
     id INT IDENTITY(1,1) PRIMARY KEY,
     url NVARCHAR(255)
 );
-
+select * from Product
+insert into ProductVariant (product_id, image_id , RAM , storage , quantity , variant_price, sale_id, status) values
+(1,1,'16Gb','512Gb',2,50,1,1),
+(2,2,'32Gb','1Tb',2,100,1,1);
 -- Create ProductVariant table
 CREATE TABLE ProductVariant (
     id INT IDENTITY(1,1) PRIMARY KEY,
@@ -162,3 +165,66 @@ SELECT * FROM Role
 SET IDENTITY_INSERT [dbo].[Account] ON;
 INSERT INTO Account(id, username, password, role_Id, isActive) VALUES (2, 'admin', 'admin@123', '1', '1');
 SET IDENTITY_INSERT [dbo].[Account] OFF;
+
+create table [Order](
+id int identity(1,1) primary key,
+user_id bigint not null,
+total_price DECIMAL(10, 2) NOT NULL,
+created_date DATETIME DEFAULT GETDATE(),
+name nvarchar(max) null,
+address nvarchar(max) null,
+phone varchar(12) null,
+status int not null,
+constraint FK_Order_User foreign key(user_id) references [User](id)
+);
+insert into [Order](user_id,total_price,name,address,phone,status) values 
+(3,500,'Tran Tien Dung','Tro Thanh Lang, Ngo 1 cay xang 39, Thach That, Hanoi','0963177099',1)
+create table OrderDetail(
+id int identity(1,1) primary key,
+order_id int not null,
+productVariant_id int not null,
+quantity int not null,
+constraint FK_OrderDetail_Order foreign key(order_id) references [Order](id),
+constraint productVariant_id foreign key(productVariant_id) references ProductVariant(id)
+);
+insert into OrderDetail(order_id,productVariant_id,quantity) values 
+(2,2,1),
+(2,3,2)
+INSERT INTO [Account](username, password, role_Id, isActive) VALUES
+('dungle2107','1',1,1),
+('admin','1',1,1),
+('john_doe', 'password123', 2, 1),
+('jane_smith', 'securePass', 3, 1),
+('alex_jones', 'alex@123', 2, 0),
+('mary_jane', 'mjane456', 1, 1),
+('peter_parker', 'spiderman', 2, 1),
+('tony_stark', 'ironman', 3, 1),
+('bruce_wayne', 'batman', 2, 1),
+('clark_kent', 'superman', 1, 1),
+('diana_prince', 'wonderwoman', 2, 0),
+('barry_allen', 'flash123', 2, 1),
+('arthur_curry', 'aquaman', 3, 1),
+('victor_stone', 'cyborg', 2, 1),
+('oliver_queen', 'greenarrow', 1, 1),
+('hal_jordan', 'greenlantern', 2, 1),
+('john_constantine', 'hellblazer', 3, 0);
+INSERT INTO [User](id, fullname, phone, email, address, gender) VALUES
+(2, 'Admin','01234567444','admin@example.com','Ha Noi',1),
+(3, 'Tran Tien Dung','0963177099','ttd21072004@gmail.com','Ha Noi',1),
+(4, 'Admin','01234656789','dsadas@example.com','Viet Nam',1),
+(5, 'John Doe', '0912345678', 'john.doe@example.com', 'New York', 1),
+(6, 'Jane Smith', '0923456789', 'jane.smith@example.com', 'Los Angeles', 0),
+(7, 'Alex Jones', '0934567890', 'alex.jones@example.com', 'Chicago', 1),
+(8, 'Mary Jane', '0945678901', 'mary.jane@example.com', 'Houston', 0),
+(9, 'Peter Parker', '0956789012', 'peter.parker@example.com', 'Queens', 1),
+(10, 'Tony Stark', '0967890123', 'tony.stark@example.com', 'Malibu', 1),
+(11, 'Bruce Wayne', '0978901234', 'bruce.wayne@example.com', 'Gotham', 1),
+(12, 'Clark Kent', '0989012345', 'clark.kent@example.com', 'Metropolis', 1),
+(13, 'Diana Prince', '0990123456', 'diana.prince@example.com', 'Themyscira', 0),
+(14, 'Barry Allen', '0901234567', 'barry.allen@example.com', 'Central City', 1),
+(15, 'Arthur Curry', '0912345670', 'arthur.curry@example.com', 'Atlantis', 1),
+(16, 'Victor Stone', '0923456701', 'victor.stone@example.com', 'Detroit', 1),
+(17, 'Oliver Queen', '0934567012', 'oliver.queen@example.com', 'Star City', 1),
+(18, 'Hal Jordan', '0945670123', 'hal.jordan@example.com', 'Coast City', 1),
+(19, 'John Constantine', '0956780123', 'john.constantine@example.com', 'London', 1);
+

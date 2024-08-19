@@ -11,6 +11,7 @@ package model;
  */
 public class ProductVariant {
     private int id;
+    private String name;
     private int product_Id;
     private String ram;
     private String storage;
@@ -18,10 +19,52 @@ public class ProductVariant {
     private float variantPrice;
     private int sale_Id;
     private int status;
-
+    private float productPrice;
     public ProductVariant() {
     }
 
+    public int getProduct_Id() {
+        return product_Id;
+    }
+
+    public void setProduct_Id(int product_Id) {
+        this.product_Id = product_Id;
+    }
+
+    public int getSale_Id() {
+        return sale_Id;
+    }
+
+    public void setSale_Id(int sale_Id) {
+        this.sale_Id = sale_Id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public float getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(float productPrice) {
+        this.productPrice = productPrice;
+    }
+
+    public ProductVariant(int id, String name, String ram, String storage, int quantity, float variantPrice, float productPrice) {
+        this.id = id;
+        this.name = name;
+        this.ram = ram;
+        this.storage = storage;
+        this.quantity = quantity;
+        this.variantPrice = variantPrice;
+        this.productPrice = productPrice;
+    }
+   
     public ProductVariant(int id, int product_Id, String ram, String storage, int quantity, float variantPrice,
             int sale_Id, int status) {
         this.id = id;
