@@ -680,9 +680,9 @@ public List<ProductVariantInfomation> getListNameProductVariantById(List<Integer
 //        System.out.println("\nStorage Size for ID 1: " + storageSize);
 //
 //         Test getProductVariantByID method
-        ProductVariant productVariantById = productVariantDAO.getProductVariantByID(1);
-        System.out.println("\nProduct Variant by ID 1:");
-        System.out.println(productVariantById);
+//        ProductVariant productVariantById = productVariantDAO.getProductVariantByID(1);
+//        System.out.println("\nProduct Variant by ID 1:");
+//        System.out.println(productVariantById);
 ////
 //        // Test getProductVariant method
 //        ProductVariant productVariantByRamStorage = productVariantDAO.getProductVariant("1", "1", "1");
