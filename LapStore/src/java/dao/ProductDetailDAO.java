@@ -33,14 +33,14 @@ public class ProductDetailDAO extends DBContext {
                     rs.getInt(1),
                     rs.getString(2),
                     rs.getString(3),
-                    rs.getInt(4), 
-                    rs.getFloat(5),       
+                    rs.getInt(11),
+                    rs.getFloat(4),       
+                    rs.getString(5),
                     rs.getString(6),
                     rs.getString(7),
                     rs.getString(8),
-                    rs.getString(9),
-                    rs.getFloat(10),
-                    rs.getString(11),
+                    rs.getFloat(9),  
+                    rs.getString(10),
                     rs.getString(12),
                     rs.getString(13),
                     rs.getInt(14));
@@ -190,8 +190,10 @@ public class ProductDetailDAO extends DBContext {
     
     public static void main(String[] args) {
         ProductDetailDAO d = new ProductDetailDAO();
-        Product p = d.getProductbyName("iphone 14 pro");
-        String rid = d.getRamIdByName("purple") + "";
+        Product p = d.getProductbyName("Dell XPS 13");
+        System.out.println(p);
+        String rid = d.getRamIdByName("16GB DDR5") + "";
+        System.out.println(rid);
         List<Storage> s = d.getAllStorageList();
         for (Storage storage : s) {
             System.out.println(storage.getStorageSize());

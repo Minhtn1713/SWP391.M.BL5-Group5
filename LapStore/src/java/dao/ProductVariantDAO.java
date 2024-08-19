@@ -335,7 +335,7 @@ public class ProductVariantDAO extends DBContext {
     
     public ProductVariant getProductVariantByID(int id){
         ProductVariant product = new ProductVariant();
-        String sql = "SELECT * FROM [ProductVariant] WHERE id LIKE '" + id + "'";
+        String sql = "SELECT * FROM [ProductVariant] WHERE id  LIKE '" + id + "'";
          try{
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -649,10 +649,10 @@ public List<ProductVariantInfomation> getListNameProductVariantById(List<Integer
         // Test getListProductVariant method
         List<ProductVariant> productVariants = productVariantDAO.getListProductVariant(
             1, // offset
-            10, // fetch
+            5, // fetch
             "variant_price", // orderBy
-            Arrays.asList("1", "2"), // filterRam
-            Arrays.asList("1", "2"), // filterStorage
+            Arrays.asList("1", "5"), // filterRam
+            Arrays.asList("1", "5"), // filterStorage
             new Range(100, 1000), // range
             Arrays.asList(1, 2), // search (product_id list)
             "2" // filter
@@ -679,14 +679,14 @@ public List<ProductVariantInfomation> getListNameProductVariantById(List<Integer
 //        String storageSize = productVariantDAO.getStorageSizeById(1);
 //        System.out.println("\nStorage Size for ID 1: " + storageSize);
 //
-        // Test getProductVariantByID method
+//         Test getProductVariantByID method
         ProductVariant productVariantById = productVariantDAO.getProductVariantByID(1);
         System.out.println("\nProduct Variant by ID 1:");
         System.out.println(productVariantById);
-//
-        // Test getProductVariant method
-        ProductVariant productVariantByRamStorage = productVariantDAO.getProductVariant("1", "1", "1");
-        System.out.println("\nProduct Variant by RAM ID, Product ID, and Storage ID:");
-        System.out.println(productVariantByRamStorage);
+////
+//        // Test getProductVariant method
+//        ProductVariant productVariantByRamStorage = productVariantDAO.getProductVariant("1", "1", "1");
+//        System.out.println("\nProduct Variant by RAM ID, Product ID, and Storage ID:");
+//        System.out.println(productVariantByRamStorage);
     }
 }
