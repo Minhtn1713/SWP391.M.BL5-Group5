@@ -25,7 +25,7 @@ public class Admin_DeleteVariantController extends HttpServlet {
         String status = (String) req.getParameter("sta");
         int succes = variantDao.updateProductStatus(id, status);
         if (succes != 0) {
-            resp.sendRedirect("/LapStore-main/admin-variant-list");
+            resp.sendRedirect("/LapStore_main/admin-variant-list");
         } else //todo: add error page
         {
             resp.sendRedirect("error-page");

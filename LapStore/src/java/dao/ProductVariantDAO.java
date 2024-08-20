@@ -473,11 +473,11 @@ public class ProductVariantDAO extends DBContext {
           return succes;
     }
     
-      public int updateProductStatus(String id, String status){
+      public int updateProductSale(String id, String status){
         int succes = 0;
-        String query = "UPDATE [ProductVariant] SET [status] = " + status + 
-                                       
-                                       " where id = " + id;
+        String query = "UPDATE ProductVariant SET "
+                + "status = " + status + 
+                " where id = " + id;
           try{
             PreparedStatement ps = connection.prepareStatement(query);
             succes = ps.executeUpdate();
@@ -487,7 +487,7 @@ public class ProductVariantDAO extends DBContext {
         }
           return succes;
     }
-      public int updateProductSale(String id, String sale){
+      public int updateProductStatus(String id, String sale){
         int succes = 0;
         String query = "UPDATE [ProductVariant] SET [sale_id] = " + sale + 
                                        

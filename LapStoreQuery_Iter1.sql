@@ -1,3 +1,18 @@
+USE [master];
+GO
+
+-- Drop the database if it exists
+IF DB_ID('LapStore') IS NOT NULL
+BEGIN
+    ALTER DATABASE LapStore SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    DROP DATABASE [LapStore];
+END
+
+
+
+-- Create the database
+CREATE DATABASE [LapStore];
+USE [LapStore];
 
 GO
 --Create Role table
@@ -187,13 +202,13 @@ INSERT [dbo].[Sale] ([Id], [Percent]) VALUES (10, CAST(32.00 AS Decimal(5, 2)))
 INSERT [dbo].[Sale] ([Id], [Percent]) VALUES (11, CAST(50.00 AS Decimal(5, 2)))
 SET IDENTITY_INSERT [dbo].[Sale] OFF  
 -- Insert into ProductVariant table
-INSERT INTO ProductVariant (product_id, Ram_id, Storage_id, quantity, variant_price,  sale_id, status)
+INSERT INTO ProductVariant (product_id, RAM_id, Storage_id, quantity, variant_price,  sale_id, status)
 VALUES 
-(1, 1, 1, 10, 1099.99,  1,1),
-(2, 2, 2, 5, 2299.99,  1, 1),
-(3, 1, 1, 20, 1399.99,  1,1),
-(4, 1, 2, 8, 1599.99, 1, 1),
-(5, 1, 2, 12, 1899.99,1, 1);
+(1, 1, 1, 10, 999.99,  1,1),
+(2, 2, 2, 5, 2074.99,  1, 1),
+(3, 1, 1, 20, 1299.99,  1,1),
+(4, 1, 2, 8, 1524.99, 1, 1),
+(5, 1, 2, 12, 1824.99,1, 1);
 
 SET IDENTITY_INSERT [dbo].[ProductImage] ON
 INSERT INTO [ProductImage] ([Id],[Url], [Product_Id], [Ram_Id])
@@ -204,3 +219,4 @@ VALUES
 (4, N'AsusROGZephyrusG14.jpg',1, 2),
 (5, N'LenovoThinkPadX1Carbon.jpg',1, 2);
 SET IDENTITY_INSERT [dbo].[ProductImage] OFF
+UPDATE [ProductVariant] SET sale_id = 2 where id = 1
