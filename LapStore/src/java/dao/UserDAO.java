@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Connection;
+import java.util.HashMap;
 
 public class UserDAO extends DBContext {
 
@@ -170,6 +171,25 @@ public class UserDAO extends DBContext {
         return null;
     }
     
+    public User getUserById_Dung(int id){
+        String query = "Select * from [LapStore].[dbo].[User]"
+                + " Where [id] = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return new User(rs.getInt(1), rs.getString(2), rs.getString(4),rs.getString(3), rs.getString(5), rs.getInt(6));
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+    
+    
     public boolean toggleById(int id) {
         int check = 0;
         Connection con = null;
@@ -238,7 +258,7 @@ public class UserDAO extends DBContext {
         }
         return check > 0 ? u : null;
     }
-     public User getUserById_Dung(int id) {
+    public User getUserById_1(int id) {
         String query = "select * from [User] join Account on [User].id=Account.id where [User].id=?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
@@ -279,5 +299,20 @@ public class UserDAO extends DBContext {
             System.out.println(e);
         } 
     }
-  
+    public HashMap<Integer, String> getUserName(){
+        HashMap<Integer, String> map = new HashMap<>();
+        String query = "Select * from [LapStore].[dbo].[User]";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                map.put(rs.getInt(1), rs.getString(2));
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return map;
+    }
 }

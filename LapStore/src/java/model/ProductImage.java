@@ -6,12 +6,13 @@ package model;
 
 /**
  *
- * @author hieu
+ * @author kienk
  */
 public class ProductImage {
     private int id;
     private String url;
     private int productId;
+    private int ramId;
 
     public ProductImage() {
     }
@@ -45,4 +46,21 @@ public class ProductImage {
     public void setProductId(int productId) {
         this.productId = productId;
     }
+
+    public int getRamId() {
+        return ramId;
+    }
+
+    public void setRamId(int ramId) {
+        this.ramId = ramId;
+    }
+
+    public ProductImage(int id, String url, int productId, int ramId) {
+        this.id = id;
+        this.url = url;
+        this.productId = productId;
+        this.ramId = ramId;
+    }
+
+    
 }

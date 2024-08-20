@@ -42,11 +42,11 @@ public class Comment {
         this.userId = userId;
     }
 
-    public int getProdcutId() {
+    public int getProductId() {
         return prodcutId;
     }
 
-    public void setProdcutId(int prodcutId) {
+    public void setProductId(int prodcutId) {
         this.prodcutId = prodcutId;
     }
 

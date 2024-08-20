@@ -16,10 +16,7 @@
         <servlet-name>ForgotPasswordController</servlet-name>
         <servlet-class>controller.ForgotPasswordController</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>ProductDetailController</servlet-name>
-        <servlet-class>controller.ProductDetailController</servlet-class>
-    </servlet>
+
     <servlet>
         <servlet-name>SignInController</servlet-name>
         <servlet-class>controller.SignInController</servlet-class>
@@ -33,8 +30,8 @@
         <servlet-class>controller.SignUpController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>StoreController</servlet-name>
-        <servlet-class>controller.StoreController</servlet-class>
+        <servlet-name>ProductListController</servlet-name>
+        <servlet-class>controller.ProductListController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Admin_CreateVariantController</servlet-name>
@@ -73,20 +70,20 @@
         <servlet-class>controller.Admin_CreateProductController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AdminColorListController</servlet-name>
-        <servlet-class>controller.AdminColorListController</servlet-class>
+        <servlet-name>AdminRamListController</servlet-name>
+        <servlet-class>controller.AdminRamListController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AdminHideColor</servlet-name>
-        <servlet-class>controller.AdminHideColor</servlet-class>
+        <servlet-name>AdminHideRam</servlet-name>
+        <servlet-class>controller.AdminHideRam</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AdminCreateColorController</servlet-name>
-        <servlet-class>controller.AdminCreateColorController</servlet-class>
+        <servlet-name>AdminCreateRamController</servlet-name>
+        <servlet-class>controller.AdminCreateRamController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AdminUpdateColor</servlet-name>
-        <servlet-class>controller.AdminUpdateColor</servlet-class>
+        <servlet-name>AdminUpdateRam</servlet-name>
+        <servlet-class>controller.AdminUpdateRam</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AdminStorageLListController</servlet-name>
@@ -113,10 +110,6 @@
         <servlet-class>controller.AddToOrderController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>CheckoutController</servlet-name>
-        <servlet-class>controller.CheckoutController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>DeleteOrderDetailController</servlet-name>
         <servlet-class>controller.DeleteOrderDetailController</servlet-class>
     </servlet>
@@ -131,10 +124,6 @@
     <servlet>
         <servlet-name>Admin_OrderDetail</servlet-name>
         <servlet-class>controller.Admin_OrderDetail</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>MyCartController</servlet-name>
-        <servlet-class>controller.MyOrderController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UserOrderHistoryDetailController</servlet-name>
@@ -216,6 +205,10 @@
         <servlet-name>HomeController</servlet-name>
         <servlet-class>controller.HomeController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MyOrderController</servlet-name>
+        <servlet-class>controller.MyOrderController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AccountProfileController</servlet-name>
         <url-pattern>/account-profile</url-pattern>
@@ -224,10 +217,7 @@
         <servlet-name>ForgotPasswordController</servlet-name>
         <url-pattern>/forgot-password</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ProductDetailController</servlet-name>
-        <url-pattern>/product-detail</url-pattern>
-    </servlet-mapping>
+  
     <servlet-mapping>
         <servlet-name>SignInController</servlet-name>
         <url-pattern>/sign-in</url-pattern>
@@ -241,7 +231,7 @@
         <url-pattern>/sign-up</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>StoreController</servlet-name>
+        <servlet-name>ProductListController</servlet-name>
         <url-pattern>/store</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
@@ -279,11 +269,7 @@
     <servlet-mapping>
         <servlet-name>AddToOrderController</servlet-name>
         <url-pattern>/add-to-cart</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CheckoutController</servlet-name>
-        <url-pattern>/checkout</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>    
     <servlet-mapping>
         <servlet-name>DeleteOrderDetailController</servlet-name>
         <url-pattern>/delete-detail</url-pattern>
@@ -293,20 +279,20 @@
         <url-pattern>/admin-create-product</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AdminColorListController</servlet-name>
-        <url-pattern>/color-list</url-pattern>
+        <servlet-name>AdminRamListController</servlet-name>
+        <url-pattern>/ram-list</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AdminHideColor</servlet-name>
-        <url-pattern>/admin-hide-color</url-pattern>
+        <servlet-name>AdminHideRam</servlet-name>
+        <url-pattern>/admin-hide-ram</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AdminCreateColorController</servlet-name>
-        <url-pattern>/create-color</url-pattern>
+        <servlet-name>AdminCreateRamController</servlet-name>
+        <url-pattern>/create-ram</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AdminUpdateColor</servlet-name>
-        <url-pattern>/update-color</url-pattern>
+        <servlet-name>AdminUpdateRam</servlet-name>
+        <url-pattern>/update-ram</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AdminStorageLListController</servlet-name>
@@ -339,10 +325,6 @@
     <servlet-mapping>
         <servlet-name>Admin_OrderDetail</servlet-name>
         <url-pattern>/admin-order-detail</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>MyCartController</servlet-name>
-        <url-pattern>/my-cart</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserOrderHistoryDetailController</servlet-name>
@@ -423,6 +405,10 @@
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MyOrderController</servlet-name>
+        <url-pattern>/my-order</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -40,9 +40,19 @@
                 ><i class="bx bx-palette icon"></i>
                 <span class="text nav-text">Brand</span></a
               >
+              <li class="nav-link sub-menu">
+              <a href="ram-list"
+                ><i class="bx bx-palette icon"></i>
+                <span class="text nav-text">Ram</span></a
+              >
+              <li class="nav-link sub-menu">
+              <a href="storage-list"
+                ><i class="bx bx-palette icon"></i>
+                <span class="text nav-text">Storage</span></a
+              >
       
             <li class="nav-link sub-menu">
-              <a href="admin-order"
+              <a href="/LapStore_main/order"
                 ><i class='bx bx-cart icon'></i>
                 <span class="text nav-text">Order</span></a
               >

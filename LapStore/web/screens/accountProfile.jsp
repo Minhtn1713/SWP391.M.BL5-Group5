@@ -32,6 +32,7 @@
                     <div class="left-container">
                         <a id="profile" class="left-line" href="/LapStore_main/account-profile?status=profile"><i class='fa fa-user'></i> Profile</a><br/><br/>
                         <a id="setting" class="left-line" href="/LapStore_main/account-profile?status=setting"><i class="fa fa-cog" aria-hidden="true"></i> Change Password</a><br/><br/>
+                        <a class="left-line" href="my-order"><i class='fa fa-shopping-bag'></i> My order</a><br/><br/>
                     </div>
                     <div class="right-container" id="right-content">
                     <c:choose>

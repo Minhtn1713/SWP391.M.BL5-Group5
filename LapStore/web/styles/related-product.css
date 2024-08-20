@@ -1,3 +1,12 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Aug 19, 2024, 4:53:33 PM
+    Author     : lords
+*/
+
 #related-title {
   margin: 10vh 0 5vh 0;
   text-align: center;
@@ -5,14 +14,13 @@
 }
 
 .content-img-container a img {
-  width: 190px;
-  height: 257px;
+  width: 400px;
+  height: 400px;
 }
 
 .content-img-container {
   display: flex;
   justify-content: space-evenly;
-  padding: 0 10vw 0 10vw;
   text-align: center;
 }
 
@@ -21,4 +29,5 @@
   font-weight: 700;
   font-family: "Montserrat", sans-serif;
   text-transform: uppercase;
+  margin-top: -20px; 
 }

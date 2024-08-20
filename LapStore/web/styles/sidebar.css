@@ -1,3 +1,11 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Aug 18, 2024, 4:49:32 PM
+    Author     : lords
+*/
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Poppins:wght@400;500;600;700&family=Shadows+Into+Light&display=swap");
 * {
   font-family: "Poppins", sans-serif;
@@ -350,3 +358,4 @@ body.dark .switch::before {
     opacity: 0;
   }
 }
+
