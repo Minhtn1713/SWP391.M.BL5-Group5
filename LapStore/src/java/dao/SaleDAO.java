@@ -50,8 +50,8 @@ public class SaleDAO extends DBContext {
     }
     
     public Sale getSaleById(int id){
-        String query = "SELECT * FROM sale"
-                + " Where id = ?";
+        String query = "SELECT * FROM Sale"
+                + " Where Id = ?";
         try{
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setInt(1, id);
@@ -68,8 +68,8 @@ public class SaleDAO extends DBContext {
     }
     
     public Sale isPercentExist (float percent){
-         String query = "SELECT * FROM sale"
-                + " Where [percent] = ?";
+         String query = "SELECT * FROM Sale"
+                + " Where [Percent] = ?";
         try{
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setFloat(1, percent);
@@ -86,7 +86,7 @@ public class SaleDAO extends DBContext {
     }
     
     public void createNewSale (float percent){
-         String query = "Insert Into [Sale]([percent])"
+         String query = "Insert Into [Sale]([Percent])"
                 + " values ("+percent+")";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
@@ -113,5 +113,40 @@ public class SaleDAO extends DBContext {
         }
         return null;
     }
-    
+//    public static void main(String[] args) {
+//        SaleDAO saleDAO = new SaleDAO();
+//
+//        // Test getListSale method
+//        List<Sale> sales = saleDAO.getListSale();
+//        System.out.println("List of Sales:");
+//        for (Sale sale : sales) {
+//            System.out.println("ID: " + sale.getId() + ", Percent: " + sale.getPercent());
+//        }
+//
+//        // Test getTotalSale method
+//        int totalSale = saleDAO.getTotalSale();
+//        System.out.println("Total Sales (excluding sale_Id = 1): " + totalSale);
+//
+//        // Test getSaleById method
+//        Sale saleById = saleDAO.getSaleById(1); // Replace 1 with an appropriate ID
+//        System.out.println("Sale by ID: " + saleById);
+//
+//        // Test isPercentExist method
+//        float testPercent = 20.0f; // Replace with the percent you want to test
+//        Sale saleWithPercent = saleDAO.isPercentExist(testPercent);
+//        if (saleWithPercent != null) {
+//            System.out.println("Sale with Percent " + testPercent + " exists: " + saleWithPercent);
+//        } else {
+//            System.out.println("No Sale found with Percent " + testPercent);
+//        }
+//
+//        // Test createNewSale method
+//        float newSalePercent = 25.0f; // Replace with the new percent to create
+//        saleDAO.createNewSale(newSalePercent);
+//        System.out.println("Created new sale with Percent: " + newSalePercent);
+//
+//        // Test getNewSale method
+//        Sale newSale = saleDAO.getNewSale();
+//        System.out.println("Newest Sale: " + newSale);
+//    }
             }

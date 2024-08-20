@@ -29,68 +29,67 @@ public class ProductVariantDAO extends DBContext {
             String orderBy, List<String> filterRam, List<String> filterStorage,
             Range range, List<Integer> search, String filter) {
         List<ProductVariant> product = new ArrayList<>();
-        String query = "select * from ProductVariant"
-                + " where 1=1";
-        
-        int min = range.getMin();
-        int max = range.getMax();
-        query += "AND (variant_price BETWEEN "+min +" AND "+max+") ";
-        if (!filterRam.isEmpty()) {
-            query += " and ";
-            if (filterRam.size() == 1){
-                query+= "RAM_id =" + filterRam.get(0);
-            }
-            if (filterRam.size()>1){
-                query+= "(";
-            
-            for (int i = 0; i < filterRam.size(); i++) {
-                if (i <=filterRam.size() - 2){
-                    query+="RAM_id = " + filterRam.get(i) + " or ";
-                }if (i == filterRam.size() -1){
-                    query+="RAM_id = " + filterRam.get(i) + ") ";
-                }
-               
-            }
-            }
-        }
-        if (!filterStorage.isEmpty()) {
-            query += " and ";
-            if (filterStorage.size() == 1){
-                query+= "Storage_id =" + filterStorage.get(0);
-            }
-            if (filterStorage.size()>1){
-                query+= "(";
-            
-            for (int i = 0; i < filterStorage.size(); i++) {              
-                if (i <=filterStorage.size() - 2){
-                    query+="Storage_id = " + filterStorage.get(i) + " or ";
-                }
-                if (i == filterStorage.size() -1){
-                    query+="Storage_id = " + filterStorage.get(i) + ") ";
-                }
-               
-            }
-            }
-        }
-        if (!search.isEmpty()) {
-            query += " and ";
-            if (search.size() == 1){
-                query+= "product_id =" + search.get(0);
-            }
-            if (search.size()>1){
-                query+= "(";
-            
-            for (int i = 0; i < search.size(); i++) {              
-                if (i <=search.size() - 2){
-                    query+="product_id = " + search.get(i) + " or ";
-                }
-                if (i == search.size() -1){
-                    query+="product_id = " + search.get(i) + ") ";
-                }
-               
-            }
-            }
-        }
+        String query = "select * from ProductVariant";
+//        
+//        int min = range.getMin();
+//        int max = range.getMax();
+//        query += "AND (variant_price BETWEEN "+min +" AND "+max+") ";
+//        if (!filterRam.isEmpty()) {
+//            query += " and ";
+//            if (filterRam.size() == 1){
+//                query+= "RAM_id =" + filterRam.get(0);
+//            }
+//            if (filterRam.size()>1){
+//                query+= "(";
+//            
+//            for (int i = 0; i < filterRam.size(); i++) {
+//                if (i <=filterRam.size() - 2){
+//                    query+="RAM_id = " + filterRam.get(i) + " or ";
+//                }if (i == filterRam.size() -1){
+//                    query+="RAM_id = " + filterRam.get(i) + ") ";
+//                }
+//               
+//            }
+//            }
+//        }
+//        if (!filterStorage.isEmpty()) {
+//            query += " and ";
+//            if (filterStorage.size() == 1){
+//                query+= "Storage_id =" + filterStorage.get(0);
+//            }
+//            if (filterStorage.size()>1){
+//                query+= "(";
+//            
+//            for (int i = 0; i < filterStorage.size(); i++) {              
+//                if (i <=filterStorage.size() - 2){
+//                    query+="Storage_id = " + filterStorage.get(i) + " or ";
+//                }
+//                if (i == filterStorage.size() -1){
+//                    query+="Storage_id = " + filterStorage.get(i) + ") ";
+//                }
+//               
+//            }
+//            }
+//        }
+//        if (!search.isEmpty()) {
+//            query += " and ";
+//            if (search.size() == 1){
+//                query+= "product_id =" + search.get(0);
+//            }
+//            if (search.size()>1){
+//                query+= "(";
+//            
+//            for (int i = 0; i < search.size(); i++) {              
+//                if (i <=search.size() - 2){
+//                    query+="product_id = " + search.get(i) + " or ";
+//                }
+//                if (i == search.size() -1){
+//                    query+="product_id = " + search.get(i) + ") ";
+//                }
+//               
+//            }
+//            }
+//        }
 //        if (filter.equals("2")){
 //            query+= "and status = 1";
 //        } else if(filter.equals("3")){
@@ -474,7 +473,7 @@ public class ProductVariantDAO extends DBContext {
           return succes;
     }
     
-      public int updateProduct(String id, String status){
+      public int updateProductStatus(String id, String status){
         int succes = 0;
         String query = "UPDATE [ProductVariant] SET [status] = " + status + 
                                        
