@@ -1,3 +1,4 @@
+
 USE [master];
 GO
 
@@ -13,7 +14,6 @@ END
 -- Create the database
 CREATE DATABASE [LapStore];
 USE [LapStore];
-
 GO
 --Create Role table
 CREATE TABLE [dbo].[Role] (
@@ -116,7 +116,7 @@ CREATE TABLE [dbo].[Security](
 	[answer] [ntext] NOT NULL,
 	)
 GO
-/****** Object:  Table [dbo].[SecurityQuestion]    Script Date: 7/25/2023 8:47:57 PM ******/
+
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -138,6 +138,7 @@ GO
 ALTER TABLE [dbo].[User]  WITH CHECK ADD FOREIGN KEY([id])
 REFERENCES [dbo].[Account] ([id])
 ON DELETE CASCADE
+
 -- Insert sample data into the Brand table
 INSERT INTO Brand (name) 
 VALUES 
@@ -219,4 +220,126 @@ VALUES
 (4, N'AsusROGZephyrusG14.jpg',1, 2),
 (5, N'LenovoThinkPadX1Carbon.jpg',1, 2);
 SET IDENTITY_INSERT [dbo].[ProductImage] OFF
-UPDATE [ProductVariant] SET sale_id = 2 where id = 1
+
+
+/****** Object:  Table [dbo].[Blog]    Script Date: 7/25/2023 8:47:57 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Blog](
+	[id] [bigint] IDENTITY(1,1) NOT NULL,
+	[title] [nvarchar](max) NULL,
+	[categoryId] [int] NOT NULL,
+	[userId] [bigint] NOT NULL,
+	[status] [int] NULL,
+	[coverImg] [varchar](max) NULL,
+	[date] [date] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[BlogCategory]    Script Date: 7/25/2023 8:47:57 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[BlogCategory](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[categoryName] [nvarchar](50) NOT NULL,
+	[status] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[SubBlog]    Script Date: 7/25/2023 8:47:57 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SubBlog](
+	[id] [bigint] IDENTITY(1,1) NOT NULL,
+	[title] [nvarchar](max) NULL,
+	[content] [nvarchar](max) NULL,
+	[img] [nvarchar](max) NULL,
+	[blogId] [bigint] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Blog] ADD  DEFAULT ((1)) FOR [status];
+ALTER TABLE [dbo].[Blog] ADD  DEFAULT (getdate()) FOR [date];
+ALTER TABLE [dbo].[BlogCategory] ADD  DEFAULT ((1)) FOR [status];
+GO
+ALTER TABLE [dbo].[Blog]  WITH CHECK ADD FOREIGN KEY([categoryId])
+REFERENCES [dbo].[BlogCategory] ([id])
+GO
+ALTER TABLE [dbo].[Blog]  WITH CHECK ADD FOREIGN KEY([userId])
+REFERENCES [dbo].[User] ([id])
+GO
+ALTER TABLE [dbo].[SubBlog]  WITH CHECK ADD FOREIGN KEY([blogId])
+REFERENCES [dbo].[Blog] ([id])
+
+INSERT INTO [dbo].[Account] ([username], [password], [role_Id], [isActive]) VALUES
+('john_doe', 'password123', 1, 1),  
+('jane_smith', 'password456', 2, 1),
+('emily_johnson', 'password789', 2, 1), 
+('linda_davis', 'password999', 1, 1);  
+
+INSERT INTO [User] ([id], [fullname], [phone], [email], [address], [gender]) VALUES 
+(2, N'John Doe', '1234567890', 'johndoe@example.com', N'123 Main St, New York, NY', 1),
+(3, N'Jane Smith', '0987654321', 'janesmith@example.com', N'456 Park Ave, Los Angeles, CA', 0),
+(4, N'Emily Johnson', '1231231234', 'emilyj@example.com', N'789 Broadway, San Francisco, CA', 0),
+(5, N'Michael Brown', '4564564567', 'michaelb@example.com', N'101 Elm St, Chicago, IL', 1),
+(6, N'Linda Davis', '7897897890', 'lindad@example.com', N'202 Maple Ave, Houston, TX', 0);
+
+GO
+SET IDENTITY_INSERT [dbo].[Blog] ON 
+
+INSERT [dbo].[Blog] ([id], [title], [categoryId], [userId], [status], [coverImg], [date]) VALUES (5, N'Dell XPS 13: Review and Performance Insights', 2, 2, 1, N'dellxps13.jpg', CAST(N'2023-07-25' AS Date))
+INSERT [dbo].[Blog] ([id], [title], [categoryId], [userId], [status], [coverImg], [date]) VALUES (6, N'MacBook Pro 14 vs. Dell XPS 13: Which One Should You Buy?', 3, 2, 1, N'macbookpro14.jpg', CAST(N'2023-07-25' AS Date))
+INSERT [dbo].[Blog] ([id], [title], [categoryId], [userId], [status], [coverImg], [date]) VALUES (7, N'How to Optimize Your HP Spectre x360 for Best Battery Life', 4, 2, 1, N'hpspectrex360.jpg', CAST(N'2023-07-25' AS Date))
+INSERT [dbo].[Blog] ([id], [title], [categoryId], [userId], [status], [coverImg], [date]) VALUES (8, N'Asus ROG Zephyrus G14: Gaming Laptop of the Year?', 1, 2, 1, N'asusrogzephyrusg14.jpg', CAST(N'2023-07-25' AS Date))
+INSERT [dbo].[Blog] ([id], [title], [categoryId], [userId], [status], [coverImg], [date]) VALUES (9, N'Lenovo ThinkPad X1 Carbon: A Business Laptop for Professionals', 5, 2, 1, N'lenovox1carbon.jpg', CAST(N'2023-07-25' AS Date))
+
+SET IDENTITY_INSERT [dbo].[Blog] OFF
+GO
+SET IDENTITY_INSERT [dbo].[BlogCategory] ON 
+
+GO
+SET IDENTITY_INSERT [dbo].[BlogCategory] ON 
+
+INSERT [dbo].[BlogCategory] ([id], [categoryName], [status]) VALUES (1, N'News', 1)
+INSERT [dbo].[BlogCategory] ([id], [categoryName], [status]) VALUES (2, N'Reviews', 1)
+INSERT [dbo].[BlogCategory] ([id], [categoryName], [status]) VALUES (3, N'Updates and Features', 1)
+INSERT [dbo].[BlogCategory] ([id], [categoryName], [status]) VALUES (4, N'Tips', 1)
+INSERT [dbo].[BlogCategory] ([id], [categoryName], [status]) VALUES (5, N'Tricks', 1)
+SET IDENTITY_INSERT [dbo].[BlogCategory] OFF
+GO
+
+SET IDENTITY_INSERT [dbo].[BlogCategory] OFF
+GO
+SET IDENTITY_INSERT [dbo].[SubBlog] ON 
+
+INSERT [dbo].[SubBlog] ([id], [title], [content], [img], [blogId]) VALUES (3, N'Dell XPS 13: Review and Performance Insights', N'The Dell XPS 13 continues to be one of the best ultrabooks on the market. With a sleek design, powerful performance, and stunning display, it’s a top choice for both work and entertainment.', N'DellXPS13_review.jpg', 5)
+INSERT [dbo].[SubBlog] ([id], [title], [content], [img], [blogId]) VALUES (4, N'Dell XPS 13: Design and Build Quality', N'The XPS 13 features a sturdy aluminum body, near bezel-less display, and an impressive keyboard. It’s lightweight, making it perfect for users on the go.', N'dellxps13_design.jpg', 5)
+
+INSERT [dbo].[SubBlog] ([id], [title], [content], [img], [blogId]) VALUES (5, N'MacBook Pro 14 vs. Dell XPS 13: Display and Performance Comparison', N'Both the MacBook Pro 14 and the Dell XPS 13 offer incredible displays, but how do they compare in real-world performance? Find out which one is better for your needs.', N'macbookpro_vs_dellxps13.jpg', 6)
+INSERT [dbo].[SubBlog] ([id], [title], [content], [img], [blogId]) VALUES (6, N'MacBook Pro 14: M1 Pro Chip Benchmarks', N'The M1 Pro chip inside the MacBook Pro 14 delivers industry-leading performance for both creative professionals and casual users alike. See how it compares to its rivals.', N'macbookpro14_benchmarks.jpg', 6)
+
+INSERT [dbo].[SubBlog] ([id], [title], [content], [img], [blogId]) VALUES (7, N'How to Optimize Your HP Spectre x360 for Best Battery Life', N'The HP Spectre x360 offers great battery life, but there are a few tricks you can use to make it even better. Learn how to extend your usage throughout the day.', N'hpspectrex360_battery.jpg', 7)
+INSERT [dbo].[SubBlog] ([id], [title], [content], [img], [blogId]) VALUES (8, N'Tips for HP Spectre x360 Performance', N'Boost your HP Spectre x360 performance with these tips. From managing your startup programs to keeping your drivers up to date, these small changes can make a big difference.', N'hpspectrex360_tips.jpg', 7)
+
+INSERT [dbo].[SubBlog] ([id], [title], [content], [img], [blogId]) VALUES (9, N'Asus ROG Zephyrus G14: Gaming Laptop of the Year?', N'The Asus ROG Zephyrus G14 is hailed as one of the best gaming laptops of 2023. With top-notch specs and a unique design, this laptop is perfect for serious gamers.', N'asusrogzephyrusg14_gaming.jpg', 8)
+INSERT [dbo].[SubBlog] ([id], [title], [content], [img], [blogId]) VALUES (10, N'Asus ROG Zephyrus G14: Best Features for Gamers', N'From its impressive cooling system to its customizable AniMe Matrix display, discover why the Asus ROG Zephyrus G14 stands out in the crowded gaming laptop market.', N'asusrogzephyrusg14_features.jpg', 8)
+
+INSERT [dbo].[SubBlog] ([id], [title], [content], [img], [blogId]) VALUES (11, N'Lenovo ThinkPad X1 Carbon: The Ultimate Business Laptop', N'The Lenovo ThinkPad X1 Carbon combines durability, power, and portability, making it a top choice for business professionals.', N'lenovox1carbon_business.jpg', 9)
+INSERT [dbo].[SubBlog] ([id], [title], [content], [img], [blogId]) VALUES (12, N'Lenovo ThinkPad X1 Carbon: Security and Productivity Features', N'With a range of security features and productivity tools, the ThinkPad X1 Carbon is designed for business professionals who need a reliable and secure laptop.', N'lenovox1carbon_security.jpg', 9)
+
+SET IDENTITY_INSERT [dbo].[SubBlog] OFF
