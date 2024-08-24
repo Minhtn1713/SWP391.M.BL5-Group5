@@ -1,7 +1,7 @@
-<nav class="sidebar close">
+    <nav class="sidebar close">
       <header>
         <div class="logo text">
-          <a href="admin-production-list" style="text-decoration: none"
+          <a href="admin-dashboard" style="text-decoration: none"
             ><h3 style="width: 100%; text-align: center">LapStore</h3></a
           >
         </div>
@@ -11,7 +11,7 @@
         <div class="menu">
           <ul class="menu-links">
             <li class="nav-link">
-              <a href="dashboard">
+              <a href="admin-dashboard">
                 <i class="bx bx-home-alt icon"></i>
                 <span class="text nav-text">Dashboard</span>
               </a>

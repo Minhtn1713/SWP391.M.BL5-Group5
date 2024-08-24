@@ -474,7 +474,7 @@ public class ProductVariantDAO extends DBContext {
           return succes;
     }
     
-      public int updateProduct(String id, String status){
+      public int updateProductSale(String id, String status){
         int succes = 0;
         String query = "UPDATE [ProductVariant] SET [status] = " + status + 
                                        
@@ -488,7 +488,7 @@ public class ProductVariantDAO extends DBContext {
         }
           return succes;
     }
-      public int updateProductSale(String id, String sale){
+      public int updateProduct(String id, String sale){
         int succes = 0;
         String query = "UPDATE [ProductVariant] SET [sale_id] = " + sale + 
                                        
@@ -642,35 +642,72 @@ public List<ProductVariantInfomation> getListNameProductVariantById(List<Integer
         }
         return succes;
     }
+    public List<ProductVariant> getTop4PopularProducts() {
+        List<ProductVariant> popularProducts = new ArrayList<>();
+        String query = "SELECT TOP 4 " +
+                       "pv.id, " +
+                       "pv.product_id, " +
+                       "pv.RAM_id, " +
+                       "pv.Storage_id, " +
+                       "pv.quantity, " +
+                       "pv.variant_price, " +
+                       "pv.sale_id, " +
+                       "pv.[status], " +
+                       "p.[name] AS product_name " +
+                       "FROM ProductVariant pv " +
+                       "JOIN OrderDetail od ON od.product_id = pv.id " +
+                       "JOIN Product p ON pv.product_id = p.id " +
+                       "GROUP BY " +
+                       "pv.id, " +
+                       "pv.product_id, " +
+                       "pv.RAM_id, " +
+                       "pv.Storage_id, " +
+                       "pv.quantity, " +
+                       "pv.variant_price, " +
+                       "pv.sale_id, " +
+                       "pv.[status], " +
+                       "p.[name] " +
+                       "ORDER BY COUNT(od.product_id) DESC;";
+
+        try (PreparedStatement ps = connection.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                ProductVariant productVariant = new ProductVariant();
+                productVariant.setId(rs.getInt("id"));
+                productVariant.setProductId(rs.getInt("product_id"));
+                productVariant.setRamId(rs.getInt("RAM_id"));
+                productVariant.setStorageId(rs.getInt("Storage_id"));
+                productVariant.setQuantity(rs.getInt("quantity"));
+                productVariant.setVariantPrice(rs.getFloat("variant_price"));
+                productVariant.setSaleId(rs.getInt("sale_id"));
+                productVariant.setStatus(rs.getInt("status"));
+                productVariant.setProductName(rs.getString("product_name"));
+
+                // Optionally, fetch RAM and Storage details if needed
+                productVariant.setRam(getRamNameById(rs.getInt("RAM_id")));
+                productVariant.setStorage(getStorageSizeById(rs.getInt("Storage_id")));
+
+                popularProducts.add(productVariant);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return popularProducts;
+    }   
  public static void main(String[] args) {
         ProductVariantDAO productVariantDAO = new ProductVariantDAO();
         ProductDAO pDao = new ProductDAO();
         SaleDAO sale = new SaleDAO();
 
         // Test getListProductVariant method
-        List<ProductVariant> productVariants = productVariantDAO.getListProductVariant(
-            1, // offset
-            5, // fetch
-            "variant_price", // orderBy
-            new ArrayList<>(),// filterRam
-            new ArrayList<>(), // filterStorage
-            new Range(0, 10000), // range
-            new ArrayList<>(), // search (product_id list)
-            "2" // filter
-        );
-        System.out.println("Product Variants:");
-        List<ProductVariantInfomation> productVarInfo = new ArrayList<>();
-        Product pr;
-        ProductImage pi;
-        for (ProductVariant p : productVariants) {
-            pr = pDao.getProductByID(p.getProductId() + "");
-            pi = productVariantDAO.getOneProductVariantImage(p.getProductId(), p.getRamId() + "");
-            productVarInfo.add(new ProductVariantInfomation(p.getId(), pr.getName(), pr.getProcessor(),
-                    pr.getScreen_details(), pr.getOperatingSystem(), pr.getBattery(), pr.getGraphic_card(),
-                    (pi != null ? pi.getUrl(): ""), productVariantDAO.getRamNameById(p.getRamId()),
-                    productVariantDAO.getStorageSizeById(p.getStorageId()), p.getQuantity(), p.getVariantPrice(), p.getStatus(), sale.getSaleById(p.getSaleId()).getPercent()));
-        }
-        productVarInfo.forEach(action -> System.out.println(action));
+        List<ProductVariant> productVariants = productVariantDAO.getTop4PopularProducts();
+        for (ProductVariant productVariant : productVariants) {
+         System.out.println("Product Variants:"  + productVariant.getProductName());
+     }
+        
 //
 //        // Test getOneProductVariantImage method
 //        ProductImage productImage = productVariantDAO.getOneProductVariantImage(1, "2");

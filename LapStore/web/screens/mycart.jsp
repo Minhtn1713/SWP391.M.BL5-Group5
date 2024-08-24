@@ -92,7 +92,7 @@
                 <h3 style="text-align:center; margin: 50px 0;">There is no product in your cart</h3>
             </c:if>
 
-            <a href="shop">Click Me To Continue Shopping</a>
+            <a href="store">Click Me To Continue Shopping</a>
         </div>
 
         <hr />

@@ -16,10 +16,11 @@ public class Order {
     private float totalPrice;
     private Date createdDate;
     private int status;
+    private String statusName;
     private String name;
     private String address;
     private String phone;
-
+    
     public Order() {
     }
 
@@ -35,6 +36,19 @@ public class Order {
         this.phone = phone;
     }
 
+    public Order(int id, int userId, float totalPrice, Date createdDate, int status, String statusName, String name, String address, String phone) {
+        this.id = id;
+        this.userId = userId;
+        this.totalPrice = totalPrice;
+        this.createdDate = createdDate;
+        this.status = status;
+        this.statusName = statusName;
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+    }
+
+    
     public int getId() {
         return id;
     }
@@ -97,6 +111,14 @@ public class Order {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getStatusName() {
+        return statusName;
+    }
+
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
     }
 
 }

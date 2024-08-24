@@ -7,7 +7,7 @@ package model;
 /**
  * Represents a product variant with various attributes.
  * 
- * Author: hieu
+ * Author: lords
  */
 public class ProductVariant {
     private int id;
@@ -22,7 +22,17 @@ public class ProductVariant {
     private int saleId;
     private String ram;
     private String storage;
+    private String productName;
 
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    
     public String getRam() {
         return ram;
     }
@@ -157,5 +167,16 @@ public class ProductVariant {
         this.saleId = sale_Id;
         this.status = status;
     }
-
+    public ProductVariant(int id, int product_Id, String ram, String storage, int quantity, float variantPrice,
+            int sale_Id, int status, String productName) {
+        this.id = id;
+        this.productId = product_Id;
+        this.ram = ram;
+        this.storage = storage;
+        this.quantity = quantity;
+        this.variantPrice = variantPrice;
+        this.saleId = sale_Id;
+        this.status = status;
+        this.productName = productName;
+    }
 }

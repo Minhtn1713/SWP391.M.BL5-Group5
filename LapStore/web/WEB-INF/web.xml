@@ -4,10 +4,6 @@
         <filter-name>AdminFilter</filter-name>
         <filter-class>filter.AdminFilter</filter-class>
     </filter>
-    <filter-mapping>
-        <filter-name>AdminFilter</filter-name>
-        <url-pattern>/admin-*</url-pattern>
-    </filter-mapping>
     <servlet>
         <servlet-name>AccountProfileController</servlet-name>
         <servlet-class>controller.AccountProfileController</servlet-class>
@@ -16,7 +12,6 @@
         <servlet-name>ForgotPasswordController</servlet-name>
         <servlet-class>controller.ForgotPasswordController</servlet-class>
     </servlet>
-
     <servlet>
         <servlet-name>SignInController</servlet-name>
         <servlet-class>controller.SignInController</servlet-class>
@@ -209,6 +204,10 @@
         <servlet-name>MyOrderController</servlet-name>
         <servlet-class>controller.MyOrderController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RelatedProductController</servlet-name>
+        <servlet-class>controller.RelatedProductController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AccountProfileController</servlet-name>
         <url-pattern>/account-profile</url-pattern>
@@ -217,7 +216,6 @@
         <servlet-name>ForgotPasswordController</servlet-name>
         <url-pattern>/forgot-password</url-pattern>
     </servlet-mapping>
-  
     <servlet-mapping>
         <servlet-name>SignInController</servlet-name>
         <url-pattern>/sign-in</url-pattern>
@@ -269,7 +267,7 @@
     <servlet-mapping>
         <servlet-name>AddToOrderController</servlet-name>
         <url-pattern>/add-to-cart</url-pattern>
-    </servlet-mapping>    
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DeleteOrderDetailController</servlet-name>
         <url-pattern>/delete-detail</url-pattern>
@@ -409,6 +407,10 @@
     <servlet-mapping>
         <servlet-name>MyOrderController</servlet-name>
         <url-pattern>/my-order</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RelatedProductController</servlet-name>
+        <url-pattern>/RelatedProductController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

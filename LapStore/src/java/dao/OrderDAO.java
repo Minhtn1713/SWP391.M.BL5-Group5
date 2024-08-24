@@ -83,7 +83,21 @@ public class OrderDAO extends DBContext {
         }
         return 0;
     }
-
+    public int getTotalRevenue() {
+        String query = "Select SUM(total_price) From [Order]";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
     public List<Order> getRecentOrder() {
         List<Order> listOrder = new ArrayList<>();
         String sql = "SELECT TOP (5) [Id]\n"
@@ -94,7 +108,7 @@ public class OrderDAO extends DBContext {
                 + "      ,[Name]\n"
                 + "      ,[Address]\n"
                 + "      ,[Phone]\n"
-                + "  FROM [DURIAN_SHOP].[dbo].[Order] order by id desc ";
+                + "  FROM [LapStore].[dbo].[Order] order by id desc ";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -181,7 +195,7 @@ public class OrderDAO extends DBContext {
 
     public int createOrder(int User_id, double Total_Price) {
         int succes = 0;
-        String sql = "Insert into [DURIAN_SHOP].[dbo].[Order]([User_Id], [Total_Price], [Created_Date],[Status]) values (?,?,(SELECT GETDATE()),1);";
+        String sql = "Insert into [Store].[dbo].[Order]([User_Id], [Total_Price], [Created_Date],[Status]) values (?,?,(SELECT GETDATE()),1);";
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setInt(1, User_id);
@@ -564,4 +578,29 @@ public class OrderDAO extends DBContext {
         }
         return -1;
     }
+    public List<Order> getTop5RecentOrders() {
+    List<Order> orders = new ArrayList<>();
+    String sql = "SELECT o.*, s.status AS status_name FROM [Order] o INNER JOIN [Status] s ON o.[status] = s.id ORDER BY o.id";  
+    try (
+         PreparedStatement ps = connection.prepareStatement(sql)) {
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Order order = new Order();
+            order.setId(rs.getInt("id"));
+            order.setUserId(rs.getInt("user_id"));
+            order.setTotalPrice(rs.getFloat("total_price"));
+            order.setCreatedDate(rs.getDate("created_date"));
+            order.setStatus(rs.getInt("status"));
+            order.setName(rs.getString("name"));
+            order.setAddress(rs.getString("address"));
+            order.setPhone(rs.getString("phone"));
+            order.setStatusName(rs.getString("status_name"));
+            orders.add(order);
+            
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return orders;
+}
 }
