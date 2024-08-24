@@ -28,7 +28,7 @@
                 </div>
                 <div class="boxes">
                     <div class="add-form">
-                        <form class="add-product" action="admin-update-blog" method="POST" enctype="multipart/form-data">
+                        <form class="add-product" action="admin-update-blog" method="POST"">
                             <input type="hidden" name="blogId" value="${blog.id}"/>
                             <input type="hidden" name="quantitySub" id="quantitySub" value="${subBlogs.size()}"/>
                             <label for="cate">Blog Category</label><br />
