@@ -111,7 +111,7 @@ public class Admin_UpdateVariantController extends HttpServlet {
         int success = varDao.updateProduct(var);
 
         if (success == 1) {
-            response.sendRedirect("/LapStore-main/admin-variant-list");
+            response.sendRedirect("/LapStore_main/admin-variant-list");
         } else {
             response.sendRedirect("error-page");
         }

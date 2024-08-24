@@ -51,12 +51,12 @@
                                 </select>
                                 <input type="hidden" id="name" name="name" value="${variant.productId}">
                                 <br />
-                                <label for="color">Color</label><br />
-                                <select id="colorSelect" name="colorSelect" disabled>
-                                    <c:forEach items="${list_Color}" var="c">
-                                        <option value="${c.id}" ${variant.colorId == c.id?"selected":""}>${c.name}</option>
+                                <label for="ram">Ram</label><br />
+                                <select id="ramSelect" name="ramSelect" disabled>
+                                    <c:forEach items="${list_Ram}" var="c">
+                                        <option value="${c.id}" ${variant.ramId == c.id?"selected":""}>${c.name}</option>
                                     </c:forEach></select
-                                ><input type="hidden" id="color" name="color" value="${variant.colorId}"><br />
+                                ><input type="hidden" id="ram" name="ram" value="${variant.ramId}"><br />
                                 <label for="storage">Storage</label><br />
                                 <select id="storageSelect" name="storageSelect" disabled>
                                     <c:forEach items="${list_Storage}" var="s">
