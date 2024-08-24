@@ -15,8 +15,85 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Shadows+Into+Light&display=swap" rel="stylesheet" />
         <!-- Favicon -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <style>
+
+            .toast-container {
+                position: fixed;
+                bottom: 0;
+                right: 0;
+                margin: 1rem;
+                z-index: 1050;
+            }
+
+            .toast {
+                display: flex;
+                flex-direction: column;
+                width: 350px;
+                background-color: #fff;
+                border: 1px solid rgba(0, 0, 0, 0.1);
+                border-radius: 0.25rem;
+                box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+                animation: fadeIn 0.5s;
+            }
+
+            .toast-header {
+                display: flex;
+                align-items: center;
+                padding: 0.5rem;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+                background-color: #f8f9fa;
+            }
+
+            .toast-header img.web-logo {
+                margin-right: 0.5rem;
+                height: 20px;
+                width: 20px;
+            }
+
+            .toast-title {
+                flex-grow: 1;
+                font-weight: bold;
+            }
+
+            .toast-time {
+                margin-left: 0.5rem;
+                font-size: 0.875rem;
+            }
+
+            .toast-close {
+                background: none;
+                border: none;
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
+
+            .toast-body {
+                padding: 0.75rem;
+                color: #212529;
+            }
+
+            .toast-body.success {
+                color: #28a745;
+            }
+
+            .toast-body.error {
+                color: #dc3545;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(100%);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+
             table{
                 border-collapse:  collapse;
             }
@@ -34,7 +111,7 @@
 
         <jsp:include page="../screens/navbar.jsp"></jsp:include>
 
-        <div class="container">
+            <div class="container">
             <c:if test="${size != 0}">
                 <table border="1px" width="40%">
                     <tr>
@@ -62,10 +139,10 @@
                                 <button><a href="process?num=1&id=${i.productVariant.id}">+</a></button>
                             </td>
                             <td class="tr">
-                                $<fmt:formatNumber pattern="##.#" value="${i.price}" />
+                                <fmt:formatNumber pattern="#,###" value="${i.price}" /> VNĐ
                             </td>
                             <td class="tr">
-                                $<fmt:formatNumber pattern="##.#" value="${i.price*i.quantity}" />
+                                <fmt:formatNumber pattern="#,###" value="${i.price*i.quantity}" /> VNĐ
                             </td>
                             <td style="text-align: center"> 
                                 <form action="process" method="post">
@@ -96,6 +173,50 @@
         </div>
 
         <hr />
+        <c:choose>
+            <c:when test="${param.successed != null}">
+                <div id="toast-container" class="toast-container">
+                    <div id="customToast" class="toast">
+                        <div class="toast-header">
+                            <img src="../assets/images/favicon.ico.png" class="web-logo" alt="web-logo">
+                            <strong class="toast-title">LapStore_main</strong>
+                            <small class="toast-time">A few seconds ago</small>
+                            <button type="button" class="toast-close" aria-label="Close">&times;</button>
+                        </div>
+                        <c:choose>
+                            <c:when test="${param.successed == 'yes'}">
+                                <div class="toast-body success">
+                                    Checkout successfully!
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="toast-body error">
+                                    Failed to Checkout!
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </div>
+            </c:when>
+        </c:choose>
         <jsp:include page="../screens/footer.jsp"></jsp:include>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var toastEl = document.getElementById('customToast');
+                var closeBtn = document.querySelector('.toast-close');
+
+                if (toastEl) {
+                    // Automatically hide the toast after a delay
+                    setTimeout(function () {
+                        toastEl.style.display = 'none';
+                    }, 5000);
+
+                    // Close the toast when the close button is clicked
+                    closeBtn.addEventListener('click', function () {
+                        toastEl.style.display = 'none';
+                    });
+                }
+            });
+        </script>
     </body>
 </html>

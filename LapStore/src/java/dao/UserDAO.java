@@ -118,7 +118,7 @@ public class UserDAO extends DBContext {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                list.add(new User(rs.getInt(1), rs.getString(2), rs.getString(4), rs.getString(3), rs.getString(5), rs.getInt(6), rs.getString(8), rs.getInt(10), rs.getInt(11)));
+                list.add(new User(rs.getInt(1), rs.getString(2), rs.getString(4), rs.getString(3), rs.getString(5), rs.getInt(6), rs.getString(9), rs.getInt(11), rs.getInt(12),rs.getDouble(7)));
             }
             ps.close();
             rs.close();
@@ -193,7 +193,7 @@ public class UserDAO extends DBContext {
     public boolean toggleById(int id) {
         int check = 0;
         Connection con = null;
-        int status = getUserById_Dung(id).getIsActive(); // Get current status
+        int status = getUserById_1(id).getIsActive(); // Get current status
 
         String sql = "UPDATE Account SET isActive = ? WHERE id = ?"; // Update query
 
@@ -228,7 +228,7 @@ public class UserDAO extends DBContext {
     }
     public User updateUser(User u) {
         String query = """
-                       update [User] set fullname=?,phone=?,address=?,gender=? where id=?;
+                       update [User] set balance=? where id=?;
                        update [Account] set role_Id=?,isActive=? where id=?;""";
         int check = 0;
         Connection con = null;
@@ -236,10 +236,7 @@ public class UserDAO extends DBContext {
         try {
             PreparedStatement ps = connection.prepareStatement(query);
             int index = 1;
-            ps.setString(index++, u.getFullName());
-            ps.setString(index++, u.getPhone());
-            ps.setString(index++, u.getAddress());
-            ps.setInt(index++, u.getGender());
+            ps.setDouble(index++, u.getBalance());
             ps.setInt(index++, u.getId());
             ps.setInt(index++, u.getRole());
             ps.setInt(index++, u.getIsActive());
@@ -265,7 +262,24 @@ public class UserDAO extends DBContext {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                return new User(rs.getInt(1), rs.getString(2), rs.getString(4), rs.getString(3), rs.getString(5), rs.getInt(6), rs.getString(8), rs.getInt(10), rs.getInt(11));
+                return new User(rs.getInt(1), rs.getString(2), rs.getString(4), rs.getString(3), rs.getString(5), rs.getInt(6), rs.getString(9), rs.getInt(11), rs.getInt(12));
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+    
+    public User getUserById_2(int id) {
+        String query = "select * from [User] join Account on [User].id=Account.id where [User].id=?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return new User(rs.getInt(1), rs.getString(2), rs.getString(4), rs.getString(3), rs.getString(5), rs.getInt(6), rs.getString(9), rs.getInt(11), rs.getInt(12),rs.getDouble(7));
             }
             ps.close();
             rs.close();
@@ -314,5 +328,31 @@ public class UserDAO extends DBContext {
             System.out.println(e);
         }
         return map;
+    }
+    
+    public void insertPayment(int id, long balance) {
+        String sql = "UPDATE [User] SET balance = ? WHERE id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+
+            st.setLong(1, balance);
+            st.setInt(2, id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public boolean updateAccountBalance(User user) {
+        String sql = "UPDATE [User] SET balance = ? WHERE id = ?";
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
+            stm.setDouble(1, user.getBalance());
+            stm.setInt(2, user.getId());
+            int affectedRows = stm.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            System.out.println("Error updating account balance: " + e.getMessage());
+            return false;
+        }
     }
 }

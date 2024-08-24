@@ -753,7 +753,7 @@
                                                             <td>${o.ram}</td>
                                                             <td>${o.storage}</td>
                                                             <td>${o.quantity}</td>
-                                                            <td>$<fmt:formatNumber pattern="##.#" value="${(o.productPrice+o.variantPrice)*o.quantity}" /> </td>
+                                                            <td><fmt:formatNumber pattern="#,###" value="${(o.productPrice+o.variantPrice)*o.quantity}" /> VNĐ </td>
                                                         </tr>
                                                         <c:set var="totalPrice" value="${totalPrice + (o.productPrice + o.variantPrice) * o.quantity}" />
                                                         </c:forEach> 
@@ -766,7 +766,7 @@
                                                     <div class="mb-3">
                                                         <label class="form-label">Status</label>
                                                         <select class="form-control" name="status" id="status-${p.id}"  required>
-                                                        <option value="1" ${order.status==1 ? 'selected' : ''}>In Cart</option>
+                                                        <option value="1" ${order.status==1 ? 'selected' : ''}>Paid</option>
                                                         <option value="2" ${order.status==2 ? 'selected' : ''}>Processing</option>
                                                         <option value="3" ${order.status==3 ? 'selected' : ''}>Pending</option>
                                                         <option value="4" ${order.status==4 ? 'selected' : ''}>Shipping</option>
@@ -781,7 +781,7 @@
                                             <div class="col-md-6">
                                                     <div class="mb-3">
                                                         <label class="form-label">Total Price</label>
-                                                        <input name="price" id="price" type="text" class="form-control " readonly placeholder="$<fmt:formatNumber pattern="##.#" value="${totalPrice}" />">   
+                                                        <input name="price" id="price" type="text" class="form-control " readonly placeholder="<fmt:formatNumber pattern="#,###" value="${totalPrice}" /> VNĐ">   
                                                         <p class="text-danger">${errorEmail}</p>
                                                     </div>
                                                 </div><!--end col-->

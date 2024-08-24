@@ -30,6 +30,7 @@
                     <a class="dropdown-item" href="account-profile?status=profile"><i class='fa fa-user' aria-hidden="true"></i> Profile</a>
                     <a class="dropdown-item" href="account-profile?status=setting"><i class="fa fa-cog" aria-hidden="true"></i> Setting</a>
                     <a class="dropdown-item" href="/LapStore_main/cart"><i class="fa fa-shopping-bag" aria-hidden="true"></i> My Cart</a>
+                    <a class="dropdown-item" href="/LapStore_main/wallet"><i class="fa fa-credit-card-alt" aria-hidden="true"></i> My Wallet</a>
                     <a class="dropdown-item" href="sign-out"><i class="fa fa-sign-out" aria-hidden="true"></i> Log out</a>
                 </div>
             </li>

@@ -52,9 +52,9 @@ public class CartController extends HttpServlet {
         
         
         //temp
-        Cookie c=new Cookie("cart","2:1-3:2");
-        c.setMaxAge(2*24*60*60);
-        response.addCookie(c);
+        //Cookie c=new Cookie("cart","2:1-3:2");
+       //c.setMaxAge(2*24*60*60);
+        //response.addCookie(c);
         //temp
         Cookie[] arr=request.getCookies();
 

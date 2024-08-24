@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -704,7 +705,7 @@ body.dark .switch::before {
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Full Name</label>
-                                                    <input name="fullName" id="title" type="text" class="form-control " value="${user.fullName}">   
+                                                    <input name="fullName" id="title" type="text" class="form-control " readonly value="${user.fullName}">   
                                                     <p class="text-danger">${errorName}</p>
                                                 </div>
                                             </div><!--end col-->
@@ -712,7 +713,7 @@ body.dark .switch::before {
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Phone</label>
-                                                    <input name="phone" id="title" type="text" class="form-control "  value="${user.phone}">   
+                                                    <input name="phone" id="title" type="text" class="form-control " readonly value="${user.phone}">   
                                                     <p class="text-danger">${errorPhone}</p>
                                                 </div>
                                             </div><!--end col-->
@@ -720,7 +721,7 @@ body.dark .switch::before {
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Email</label>
-                                                    <input name="email" id="title" type="text" class="form-control "  value="${user.email}">   
+                                                    <input name="email" id="title" type="text" class="form-control " readonly value="${user.email}">   
                                                     <p class="text-danger">${errorEmail}</p>
                                                 </div>
                                             </div><!--end col-->
@@ -728,7 +729,7 @@ body.dark .switch::before {
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Gender</label>
-                                                    <select class="form-control" name="gender" required>
+                                                    <select class="form-control" name="gender" disabled required>
                                                         
                                                         <option value="1" ${user.gender==1 ? 'selected' : ''}>Male</option>
                                                         <option value="0" ${user.gender==0 ? 'selected' : ''}>Female</option>
@@ -746,7 +747,7 @@ body.dark .switch::before {
                                             <div class="col-md-6">
                                                 <div class="mb-3">
                                                     <label class="form-label">Address</label>
-                                                    <input name="address" id="address" type="text" class="form-control " value="${user.address}">   
+                                                    <input name="address" id="address" type="text" class="form-control " readonly value="${user.address}">   
                                                     <p class="text-danger">${errorAddress}</p>
                                                 </div>
                                             </div><!--end col-->
@@ -756,8 +757,8 @@ body.dark .switch::before {
                                                     <label class="form-label">Role</label>
                                                     <select class="form-control" name="role" required>
                                                         <option value="1" ${user.role==1 ? 'selected' : ''}>Admin</option>
-                                                        <option value="2" ${user.role==3 ? 'selected' : ''}>Staff</option>
-                                                        <option value="3" ${user.role==2 ? 'selected' : ''}>Customer</option>
+                                                        <option value="3" ${user.role==3 ? 'selected' : ''}>Staff</option>
+                                                        <option value="2" ${user.role==2 ? 'selected' : ''}>Customer</option>
                                                     </select>
                                                 </div>
                                             </div><!--end col-->
@@ -770,7 +771,15 @@ body.dark .switch::before {
                                                         <option value="0" ${user.isActive==0 ? 'selected' : ''}>INACTIVE</option>
                                                     </select>
                                                 </div>
-                                            </div><!--end col-->                                 
+                                            </div><!--end col-->     
+                                            
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Balance</label>
+                                                    <input name="balance" id="balance" type="text" class="form-control " value="<fmt:formatNumber value="${user.balance}" type="balance" pattern="####" />">   
+                                                    <p class="text-danger">${errorBalance}</p>
+                                                </div>
+                                            </div><!--end col-->   
                                         </div><!--end row-->
 
                                         <button type="submit" class="btn btn-primary" >Update</button>

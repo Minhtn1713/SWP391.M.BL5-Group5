@@ -18,7 +18,31 @@ public class User {
     String userName;
     int role;
     int isActive;
+    double balance;
 
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+    public User(int id, String fullName, String email, String phone, String address, int gender, String userName, int role,int isActive, double balance) {
+        this.id = id;
+        this.fullName = fullName;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.gender = gender;
+        this.userName = userName;
+        this.role = role;
+        this.isActive = isActive;
+        this.balance = balance;
+    }
+ 
+    
+    
     public User() {
     }
 

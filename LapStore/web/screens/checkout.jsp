@@ -75,10 +75,10 @@
                                 ${i.quantity}
                             </td>
                             <td class="tr">
-                                $<fmt:formatNumber pattern="##.#" value="${i.price}" />
+                                <fmt:formatNumber pattern="#,###" value="${i.price}" /> VNĐ
                             </td>
                             <td class="tr">
-                                $<fmt:formatNumber pattern="##.#" value="${i.price*i.quantity}" />
+                                <fmt:formatNumber pattern="#,###" value="${i.price*i.quantity}" /> VNĐ
                             </td>
                         </tr>
                     </c:forEach>

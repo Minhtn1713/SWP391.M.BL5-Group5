@@ -56,6 +56,7 @@ public class CheckoutController extends HttpServlet {
         int id;
         String name,phone,address;
         Account a = (Account) session.getAttribute("account");
+        id=a.getId();
         if(a!=null){
         UserDAO user = new UserDAO();
         User u = user.getUserById_1(a.getId());

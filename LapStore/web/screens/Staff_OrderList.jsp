@@ -2,6 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="model.Product" %>
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -60,19 +61,20 @@
                                             <tr class="product-row">
                                                 <td>${p.id}</td>
                                                 <td><a href="user/update?id=${p.userId}" class="btn btn-icon btn-pills btn-soft-success" >${p.userId}</a></td>
-                                                <td>${p.totalPrice}</td>
+                                                <td><fmt:formatNumber value="${p.totalPrice}" type="balance" pattern="#,###" /> VNĐ</td>
                                                 <td>${p.createdDate}</td>
                                                 <td>${p.name}</td>
                                                 <td>
                                                     <select class="form-control" name="status" id="status-${p.id}" required>
-                                                        <option value="1" ${p.status==1 ? 'selected' : ''}>In Cart</option>
-                                                        <option value="2" ${p.status==2 ? 'selected' : ''}>Processing</option>
-                                                        <option value="3" ${p.status==3 ? 'selected' : ''}>Pending</option>
-                                                        <option value="4" ${p.status==4 ? 'selected' : ''}>Shipping</option>
-                                                        <option value="5" ${p.status==5 ? 'selected' : ''}>Delivered</option>
-                                                        <option value="6" ${p.status==6 ? 'selected' : ''}>Cancel</option>
-                                                        <option value="7" ${p.status==7 ? 'selected' : ''}>Refund</option>
+                                                        <option value="1" ${p.status == 1 ? 'selected' : ''} ${p.status == 6 || p.status == 7 ? 'disabled' : ''}>Paid</option>
+                                                        <option value="2" ${p.status == 2 ? 'selected' : ''} ${p.status == 6 || p.status == 7 ? 'disabled' : ''}>Processing</option>
+                                                        <option value="3" ${p.status == 3 ? 'selected' : ''} ${p.status == 6 || p.status == 7 ? 'disabled' : ''}>Pending</option>
+                                                        <option value="4" ${p.status == 4 ? 'selected' : ''} ${p.status == 6 || p.status == 7 ? 'disabled' : ''}>Shipping</option>
+                                                        <option value="5" ${p.status == 5 ? 'selected' : ''} ${p.status == 6 || p.status == 7 ? 'disabled' : ''}>Delivered</option>
+                                                        <option value="6" ${p.status == 6 ? 'selected' : ''}>Cancel</option>
+                                                        <option value="7" ${p.status == 7 ? 'selected' : ''}>Refund</option>
                                                     </select>
+
                                                 </td>
                                                 <td class="text-start p-3">
                                                     <a href="order/update?id=${p.id}" class="btn btn-icon btn-pills btn-soft-success" ><i class="uil uil-edit"></i></a>

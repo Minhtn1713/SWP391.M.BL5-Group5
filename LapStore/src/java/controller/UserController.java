@@ -151,7 +151,7 @@ public class UserController extends HttpServlet {
         UserDAO u = new UserDAO();
         int id = Integer.parseInt(request.getParameter("id"));
         try {
-            User user = u.getUserById_Dung(id);
+            User user = u.getUserById_2(id);
             request.setAttribute("user", user);
             request.getRequestDispatcher("/screens/admin-userDetails.jsp").forward(request, response);
 
@@ -166,23 +166,29 @@ public class UserController extends HttpServlet {
         String phone = request.getParameter("phone");
         String address = request.getParameter("address");
         String username = request.getParameter("username");
-
+        String balanceTxt = request.getParameter("balance");
+        if(isDouble(balanceTxt)){
+            double balance = Double.parseDouble(balanceTxt);
+        
+        
         
         int role = Integer.parseInt(request.getParameter("role"));
-        int gender = Integer.parseInt(request.getParameter("gender"));
+        
         int status = Integer.parseInt(request.getParameter("status"));
         //String status = String.valueOf(request.getParameter("status"));
         UserDAO u=new UserDAO();
-        User update = new User( id, fullName, null, phone,address,gender, null,role,status);
+        User old = u.getUserById_2(id);
+        User update = new User( id, null, null, null,null,old.getGender(), null,role,status,balance);
         
-        if (isValidFullName(fullName) && isValidPhone(phone) && isValidAddress(address) ) {
+        
         User isUpdated = u.updateUser(update);
         if (isUpdated != null) {
             response.sendRedirect("/LapStore_main/user/update?id="+id+"&updated=yes");
         } else {
             response.sendRedirect("/LapStore_main/user/update?id="+id+"&updated=no");
+         
         }
-        }else {
+        }else{
             response.sendRedirect("/LapStore_main/user/update?id="+id+"&updated=no");
         }
     }
@@ -251,6 +257,18 @@ public class UserController extends HttpServlet {
                 request.setAttribute("error", "Failed to add user to the database.");
                 request.getRequestDispatcher("/screens/admin-newUser.jsp").forward(request, response);
             }
+        }
+    }
+    public static boolean isDouble(String input) {
+        if (input == null || input.isEmpty()) {
+            return false;
+        }
+
+        try {
+            Double.parseDouble(input);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
     }
 

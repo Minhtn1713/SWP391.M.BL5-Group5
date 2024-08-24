@@ -29,7 +29,7 @@ import model.User;
  */
 @WebServlet(name = "FinishCheckoutController", urlPatterns = {"/finish"})
 public class FinishCheckoutController extends HttpServlet {
-
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -46,58 +46,103 @@ public class FinishCheckoutController extends HttpServlet {
             out.println("</html>");
         }
     }
-
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         OrderDAO o = new OrderDAO();
-        Cookie[] arr=request.getCookies();
+        Cookie[] arr = request.getCookies();
         List<ProductVariant> list = o.getAllProductVariant();
-
-        String txt="";
-        if(arr!=null){
-            for(Cookie ck:arr){
-                if(ck.getName().equals("cart")){
-                    txt+=ck.getValue();
+        
+        String txt = "";
+        if (arr != null) {
+            for (Cookie ck : arr) {
+                if (ck.getName().equals("cart")) {
+                    txt += ck.getValue();
                 }
             }
         }
-        if(!txt.isEmpty() && txt!=null){
-        Cart cart = new Cart(txt,list);
-       
-        HttpSession session = request.getSession();
-        Account a = (Account) session.getAttribute("account");
-        User u = null;
-        if (a != null) {
-            UserDAO user = new UserDAO();
-            u = user.getUserById_1(a.getId());
-        }
-        
-        String name = request.getParameter("name");
-        String phone = request.getParameter("phone");
-        String address = request.getParameter("address");
-        String payment = request.getParameter("payment");
-        if(payment.equals("Pay on Receipt")){
-        float total_price = cart.getTotalMoney();
-        List<Item> listItem= cart.getItems();
-        int success1 = o.createOrder(u, name, phone, address, total_price, 3);
-        Order order = o.getOrderById_Dung(o.getOrderId());
-        if(success1==1){
-            for(Item i : listItem){
-                int success2= o.createOrderDetail(order, i.getProductVariant(), i.getQuantity());
-                int success3 = o.setProductVariantId(o.getProductVariantQuantity(i.getProductVariant().getId())-i.getQuantity(), i.getProductVariant().getId());
+        if (!txt.isEmpty() && txt != null) {
+            Cart cart = new Cart(txt, list);
+            
+            HttpSession session = request.getSession();
+            Account a = (Account) session.getAttribute("account");
+            User u = null;
+            if (a != null) {
+                UserDAO user = new UserDAO();
+                u = user.getUserById_1(a.getId());
             }
-            response.sendRedirect("cart");
-        }
-        } 
+            
+            String name = request.getParameter("name");
+            String phone = request.getParameter("phone");
+            String address = request.getParameter("address");
+            String payment = request.getParameter("payment");
+            if (payment.equals("Pay on Receipt")) {
+                float total_price = cart.getTotalMoney();
+                List<Item> listItem = cart.getItems();
+                boolean checkQuantity = true;
+                for (Item i : listItem) {
+                    if (i.getProductVariant().getQuantity() < i.getQuantity()) {
+                        checkQuantity = false;
+                    }
+                }
+                if (checkQuantity) {
+                    int success1 = o.createOrder(u, name, phone, address, total_price, 3);
+                    Order order = o.getOrderById_Dung(o.getOrderId());
+                    if (success1 == 1) {
+                        for (Item i : listItem) {
+                            int success2 = o.createOrderDetail(order, i.getProductVariant(), i.getQuantity());
+                            int success3 = o.setProductVariantId(o.getProductVariantQuantity(i.getProductVariant().getId()) - i.getQuantity(), i.getProductVariant().getId());
+                        }
+                        response.sendRedirect("my-order?successed=yes");
+                    }
+                } else {
+                    response.sendRedirect("my-order?successed=no");
+                }
+            } else {
                 
-        
+                if (a != null) {
+                    UserDAO user = new UserDAO();
+                    u = user.getUserById_2(a.getId());
+                    
+                    float total_price = cart.getTotalMoney();
+                    if (u.getBalance() > total_price) {
+                        List<Item> listItem = cart.getItems();
+                        boolean checkQuantity = true;
+                        for (Item i : listItem) {
+                            if (i.getProductVariant().getQuantity() < i.getQuantity()) {
+                                checkQuantity = false;
+                            }
+                        }
+                        if (checkQuantity) {
+                            int success1 = o.createOrder(u, name, phone, address, total_price, 1);
+                            Order order = o.getOrderById_Dung(o.getOrderId());
+                            if (success1 == 1) {
+                                for (Item i : listItem) {
+                                    int success2 = o.createOrderDetail(order, i.getProductVariant(), i.getQuantity());
+                                    int success3 = o.setProductVariantId(o.getProductVariantQuantity(i.getProductVariant().getId()) - i.getQuantity(), i.getProductVariant().getId());
+                                }
+                                u.setBalance(u.getBalance()-total_price);
+                                user.updateAccountBalance(u);
+                                response.sendRedirect("my-order?successed=yes");
+                            }
+                        } else {
+                            response.sendRedirect("my-order?successed=no");
+                        }
+                    } else {
+                        response.sendRedirect("wallet?successed=no");
+                    }
+                } else {
+                    response.sendRedirect("sign-in");
+                }
+            }
+            
+        }
     }
 }
-} 
