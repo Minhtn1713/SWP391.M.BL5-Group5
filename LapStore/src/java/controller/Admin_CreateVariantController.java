@@ -52,8 +52,8 @@ public class Admin_CreateVariantController extends HttpServlet {
         int ram_id = Integer.parseInt(req.getParameter("ram"));
         int storage_id = Integer.parseInt(req.getParameter("storage"));
         int quantity = Integer.parseInt(req.getParameter("quantity"));
-//        String img = req.getParameter("imgList");
-//        String[] imgList = img.split(",");
+        String img = req.getParameter("imgList");
+        String[] imgList = img.split(",");
         ProductDAO pDao = new ProductDAO();
         Product product = pDao.getProductById(pro_id);
         ProductDetailDAO pdDao = new ProductDetailDAO();
@@ -64,21 +64,21 @@ public class Admin_CreateVariantController extends HttpServlet {
         ProductVariant isExisted = varDao.productVariantIsExist(pro_id, ram_id, storage_id);
         if (isExisted == null) {
             ProductVariant var = new ProductVariant(0, pro_id, ram_id, storage_id, quantity, price, 1, 1);
-//            ProductImageDAO prid = new ProductImageDAO();
-//            for (String string : imgList) {
-//                ProductImage pimg = new ProductImage(0, string, pro_id, ram_id);
-//                prid.createImage(pimg);
-//            }
+            ProductImageDAO prid = new ProductImageDAO();
+            for (String string : imgList) {
+                ProductImage pimg = new ProductImage(0, string, pro_id, ram_id);
+                prid.createImage(pimg);
+            }
 
             int success = varDao.createVariant(var);
 
             if (success == 1) {
-                resp.sendRedirect("/LapStore-main/admin-variant-list");
+                resp.sendRedirect("/LapStore_main/admin-variant-list");
             } else {
-                resp.sendRedirect("/LapStore-main/admin-variant-list");
+                resp.sendRedirect("error");
             }
         } else {
-            resp.sendRedirect("/LapStore-main/admin-variant-list");
+            resp.sendRedirect("error-page");
         }
     }
 

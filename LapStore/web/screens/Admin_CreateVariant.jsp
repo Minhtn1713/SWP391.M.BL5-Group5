@@ -51,8 +51,8 @@
                   <br />
                 <label for="ram">Ram</label><br />
                 <select id="ram" name="ram">
-                  <c:forEach items="${list_Ram}" var="r">
-                  <option value="${r.id}">${r.name}</option>
+                  <c:forEach items="${list_Ram}" var="c">
+                  <option value="${c.id}">${c.name}</option>
                   
                   </c:forEach></select
                 ><br />
@@ -72,11 +72,11 @@
                   required
                   style="margin-bottom: 40px"
                 />
-<!--                <div class="add-img">
+                <div class="add-img">
                     <label for="imgs">Add images<i id="plus" class="bx bx-plus icon plus"></i></label><div class="image-container"><div id="display-img"></div></div><br />
                 <input type="file" name="imgs" id="imgs" style="display: none;" onchange="getImage(event.target.value)"/>
                 <input type="hidden" id="imgList" name="imgList" />
-                </div>-->
+                </div>
                 <br />
                 <button type="submit">Add</button>
               </form>
@@ -87,51 +87,51 @@
     </section>
     <script src="js/dashboard.js"></script>
     <script>
-//        let imgList = []; //abs.jps, dcd.jsp
-//        
-//        const loadImage = (list) =>{
-//            const img = document.getElementById('display-img');
-//            let text = '';
-//            for (var i = 0; i < list.length; i++) {
-//                text+= `<span onclick="removeImage(`+i+`)" class="span-img" id='span-`+ (i+1) +`'><i id='icon-`+ (i+1) +`' class="bx bx-x icon"></i><img id='imgId`+ (i+1) +`'  src=\'img/` + list[i]+ `'/></span>`;
-//            }
-//            img.innerHTML = text;
-//        };
-//        const getImage = (imgUrl) =>{
-//            const img = document.getElementById('display-img');
-//            if (imgUrl !== ""){
-//            const newImg = imgUrl.replace(/^.*\\/,"");
-//            imgList.push(newImg);
-//            loadImage(imgList);
-//            }
-//        };
-//        
-//        const removeImage = (index) =>{
-//            const img = document.getElementById('display-img');
-//             imgList.splice(index, 1);
-//             let temp = '';
-//            imgList.forEach(e=>{
-//                temp+= e + ",";
-//            });
-//            temp = temp.slice(0, temp.lastIndexOf(','));
-//            const imgs = document.getElementById("imgList");
-//            imgs.value = temp;
-//              loadImage(imgList);
-//        };
-//        
-//        const imgInput = document.getElementById("imgs");
-//        imgInput.addEventListener('change', ()=>{
-//            let temp = '';
-//            imgList.forEach(e=>{
-//                temp+= e + ",";
-//            });
-//            temp = temp.slice(0, temp.lastIndexOf(','));
-//            const img = document.getElementById("imgList");
-//            img.value = temp;
-//            console.log(img.value);
-//            
-//        });
-//        loadImage(imgList);
+        let imgList = []; //abs.jps, dcd.jsp
+        
+        const loadImage = (list) =>{
+            const img = document.getElementById('display-img');
+            let text = '';
+            for (var i = 0; i < list.length; i++) {
+                text+= `<span onclick="removeImage(`+i+`)" class="span-img" id='span-`+ (i+1) +`'><i id='icon-`+ (i+1) +`' class="bx bx-x icon"></i><img id='imgId`+ (i+1) +`'  src=\'img/` + list[i]+ `'/></span>`;
+            }
+            img.innerHTML = text;
+        };
+        const getImage = (imgUrl) =>{
+            const img = document.getElementById('display-img');
+            if (imgUrl !== ""){
+            const newImg = imgUrl.replace(/^.*\\/,"");
+            imgList.push(newImg);
+            loadImage(imgList);
+            }
+        };
+        
+        const removeImage = (index) =>{
+            const img = document.getElementById('display-img');
+             imgList.splice(index, 1);
+             let temp = '';
+            imgList.forEach(e=>{
+                temp+= e + ",";
+            });
+            temp = temp.slice(0, temp.lastIndexOf(','));
+            const imgs = document.getElementById("imgList");
+            imgs.value = temp;
+              loadImage(imgList);
+        };
+        
+        const imgInput = document.getElementById("imgs");
+        imgInput.addEventListener('change', ()=>{
+            let temp = '';
+            imgList.forEach(e=>{
+                temp+= e + ",";
+            });
+            temp = temp.slice(0, temp.lastIndexOf(','));
+            const img = document.getElementById("imgList");
+            img.value = temp;
+            console.log(img.value);
+            
+        });
+        loadImage(imgList);
     </script>
     </body>
 </html>

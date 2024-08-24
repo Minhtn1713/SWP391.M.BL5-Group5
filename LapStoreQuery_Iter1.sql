@@ -93,14 +93,18 @@ CREATE TABLE ProductVariant (
     RAM_id INT NOT NULL,
     Storage_id INT NOT NULL,
     quantity INT,
-    variant_price DECIMAL(10, 2),
-    sale_id INT NOT NULL,
-    status INT NOT NULL,
+    variant_price DECIMAL(10, 2) NULL,
+    sale_id INT NULL,
+    status INT  NULL,
 	CONSTRAINT FK_ProductVariant_Product FOREIGN KEY (product_id) REFERENCES Product(id),
 	CONSTRAINT FK_ProductVariant_Ram FOREIGN KEY (RAM_id) REFERENCES dbo.Ram(Id), 
 	CONSTRAINT FK_ProductVariant_Storage FOREIGN KEY (Storage_id) REFERENCES Storage(Id),
 	CONSTRAINT FK_ProductVariant_Sale FOREIGN KEY (sale_id) REFERENCES Sale(Id)
 );
+GO
+ALTER TABLE ProductVariant ADD  DEFAULT ((1)) FOR status
+GO
+ALTER TABLE ProductVariant ADD  DEFAULT ((1)) FOR sale_id
 GO
 CREATE TABLE [dbo].[ProductImage](
 	[Id] [bigint] IDENTITY(1,1) NOT NULL PRIMARY KEY,
