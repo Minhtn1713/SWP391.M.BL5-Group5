@@ -291,6 +291,43 @@ public class BlogDAO extends DBContext {
     return result;
 }
 
+ public void updateOrInsertSubBlog(int blogId, String header, String content, String img, int i) {
+    // Check if the SubBlog with the specified blogId and i exists
+    String checkExistQuery = "SELECT COUNT(*) FROM [LapStore].[dbo].[SubBlog] WHERE blogId = ? AND id = ?";
+    String updateQuery = "UPDATE [LapStore].[dbo].[SubBlog] SET title = ?, content = ?, img = ? WHERE blogId = ? AND id = ?";
+    String insertQuery = "INSERT INTO [LapStore].[dbo].[SubBlog] (title, content, img, blogId) VALUES (?, ?, ?, ?)";
+
+    try (PreparedStatement checkStmt = connection.prepareStatement(checkExistQuery);
+         PreparedStatement updateStmt = connection.prepareStatement(updateQuery);
+         PreparedStatement insertStmt = connection.prepareStatement(insertQuery)) {
+
+        // Check if the SubBlog exists
+        checkStmt.setInt(1, blogId);
+        checkStmt.setInt(2, i);
+        ResultSet rs = checkStmt.executeQuery();
+        
+        if (rs.next() && rs.getInt(1) > 0) {
+            // If SubBlog exists, update it
+            updateStmt.setString(1, header);
+            updateStmt.setString(2, content);
+            updateStmt.setString(3, img);
+            updateStmt.setInt(4, blogId);
+            updateStmt.setInt(5, i);
+            updateStmt.executeUpdate();
+        } else {
+            // If SubBlog does not exist, insert it
+            insertStmt.setString(1, header);
+            insertStmt.setString(2, content);
+            insertStmt.setString(3, img);
+            insertStmt.setInt(4, blogId);
+            insertStmt.executeUpdate();
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace(); // Log the exception (could be replaced with proper logging)
+    }
+}
+
     
    
 }
