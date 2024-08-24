@@ -67,6 +67,7 @@
                                     <thead>
                                         <tr>
                                             <th><input type="checkbox" id="check-all"/></th>
+                                            <th>Image</th>
                                             <th>Name</th>
                                             <th>Ram</th>
                                             <th>Storage</th>
@@ -82,6 +83,13 @@
                                         <c:forEach items="${product}" var="p">
                                             <tr class="product-row">
                                                 <td><input type="checkbox" value="${p.id}" onclick="handleCheckboxClick(this)"/></td>
+                                                 <td>
+                                                    <img
+                                                        src="img/${p.url}"
+                                                        alt="iphone"
+                                                        width="100px"
+                                                        />
+                                                </td>
                                                 <td>${p.name}</td>
                                                 <td>${p.ram}</td>
                                                 <td>${p.storage}</td>
