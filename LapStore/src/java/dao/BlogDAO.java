@@ -267,5 +267,30 @@ public class BlogDAO extends DBContext {
             System.out.println(blogCategory.getName());
         }
     }
+
+     public int deleteBlog(int blogId) {
+    String deleteSubBlogQuery = "DELETE FROM SubBlog WHERE blogId = ?";
+    String deleteBlogQuery = "DELETE FROM Blog WHERE id = ?";
+    int result = 0;
+
+    try (
+         PreparedStatement deleteSubBlogStmt = connection.prepareStatement(deleteSubBlogQuery);
+         PreparedStatement deleteBlogStmt = connection.prepareStatement(deleteBlogQuery)) {
+
+        // First, delete related records from SubBlog
+        deleteSubBlogStmt.setInt(1, blogId);
+        deleteSubBlogStmt.executeUpdate();
+
+        // Then, delete the blog
+        deleteBlogStmt.setInt(1, blogId);
+        result = deleteBlogStmt.executeUpdate();
+        
+    } catch (SQLException e) {
+        e.printStackTrace(); // Log the exception (could be replaced with proper logging)
+    }
+    return result;
+}
+
+    
    
 }

@@ -181,6 +181,10 @@
         <servlet-class>controller.AddNewBlogController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>DeleteBlogController</servlet-name>
+        <servlet-class>controller.DeleteBlogController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>BlogDetailController</servlet-name>
         <servlet-class>controller.BlogDetailController</servlet-class>
     </servlet>
@@ -395,6 +399,10 @@
     <servlet-mapping>
         <servlet-name>HideBlogController</servlet-name>
         <url-pattern>/hide-blog</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteBlogController</servlet-name>
+        <url-pattern>/delete-blog</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AddCommentController</servlet-name>

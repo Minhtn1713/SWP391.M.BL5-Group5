@@ -73,8 +73,11 @@
                       <td>${c.title}</td>
                       <td><%=acc.getUsername()%></td>
                       <td>
-                      <a href="admin-hide-color?id=${c.id}&sta=1"><i class='bx bx-trash icon'></i></a></td>
-                      <td><a href="admin-blog-list?id=${c.id}"><i class='bx bx-edit-alt icon' ></i></a></td>
+                        <a href="delete-blog?id=${c.id}" onclick="return confirm('Are you sure you want to delete this blog?');">
+                                     <i class='bx bx-trash icon'></i></a>
+                                      
+                                </td>
+                      <td><a href="admin-update-blog?id=${c.id}"><i class='bx bx-edit-alt icon' ></i></a></td>
                       <td><c:if test="${c.status == 1}"><a href="hide-blog?id=${c.id}&sta=2&cate=${c.categoryId}"><i class='bx bx-show-alt icon'></i></a></c:if>
                       <c:if test="${c.status != 1}"><a href="hide-blog?id=${c.id}&sta=1&cate=${c.categoryId}"><i class='bx bx-low-vision icon' ></i></a></c:if></td>
                     </tr>
