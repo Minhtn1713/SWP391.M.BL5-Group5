@@ -191,5 +191,41 @@ public class ProductDAO extends DBContext {
         }
         return -1;
     }
-    
+ public List<Product> getProductListById(List<Integer> idList) throws SQLException {
+    List<Product> productList = new ArrayList<>();
+    StringBuilder ids = new StringBuilder();
+    for (int i = 0; i < idList.size(); i++) {
+        ids.append(idList.get(i));
+        if (i < idList.size() - 1) {
+            ids.append(",");
+        }
+    }
+    String sql = "SELECT * FROM Product WHERE id IN (" + ids.toString() + ")";
+    try (Connection conn = connection;
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                productList.add(new Product(
+                    rs.getInt("id"),
+                    rs.getString("name"),
+                    rs.getString("img"),
+                    rs.getInt("brand"), 
+                    rs.getFloat("price"),       
+                    rs.getString("processor"),
+                    rs.getString("graphic_card"),
+                    rs.getString("screen_details"),
+                    rs.getString("size"),
+                    rs.getFloat("weight"),
+                    rs.getString("operating_system"),
+                    rs.getString("battery_life"),
+                    rs.getString("description"),
+                    rs.getInt("status")
+                ));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error fetching product list: " + e.getMessage());
+        }
+        return productList;
+}
 }

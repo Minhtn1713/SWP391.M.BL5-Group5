@@ -16,10 +16,7 @@ import jakarta.servlet.http.HttpSession;
 import model.Account;
 import model.User;
 
-/**
- *
- * @author kienk
- */
+
 public class AccountProfileController extends HttpServlet {
 
     /**
@@ -64,10 +61,14 @@ public class AccountProfileController extends HttpServlet {
         AccountDAO accDao = new AccountDAO();
         HttpSession session = request.getSession();
         Account acc = (Account) session.getAttribute("account");
+        if(acc!=null){
         int userId = accDao.getAccountID(acc.getUsername());
         User user = userDao.getUserById(userId);
         request.setAttribute("user", user);
-        request.getRequestDispatcher("screens/accountProfile.jsp").forward(request, response);
+        request.getRequestDispatcher("screens/accountProfile.jsp").forward(request, response);}
+        else{
+        response.sendRedirect("home");
+        }
     }
 
     /**
@@ -88,28 +89,28 @@ public class AccountProfileController extends HttpServlet {
             String phone = request.getParameter("phone");
             String email = request.getParameter("email");
             String address = request.getParameter("address");
-            
-             if (fullName == null || fullName.trim().isEmpty()) {
-            request.setAttribute("error6", "Full name cannot be empty.");
-            request.setAttribute("fullName", fullName);
-            request.setAttribute("gender", gender);
-            request.setAttribute("phone", phone);
-            request.setAttribute("email", email);
-            request.setAttribute("address", address);
-            request.getRequestDispatcher("screens/accountProfile.jsp").forward(request, response);
-            return;
-        }
-             
-              if (address == null || address.trim().isEmpty()) {
-            request.setAttribute("error7", "Address cannot be empty.");
-            request.setAttribute("fullName", fullName);
-            request.setAttribute("gender", gender);
-            request.setAttribute("phone", phone);
-            request.setAttribute("email", email);
-            request.setAttribute("address", address);
-            request.getRequestDispatcher("screens/accountProfile.jsp").forward(request, response);
-            return;
-        }
+
+            if (fullName == null || fullName.trim().isEmpty()) {
+                request.setAttribute("error6", "Full name cannot be empty.");
+                request.setAttribute("fullName", fullName);
+                request.setAttribute("gender", gender);
+                request.setAttribute("phone", phone);
+                request.setAttribute("email", email);
+                request.setAttribute("address", address);
+                request.getRequestDispatcher("screens/accountProfile.jsp").forward(request, response);
+                return;
+            }
+
+            if (address == null || address.trim().isEmpty()) {
+                request.setAttribute("error7", "Address cannot be empty.");
+                request.setAttribute("fullName", fullName);
+                request.setAttribute("gender", gender);
+                request.setAttribute("phone", phone);
+                request.setAttribute("email", email);
+                request.setAttribute("address", address);
+                request.getRequestDispatcher("screens/accountProfile.jsp").forward(request, response);
+                return;
+            }
 
             // Phone validation
             if (phone == null || phone.length() < 5 || !phone.matches("\\d{5,}")) {
@@ -139,10 +140,12 @@ public class AccountProfileController extends HttpServlet {
             AccountDAO accDao = new AccountDAO();
             HttpSession session = request.getSession();
             Account acc = (Account) session.getAttribute("account");
-            int userId = accDao.getAccountID(acc.getUsername());
-            user.updateUser(userId, fullName, phone, email, address, gender);
-            request.getSession().setAttribute("updateSuccess", "Profile updated successfully!");
-            response.sendRedirect("account-profile?status=profile");
+          
+                int userId = accDao.getAccountID(acc.getUsername());
+                user.updateUser(userId, fullName, phone, email, address, gender);
+                request.getSession().setAttribute("updateSuccess", "Profile updated successfully!");
+                response.sendRedirect("account-profile?status=profile");
+           
 
         } else if (status.equals("setting")) {
             String password = request.getParameter("current-password");

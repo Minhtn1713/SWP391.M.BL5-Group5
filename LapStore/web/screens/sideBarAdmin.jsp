@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 <nav class="sidebar close">
       <header>
         <div class="logo text">
@@ -36,7 +38,7 @@
               >
             </li>
             <li class="nav-link sub-menu">
-              <a href="admin-brand"
+              <a href="admin-brand-list"
                 ><i class="bx bx-palette icon"></i>
                 <span class="text nav-text">Brand</span></a
               >
@@ -45,6 +47,12 @@
               <a href="admin-order"
                 ><i class='bx bx-cart icon'></i>
                 <span class="text nav-text">Order</span></a
+              >
+            </li>
+            <li class="nav-link sub-menu">
+              <a href="admin-feedback"
+                ><i class='fas fa-comments icon'></i>
+                <span class="text nav-text">Feedback</span></a
               >
             </li>
             <li class="nav-link sub-menu">

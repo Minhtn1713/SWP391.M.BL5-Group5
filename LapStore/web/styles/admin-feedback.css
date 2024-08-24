@@ -1,0 +1,124 @@
+/* Container for the main content */
+.container {
+    padding: 20px;
+    margin-left: 250px; /* Adjust based on sidebar width */
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styling */
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Table styling */
+.feedback-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #333;
+}
+
+.feedback-table, .feedback-table th, .feedback-table td {
+    border: 1px solid #ddd;
+}
+
+.feedback-table th, .feedback-table td {
+    padding: 12px;
+    text-align: left;
+}
+
+.feedback-table th {
+    background-color: #f8f8f8;
+    font-weight: bold;
+}
+
+.feedback-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.feedback-table tr:hover {
+    background-color: #e9e9e9;
+}
+
+/* Button styling */
+.action-btn {
+    padding: 6px 12px;
+    margin-right: 5px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.3s ease;
+}
+
+.action-btn.delete {
+    background-color: #f44336;
+}
+
+.action-btn:hover {
+    background-color: #45a049; /* Green */
+}
+
+.action-btn.delete:hover {
+    background-color: #e53935; /* Red */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    .feedback-table {
+        font-size: 12px;
+    }
+
+    .action-btn {
+        font-size: 11px;
+        padding: 5px 10px;
+    }
+}
+.search-filter {
+    margin-bottom: 15px;
+}
+
+.search-filter select,
+.search-filter input {
+    padding: 5px;
+    font-size: 14px;
+    margin-right: 10px;
+}
+#pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#pagination a {
+    display: inline-block;
+    padding: 10px 15px;
+    margin: 0 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #333;
+    background-color: #f5f5f5;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#pagination a.active {
+    background-color: #007bff;
+    color: white;
+}
+
+#pagination a:hover:not(.active) {
+    background-color: #ddd;
+    color: #007bff;
+}

@@ -66,6 +66,16 @@
                     <div class="product-description">
                         <p>${productDetail.description}</p>
                     </div>
+
+                    <div class="quantity-container">
+                        <label for="quantity">Quantity:</label>
+                        <div class="quantity-controls">
+                            <button type="button" onclick="changeQuantity(-1)">-</button>
+                            <input type="number" id="quantity" name="quantity" value="1" min="1" max="${productDetail.status == 0 ? '0' : '10'}" readonly />
+                            <button type="button" onclick="changeQuantity(1)">+</button>
+                        </div>
+                    </div>
+
                     <div class="button-group">
                         <c:choose>
                             <c:when test="${productDetail.status == 0}">
@@ -90,6 +100,50 @@
                 </div>
             </div>
         </div>
+        <div class="feedback-section">
+            <h3>Customer Feedback</h3>
+
+            <div class="feedback-summary">
+                <p><strong>Total Feedbacks:</strong> ${feedbackData.numberOfFeedbacks}</p>
+                <p><strong>Average Rating:</strong> ${feedbackData.averageRating}</p>
+            </div>
+
+            <div class="feedback-sorting">
+                <label for="sort-feedback">Sort by: </label>
+                <select id="sort-feedback" onchange="sortFeedback()">
+                    <option value="timestamp">Date (Newest)</option>
+                    <option value="timestamp-desc">Date (Oldest)</option>
+                    <option value="rating">Rating (High to Low)</option>
+                    <option value="rating-desc">Rating (Low to High)</option>
+                </select>
+            </div>
+
+            <div id="feedback-list">
+                <c:forEach items="${feedback}" var="fb">
+                    <div class="feedback-item" data-rating="${fb.rating}" data-timestamp="${fb.timestamp}">
+                        <div class="feedback-header">
+                            <div class="feedback-rating">
+                                <c:forEach begin="1" end="${fb.rating}">
+                                    <i class="fa fa-star"></i>
+                                </c:forEach>
+                            </div>
+                            <div class="feedback-user">
+                                <strong>${fb.userName}</strong>
+                            </div>
+                        </div>
+                        <div class="feedback-comment">
+                            <p>${fb.comment}</p>
+                        </div>
+                        <div class="feedback-timestamp">
+                            <small>Posted on: ${fb.timestamp}</small>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+        </div>
+
+
+
         <script>
             let currentSlideIndex = 0;
             showSlide(currentSlideIndex);
@@ -118,6 +172,41 @@
 
             function currentSlide(n) {
                 showSlide(currentSlideIndex = n);
+            }
+            function changeQuantity(amount) {
+                let quantityInput = document.getElementById("quantity");
+                let currentQuantity = parseInt(quantityInput.value);
+                let newQuantity = currentQuantity + amount;
+                if (newQuantity >= 1 && newQuantity <= 10) {
+                    quantityInput.value = newQuantity;
+                    document.getElementById("buy-now-link").href = "order?product_id=${productDetail.id}&quantity=" + newQuantity;
+                }
+            }
+            function sortFeedback() {
+                let feedbackList = document.getElementById("feedback-list");
+                let feedbackItems = Array.from(feedbackList.getElementsByClassName("feedback-item"));
+                let sortBy = document.getElementById("sort-feedback").value;
+
+                feedbackItems.sort((a, b) => {
+                    let ratingA = parseInt(a.getAttribute("data-rating"));
+                    let ratingB = parseInt(b.getAttribute("data-rating"));
+                    let timestampA = new Date(a.getAttribute("data-timestamp")).getTime();
+                    let timestampB = new Date(b.getAttribute("data-timestamp")).getTime();
+
+                    if (sortBy === "rating") {
+                        return ratingB - ratingA; // High to Low
+                    } else if (sortBy === "rating-desc") {
+                        return ratingA - ratingB; // Low to High
+                    } else if (sortBy === "timestamp") {
+                        return timestampB - timestampA; // Newest First
+                    } else if (sortBy === "timestamp-desc") {
+                        return timestampA - timestampB; // Oldest First
+                    }
+                });
+
+                // Clear existing list and append sorted items
+                feedbackList.innerHTML = "";
+                feedbackItems.forEach(item => feedbackList.appendChild(item));
             }
 
         </script>

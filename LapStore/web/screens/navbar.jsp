@@ -11,11 +11,12 @@
         <li class="logo"><a href="/LapStore/home">LapStore</a></li>
     </ul>
     <ul class="nav-right">
-        <li class="nav-link"><a href="/LapStore/home">HOME</a></li>
-        <li class="nav-link store-link"><a href="/LapStore/store">STORE</a>
+        <li class="nav-link"><a href="/LapStore_main/home">HOME</a></li>
+        <li class="nav-link store-link"><a href="/LapStore_main/store">STORE</a>
             <li class="nav-link"><a href="blog?id=1">BLOG</a></li>
         <li class="nav-link"><a href="about-us">ABOUT</a></li>
         <li class="nav-link"><a href="contact">CONTACT</a></li>
+        <li class="nav-link"><a href="feedback">FEEDBACK</a></li>
         <li class="nav-link">
             <a href="checkout"><i class='fa fa-shopping-bag bag-icon'></i></i></a>
         </li>
