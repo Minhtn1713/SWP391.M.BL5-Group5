@@ -302,11 +302,11 @@ INSERT INTO [User] ([id], [fullname], [phone], [email], [address], [gender]) VAL
 GO
 SET IDENTITY_INSERT [dbo].[Blog] ON 
 
-INSERT [dbo].[Blog] ([id], [title], [categoryId], [userId], [status], [coverImg], [date]) VALUES (5, N'Dell XPS 13: Review and Performance Insights', 2, 2, 1, N'dellxps13.jpg', CAST(N'2023-07-25' AS Date))
-INSERT [dbo].[Blog] ([id], [title], [categoryId], [userId], [status], [coverImg], [date]) VALUES (6, N'MacBook Pro 14 vs. Dell XPS 13: Which One Should You Buy?', 3, 2, 1, N'macbookpro14.jpg', CAST(N'2023-07-25' AS Date))
-INSERT [dbo].[Blog] ([id], [title], [categoryId], [userId], [status], [coverImg], [date]) VALUES (7, N'How to Optimize Your HP Spectre x360 for Best Battery Life', 4, 2, 1, N'hpspectrex360.jpg', CAST(N'2023-07-25' AS Date))
-INSERT [dbo].[Blog] ([id], [title], [categoryId], [userId], [status], [coverImg], [date]) VALUES (8, N'Asus ROG Zephyrus G14: Gaming Laptop of the Year?', 1, 2, 1, N'asusrogzephyrusg14.jpg', CAST(N'2023-07-25' AS Date))
-INSERT [dbo].[Blog] ([id], [title], [categoryId], [userId], [status], [coverImg], [date]) VALUES (9, N'Lenovo ThinkPad X1 Carbon: A Business Laptop for Professionals', 5, 2, 1, N'lenovox1carbon.jpg', CAST(N'2023-07-25' AS Date))
+INSERT [dbo].[Blog] ([id], [title], [categoryId], [userId], [status], [coverImg], [date]) VALUES (5, N'Dell XPS 13: Review and Performance Insights', 2, 2, 1, N'DellXPS13.jpg', CAST(N'2023-07-25' AS Date))
+INSERT [dbo].[Blog] ([id], [title], [categoryId], [userId], [status], [coverImg], [date]) VALUES (6, N'MacBook Pro 14 vs. Dell XPS 13: Which One Should You Buy?', 3, 2, 1, N'MacBookPro14.jpg', CAST(N'2023-07-25' AS Date))
+INSERT [dbo].[Blog] ([id], [title], [categoryId], [userId], [status], [coverImg], [date]) VALUES (7, N'How to Optimize Your HP Spectre x360 for Best Battery Life', 4, 2, 1, N'HPSpectrex360.jpg', CAST(N'2023-07-25' AS Date))
+INSERT [dbo].[Blog] ([id], [title], [categoryId], [userId], [status], [coverImg], [date]) VALUES (8, N'Asus ROG Zephyrus G14: Gaming Laptop of the Year?', 1, 2, 1, N'AsusROGZephyrusG14.jpg', CAST(N'2023-07-25' AS Date))
+INSERT [dbo].[Blog] ([id], [title], [categoryId], [userId], [status], [coverImg], [date]) VALUES (9, N'Lenovo ThinkPad X1 Carbon: A Business Laptop for Professionals', 5, 2, 1, N'LenovoThinkPadX1Carbon.jpg', CAST(N'2023-07-25' AS Date))
 
 SET IDENTITY_INSERT [dbo].[Blog] OFF
 GO
